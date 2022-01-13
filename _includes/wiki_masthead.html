@@ -16,8 +16,8 @@
                     </picture>
                 </a>
                 {% endunless %}
-                <a class="site-title" href="{{ '/' | relative_url }}">
-                    {{ site.masthead_title | default: site.title }}
+                <a class="site-title" href="{{ '/wiki/' | relative_url }}">
+                    {{ site.masthead_title | default: site.title }} - Wiki
                     {% if site.subtitle %}<span class="site-subtitle">{{ site.subtitle }}</span>{% endif %}
                 </a>
                 <ul class="visible-links">

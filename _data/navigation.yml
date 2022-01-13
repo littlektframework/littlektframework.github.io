@@ -3,3 +3,8 @@ main:
       url: /features/
     - title: "Wiki"
       url: /wiki/
+wiki:
+    - title: "Back to Main"
+      url: /
+    - title: "Wiki Home"
+      url: "/wiki/"
