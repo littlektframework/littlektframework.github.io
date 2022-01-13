@@ -9,21 +9,27 @@
 
 ## Developer's Guide
 
+<details>
 <summary>Overview</summary>
-
+<div markdown="1">
 -   [Context and ContextListener](/wiki/framework/context-and-contextlistener)
 -   [Coroutines and Threads](/wiki/framework/coroutines-and-threads)
 -   [The Game Class](/wiki/framework/the-game-class)
 -   [Logging](/wiki/framework/logging)
+</div>
+</details>
 
+<details>
 <summary>Input</summary>
-
+<div markdown="1">
 -   [Mouse and Keyboard](/wiki/input/mouse-and-keyboard)
 -   [Gamepads](/wiki/input/gamepads)
 -   Types
     -   [Polling](/wiki/input/types/polling)
     -   [Event based](/wiki/input/types/event-based)
 -   [Cursor](/wiki/input/cursor)
+</div>
+</details>
 
 [Virtual File System](/wiki/vfs/virtual-file-system)
 
@@ -31,8 +37,9 @@
 
 [Assets]
 
-<summary>Graphics</summary>
-
+<details>
+<summary>2D</summary>
+<div markdown="1">
 -   [Batching and Textures](/wiki/graphics/batching-and-textures)
     -   [Texture Atlas]
 -   Fonts
@@ -49,3 +56,5 @@
 -   [Meshes]
 -   [Shaders]
 -   [Frame Buffer Objects]
+</div>
+</details>

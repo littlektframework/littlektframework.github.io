@@ -25,7 +25,7 @@
 
 [Assets]
 
-**Graphics**:
+**2D**:
 
 -   [Batching and Textures](/wiki/graphics/batching-and-textures)
     -   [Texture Atlas]
