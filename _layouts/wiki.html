@@ -1,0 +1,41 @@
+---
+# Taken from https://github.com/libgdx/libgdx.github.io/
+layout: wiki_base
+---
+
+<div id="main" role="main">
+    <header>
+        {% if page.title %}<h1 id="page-title" class="page__title" itemprop="headline">{{ page.title | markdownify |
+            remove: "<p>" | remove: "</p>" }}</h1>{% endif %}
+
+        <div class="header-meta">
+            {% if page.last_modified_at %}Updated on {{ page.last_modified_at | date: '%d %B %Y' }} • {% endif %}<a
+                href="{{ site.github.repository_url }}/commits/dev/{{ page.path }}">View revision history</a> • <a
+                href="{{ site.github.repository_url }}/edit/dev/{{ page.path }}">Edit on GitHub</a>
+        </div>
+    </header>
+    <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+        <div class="page__inner-wrap">
+            <section class="page__content e-content markdown-body" itemprop="text">
+                <aside class="sidebar__right">
+                    <div class="toc">
+                        <div class="wiki_toc__menu">
+                            <input id="wiki_ac-toc" name="accordion-toc" type="checkbox" />
+                            <label for="wiki_ac-toc">{{ site.data.ui-text[site.locale].menu_label | default: "Toggle
+                                Menu" }}</label>
+
+                            {% capture sidebar_include %}{% include_cached wiki_sidebar.md %}{% endcapture %}
+                            <div class="wiki_nav__items">
+                                {{ sidebar_include | markdownify }}
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+
+                {{ content }}
+
+            </section>
+        </div>
+
+    </article>
+</div>
