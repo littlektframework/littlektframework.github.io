@@ -16,8 +16,7 @@
 title: LittleKt
 description: A multiplatform 2D game framework written in Kotlin.
 github_username: littlektframework
-minimal_mistakes_skin: default
-minimal_mistakes_skin_dark: dark
+minimal_mistakes_skin: dark
 search: false
 
 # Build settings
