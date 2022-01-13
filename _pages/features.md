@@ -3,6 +3,69 @@ permalink: /features/
 title: "Features"
 ---
 
-Tempor velit sint sunt ipsum tempor enim ad qui ullamco. Est dolore anim ad velit duis dolore minim sunt aliquip amet commodo labore. Ut eu pariatur aute ea aute excepteur laborum. Esse ea esse excepteur minim mollit qui cillum excepteur ex dolore magna. Labore deserunt fugiat incididunt incididunt sint ea. Consequat dolore aute laboris quis proident quis non et est consectetur ex eiusmod sit culpa.
+LittleKt is a Kotlin multiplatform 2D game development framework based on OpenGL that is inspired by libGDX and KorGE. The goal of this project is to allow the freedom and flexibility that libGDX offers with enjoyable idiomatic features coded in Kotlin that KorGE has to offer.
 
-Cupidatat ea do et in excepteur in. Ad nostrud ut est esse eu duis ea sunt eiusmod. Aliquip tempor veniam sint elit fugiat. Velit incididunt laboris amet incididunt labore dolore irure velit excepteur commodo deserunt laborum. Consectetur eu fugiat veniam veniam Lorem labore magna eiusmod. Ea occaecat reprehenderit pariatur consectetur minim labore ut aliquip.
+**Some of the features LittleKt currently has to offer**:
+
+#### Freedom and flexibility:
+
+Various useful tools and abstractions but still allow access to the underlying code.
+
+#### Kotlin
+
+100% written in Kotlin which allows to take advantage of all the great features the language offers.
+
+#### Cross-platform
+
+Thanks to Kotlin - building for multiple platforms is easy. Currently supports **desktop via JVM** and **web** targets, as well as **mobile** and **desktop via native** planned in the future.
+
+#### Fonts
+
+Loaders and renders to make font's easy to use.
+
+-   TTF file parser and loader
+-   GPU vector font rendering of TTF files on the fly based off of [Will Dobbie's article](https://wdobbie.com/post/gpu-text-rendering-with-vector-textures/)
+-   Bitmap fonts
+-   Utilities for measuring text
+
+#### Higher-level 2D APIs
+
+-   Orthographic camera and viewports
+-   Texture atlases, slicing, and pixmap editing
+-   Shader GLSL generation DSL
+
+#### Tilemaps
+
+Includes first class support for [LDtk](https://ldtk.io) map loading and rendering.
+
+#### 2D Scene Graph and UI
+
+A light weight scene graph that is easily extensible that can be used to create your own engine. Includes a UI implementation that can be used along side.
+
+#### Low-level OpenGL utilies and access
+
+Directly access and use the **OpenGL** instance to do exactly what you need to do.
+
+Includes utilites classes built on top of **OpenGL** such as:
+
+-   Shaders
+-   Meshes
+-   Textures
+-   Framebuffer objects
+-   Vertex arrays and vertex buffer objects
+
+#### Virtual File System
+
+A file system abstraction that allows to easily read and write to files. Includes streaming support and a loaders to make loading assets a breeze.
+
+#### Audio
+
+Easily load and play clips of audio. As well as streaming audio.
+
+#### Math
+
+Extensive matrix and vector classes as well as a ton of extensions to make calculations easier.
+
+#### Utilities
+
+Loads of quality-of-life and helper extensions to make writing code a bit more enjoyable.
