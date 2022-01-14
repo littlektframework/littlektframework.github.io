@@ -1,13 +1,4 @@
-# Table of Contents
-
-[Home](/wiki/)
-
-## Getting Started
-
--   [First application](/wiki/starting/first-application)
--   [First game](/wiki/starting/first-game)
-
-## Developer's Guide
+## LittleKt
 
 <details>
 <summary>Overview</summary>
@@ -16,6 +7,14 @@
 -   [Coroutines and Threads](/wiki/framework/coroutines-and-threads)
 -   [The Game Class](/wiki/framework/the-game-class)
 -   [Logging](/wiki/framework/logging)
+</div>
+</details>
+
+<details>
+<summary>Getting Started</summary>
+<div markdown="1">
+-   [First application](/wiki/starting/first-application)
+-   [First game](/wiki/starting/first-game)
 </div>
 </details>
 
@@ -48,7 +47,7 @@
 </details>
 
 <details>
-<summary>2D</summary>
+<summary>2D Graphics</summary>
 <div markdown="1">
 -   [SpriteBatch](/wiki/2d/spritebatch)
 -   [Textures and TextureSlices](/wiki/2d/textures-and-textureslices)
@@ -63,7 +62,13 @@
 -   Tilemaps
     -   [LDtk](/wiki/2d/tilemaps/ldtk)
     -   [Tiled]
--   [OpenGL Profiling and Stats]
+</div>
+</details>
+
+<details>
+<summary>OpenGL Utilities</summary>
+<div markdown="1">
+-   [Stats and GL related calls]
 -   [Meshes]
 -   [Shaders]
 -   [Frame Buffer Objects]
@@ -76,6 +81,5 @@
 -   Vectors
 -   Matrices
 -   Utility extensions
-
 </div>
 </details>
