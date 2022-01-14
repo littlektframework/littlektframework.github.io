@@ -24,25 +24,13 @@ article.page {
     word-wrap: break-word;
 }
 
-@media (prefers-color-scheme: light) {
-    .header-meta {
-        padding-bottom: 8px;
-        margin-top: 8px;
-        font-size: 14px;
-        color: #57606a;
-        border-bottom: 1px solid #d0d7de;
-        margin-bottom: 10px;
-    }
-}
-@media (prefers-color-scheme: dark) {
-    .header-meta {
-        padding-bottom: 8px;
-        margin-top: 8px;
-        font-size: 14px;
-        color: #8b949e;
-        border-bottom: 1px solid #30363d;
-        margin-bottom: 10px;
-    }
+.header-meta {
+    padding-bottom: 8px;
+    margin-top: 8px;
+    font-size: 14px;
+    color: #8b949e;
+    border-bottom: 1px solid #30363d;
+    margin-bottom: 10px;
 }
 
 .header-meta .ico-ext {
@@ -55,61 +43,30 @@ article.page {
 }
 
 // NAVBAR AT THE TOP
-@media (prefers-color-scheme: light) {
-    .greedy-nav a {
-        color: #6f777d !important;
-    }
-}
-
-@media (prefers-color-scheme: dark) {
-    .greedy-nav a {
-        color: #eaeaea !important;
-    }
+.greedy-nav a {
+    color: #eaeaea !important;
 }
 
 // WIKI NAVBAR AT THE SIDE
-@media (prefers-color-scheme: light) {
-    .toc {
-        padding: 8px 16px;
-        border-color: #d0d7de;
-        border-style: solid;
-        border-width: 1px;
-        border-radius: 6px;
-        color: #24292f;
-    }
 
-    .wiki_toc__menu a {
-        color: #0969da;
-        text-decoration: none;
-    }
-    .wiki_toc__menu a:hover {
-        text-decoration: underline;
-    }
-    .wiki_toc__menu a:visited {
-        color: #0969da;
-    }
+.toc {
+    padding: 8px 16px;
+    border-color: #30363d;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 6px;
+    color: #c9d1d9;
 }
 
-@media (prefers-color-scheme: dark) {
-    .toc {
-        padding: 8px 16px;
-        border-color: #30363d;
-        border-style: solid;
-        border-width: 1px;
-        border-radius: 6px;
-        color: #c9d1d9;
-    }
-
-    .wiki_toc__menu a {
-        color: #2f7d95;
-        text-decoration: none;
-    }
-    .wiki_toc__menu a:hover {
-        text-decoration: underline;
-    }
-    .wiki_toc__menu a:visited {
-        color: #2f7d95;
-    }
+.wiki_toc__menu a {
+    color: #47a9c7;
+    text-decoration: none;
+}
+.wiki_toc__menu a:hover {
+    text-decoration: underline;
+}
+.wiki_toc__menu a:visited {
+    color: #47a9c7;
 }
 
 .toc .header-link {
@@ -139,16 +96,8 @@ article.page {
     }
 
     @include breakpoint(max-width $large - 1px) {
-        @media (prefers-color-scheme: light) {
-            label {
-                color: #7a8288;
-            }
-        }
-
-        @media (prefers-color-scheme: dark) {
-            label {
-                color: #c9d1d9;
-            }
+        label {
+            color: #c9d1d9;
         }
 
         label {
@@ -265,71 +214,25 @@ article.page {
     }
 }
 
-@media (prefers-color-scheme: light) {
-    body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica,
-            Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-        font-size: 16px;
-        line-height: 1.5;
-        color: #24292f;
-        word-wrap: break-word;
-    }
-
-    a {
-        color: #0969da;
-        text-decoration: none;
-    }
-    a:hover {
-        text-decoration: underline;
-    }
-    a:visited {
-        color: #0969da;
-    }
-}
-
 // ACTUAL CONTENT
-@media (prefers-color-scheme: light) {
-    body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica,
-            Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-        font-size: 16px;
-        line-height: 1.5;
-        color: #24292f;
-        word-wrap: break-word;
-    }
-
-    a {
-        color: #0969da;
-        text-decoration: none;
-    }
-    a:hover {
-        text-decoration: underline;
-    }
-    a:visited {
-        color: #0969da;
-    }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
+        sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    font-size: 16px;
+    line-height: 1.5;
+    color: #c9d1d9;
+    word-wrap: break-word;
 }
 
-@media (prefers-color-scheme: dark) {
-    body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica,
-            Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-        font-size: 16px;
-        line-height: 1.5;
-        color: #c9d1d9;
-        word-wrap: break-word;
-    }
-
-    a {
-        color: #2f7d95;
-        text-decoration: none;
-    }
-    a:hover {
-        text-decoration: underline;
-    }
-    a:visited {
-        color: #2f7d95;
-    }
+a {
+    color: #47a9c7;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+a:visited {
+    color: #47a9c7;
 }
 
 b,
@@ -369,29 +272,14 @@ ul {
 }
 
 // WIKI COPYRIGHT FOOTER
-@media (prefers-color-scheme: light) {
-    .copyright_footer {
-        border-color: #d0d7de;
-        border-style: solid;
-        border-width: 1px;
-        border-radius: 6px;
-        box-shadow: 0 1px 0 rgba(27, 31, 36, 0.04) !important;
-        background-color: #f6f8fa !important;
-        padding: 8px 16px;
-        margin-bottom: 20px;
-        margin-top: 15px;
-    }
-}
-@media (prefers-color-scheme: dark) {
-    .copyright_footer {
-        border-color: #30363d;
-        border-style: solid;
-        border-width: 1px;
-        border-radius: 6px;
-        box-shadow: 0 1px 0 rgba(27, 31, 36, 0.04) !important; //TODO
-        background-color: #21262d !important; //TODO
-        padding: 8px 16px;
-        margin-bottom: 20px;
-        margin-top: 15px;
-    }
+.copyright_footer {
+    border-color: #30363d;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 6px;
+    box-shadow: 0 1px 0 rgba(27, 31, 36, 0.04) !important; //TODO
+    background-color: #21262d !important; //TODO
+    padding: 8px 16px;
+    margin-bottom: 20px;
+    margin-top: 15px;
 }
