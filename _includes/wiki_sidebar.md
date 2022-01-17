@@ -33,8 +33,8 @@
 <details>
 <summary>I/O</summary>
 <div markdown="1">
--   [Virtual File System](/wiki/vfs/virtual-file-system)
--   [Assets]
+-   [Virtual File System](/wiki/io/virtual-file-system)
+-   [Assets](/wiki/io/assets)
 </div>
 </details>
 
