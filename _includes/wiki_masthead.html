@@ -1,5 +1,4 @@
 {% capture logo_path %}{{ site.logo }}{% endcapture %}
-{% capture logo_path_dark %}{{ site.logo_dark }}{% endcapture %}
 
 <div class="masthead">
     <div class="masthead__inner-wrap">
@@ -17,7 +16,7 @@
                 </a>
                 {% endunless %}
                 <a class="site-title" href="{{ '/wiki/' | relative_url }}">
-                    {{ site.masthead_title | default: site.title }} - Wiki
+                    {{ site.masthead_title | default: site.title }}
                     {% if site.subtitle %}<span class="site-subtitle">{{ site.subtitle }}</span>{% endif %}
                 </a>
                 <ul class="visible-links">
