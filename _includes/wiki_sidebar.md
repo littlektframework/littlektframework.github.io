@@ -110,4 +110,3 @@
 -   [OpenGL stats and other GL related calls]
 </div>
 </details>
-<details>
