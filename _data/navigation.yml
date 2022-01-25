@@ -82,7 +82,7 @@ wiki:
     - title: "I/O"
       children:
           - title: "Virtual File System"
-            url: /wiki/io/virtual-file-syste
+            url: /wiki/io/virtual-file-system
           - title: "Assets"
             url: /wiki/io/assets
     - title: "User Interface (UI)"
