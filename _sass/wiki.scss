@@ -69,6 +69,10 @@ article.page {
     color: #47a9c7;
 }
 
+.sidebar.sticky {
+    max-height: 75vh;
+}
+
 .toc .header-link {
     display: none;
 }
