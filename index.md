@@ -6,7 +6,11 @@ layout: splash
 author_profile: false
 ---
 
-# About
+<style>
+    .splash {
+        margin-top: 10px;
+    }
+</style>
 
 LittleKt is a multiplatform 2D game framework written in Kotlin. The framework is still under development but is usable. Check out some of the [features](/features/) currently implemented. The site is currently under construction.
 
