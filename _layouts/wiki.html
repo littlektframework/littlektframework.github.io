@@ -19,17 +19,7 @@ layout: wiki_base
         <div class="page__inner-wrap">
             <section class="page__content e-content markdown-body" itemprop="text">
                 <aside class="sidebar__right">
-                    <div class="toc">
-                        <div class="wiki_toc__menu">
-                            <input id="wiki_ac-toc" name="accordion-toc" type="checkbox" />
-                            <label for="wiki_ac-toc">{{ site.data.ui-text[site.locale].menu_label | default: "Toggle
-                                Menu" }}</label>
-
-                            <div class="wiki_nav__items">
-                                {% include sidebar.html %}
-                            </div>
-                        </div>
-                    </div>
+                    {% include sidebar.html %}
                 </aside>
 
                 {{ content }}

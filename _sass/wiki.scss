@@ -58,14 +58,14 @@ article.page {
     color: #c9d1d9;
 }
 
-.wiki_toc__menu a {
+.sidebar a {
     color: #47a9c7;
     text-decoration: none;
 }
-.wiki_toc__menu a:hover {
+.sidebar a:hover {
     text-decoration: underline;
 }
-.wiki_toc__menu a:visited {
+.sidebar a:visited {
     color: #47a9c7;
 }
 
@@ -73,7 +73,7 @@ article.page {
     display: none;
 }
 
-.wiki_toc__menu {
+.sidebar {
     font-size: 13px;
     font-weight: bold;
 
@@ -168,37 +168,6 @@ article.page {
             -ms-transform: rotate(0);
             transform: rotate(0);
         }
-    }
-}
-
-.wiki_toc__menu .wiki_nav__items {
-    margin: 0;
-
-    @include breakpoint(max-width $large - 1px) {
-        position: relative;
-        max-height: 0;
-        opacity: 0%;
-        overflow: hidden;
-        z-index: 10;
-        -webkit-transition: 0.3s ease-in-out;
-        transition: 0.3s ease-in-out;
-        -webkit-transform: translate(0, 10%);
-        -ms-transform: translate(0, 10%);
-        transform: translate(0, 10%);
-    }
-}
-
-@include breakpoint(max-width $large - 1px) {
-    .wiki_toc__menu input:checked ~ .wiki_nav__items {
-        -webkit-transition: 0.5s ease-in-out;
-        transition: 0.5s ease-in-out;
-        max-height: 9999px; /* exaggerate max-height to accommodate tall lists*/
-        overflow: visible;
-        opacity: 1;
-        margin-top: 1em;
-        -webkit-transform: translate(0, 0);
-        -ms-transform: translate(0, 0);
-        transform: translate(0, 0);
     }
 }
 
