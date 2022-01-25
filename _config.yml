@@ -86,3 +86,5 @@ defaults:
           type: pages
       values:
           layout: wiki
+          sidebar:
+              nav: "wiki"
