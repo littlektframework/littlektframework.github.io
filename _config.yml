@@ -15,7 +15,7 @@
 # in the templates via {{ site.myvariable }}.
 title: LittleKt
 description: A multiplatform 2D game framework written in Kotlin.
-logo: "/assets/images/brand/logo.svg"
+logo: "/assets/images/brand/logo-outline.svg"
 github_username: littlektframework
 minimal_mistakes_skin: dark
 masthead_title: " "
