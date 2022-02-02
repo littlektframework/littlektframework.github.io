@@ -103,6 +103,10 @@ wiki:
       children:
           - title: "Coroutines and Threads"
             url: /wiki/framework/coroutines-and-threads
+    - title: "Tools"
+      children:
+          - title: "Texture Packer"
+            url: /wiki/tools/texture-packer
     - title: "Debugging"
       children:
           - title: "OpenGL Profiling (TODO)"
