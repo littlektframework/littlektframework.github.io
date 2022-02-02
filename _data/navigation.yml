@@ -61,12 +61,14 @@ wiki:
             url: /wiki/audio/audio-streaming
     - title: "Math"
       children:
-          - title: "Vectors (TODO)"
+          - title: "Vectors"
             url: /wiki/math/vectors
-          - title: "Matrices (TODO)"
+          - title: "Matrices"
             url: /wiki/math/matrices
-          - title: "Util Math Extensions"
-            url: /wiki/math/util-extensions
+          - title: "Math Extensions"
+            url: /wiki/math/math-extensions
+          - title: "Geometry"
+            url: /wiki/math/geometry
     - title: "Inputs"
       children:
           - title: "Mouse and Keyboard"
