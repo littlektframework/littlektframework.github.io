@@ -50,6 +50,20 @@ plugins {
 }
 ```
 
+Add the maven repository to the `plguinManagement` block.
+
+**settings.gradle.kts**
+```kotlin
+pluginManagement {
+    repositories {
+        gradlePluginPortal() // needed for other kotlin plugins that may be in use
+        mavenCentral() // if we are targeting release
+        maven(url = "https://s01.oss.sonatype.org/content/repositories/snapshots/") // if we are targgetting snapshots
+    }
+}
+...
+```
+
 That is the bare minimum. It will use the default configurations when packing. If we want to set our own we can adjust them under the `littleKt` block in the same file:
 
 **build.gradle.kts**
