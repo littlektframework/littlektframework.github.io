@@ -31,7 +31,7 @@ wiki:
             url: /wiki/2d/spritebatch
           - title: "Textures and TextureSlices"
             url: /wiki/2d/textures-and-textureslices
-          - title: "Texture Atlas (TODO)"
+          - title: "Texture Atlas"
             url: /wiki/2d/texture-atlas
           - title: Bitmap Fonts
             url: /wiki/2d/fonts/bitmap-fonts
