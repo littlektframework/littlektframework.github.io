@@ -37,6 +37,8 @@ batch.use {
 If we have an atlas that is split into multiple atlas files and images - we can load them the exact same way as we would an atlas with a single JSON and image file:
 
 ```kotlin
+// assuming with have files: tiles.atlas-0.json, tiles.atlas-1.json, etc..
+// we can load either one as long the other files are referenced in the file
 val atlas: TextureAtlas = resourcesVfs["tiles.atlas-0.json"].readAtlas()
 ```
 
