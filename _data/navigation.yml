@@ -41,7 +41,7 @@ wiki:
             url: /wiki/2d/fonts/glyph-layouts
           - title: "Cameras and Viewports (TODO)"
             url: /wiki/2d/cameras-and-viewports
-          - title: "Animations (TODO)"
+          - title: "Animations"
             url: /wiki/2d/animations
           - title: "Particles (TODO)"
             url: /wiki/2d/particles
