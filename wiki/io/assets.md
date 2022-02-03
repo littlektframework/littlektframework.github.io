@@ -25,7 +25,7 @@ val slices by provider.prepare<TextureSlice> { texture.slice(16, 16) }
 
 The `prepare` method is essentially the same as the Kotlin's `lazy` delegate but will prepare each asset once all other assets have finished loading.
 
-We can check if the `AssetProvider` has finished loading by using the `isFullyLoaded` property. Accessing this property will call the `AssetProvider.update()` method automatically in order to determine if all assets have been loaded. We don't have to call `update()` manually.
+We can check if the `AssetProvider` has finished loading by using the `isFullyLoaded` property. We need to make sure we call `update()` in the render loop in order ensure the assets are finished loading and fully prepared.
 
 ```kotlin
 class MyGame(context: Context) : ContextListener(context) {
@@ -39,7 +39,10 @@ class MyGame(context: Context) : ContextListener(context) {
         // do any of the rendering and update logic here
 
         onRender {
-            if(!provider.isFullyLoaded) return
+            if(!provider.isFullyLoaded) {
+                provider.update()
+                return
+            }
             // We are loading now! Do whatever logic we need to do here.
         }
     }
