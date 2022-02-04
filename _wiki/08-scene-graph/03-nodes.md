@@ -9,7 +9,7 @@ There are three main implemenations of nodes in the scene graph that LittleKt of
 
 The `Node` contains the base implementation that is used by all nodes in a scene graph. This contains lifecycle methods, render methods, adding/removing children, and any hiearchy changes.
 
-A `Node` can contain one or more [Singal](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/util/signals.kt) types which can be used to subscribe to certain events that the node can emit.
+A `Node` can contain one or more [Signal](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/util/signals.kt) types which can be used to subscribe to certain events that the node can emit.
 
 For example, the `Node` class contains the following signals:
 
