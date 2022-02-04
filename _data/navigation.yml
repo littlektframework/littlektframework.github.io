@@ -87,10 +87,18 @@ wiki:
             url: /wiki/io/virtual-file-system
           - title: "Assets"
             url: /wiki/io/assets
+    - title: "Scene Graph"
+      children:
+          - title: "The Scene Graph"
+            url: /wiki/scene-graph/the-scene-graph
+          - title: "Creating a Scene"
+            url: /wiki/scene-graph/creating-a-scene
+          - title: "Nodes"
+            url: /wiki/scene-graph/nodes
     - title: "User Interface (UI)"
       children:
-          - title: ""
-            url:
+          - title: "The User Interface"
+            url: /wiki/ui/the-user-interface
     - title: "Viewports"
       children:
           - title: ""
