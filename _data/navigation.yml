@@ -1,104 +1,104 @@
-main:
+header:
     - title: "Features"
       url: /features/
-    - title: "Wiki"
-      url: /wiki/
+    - title: "Docs"
+      url: /docs/
 
 dev:
     - title: "Back to Main"
       url: /
-    - title: "Wiki"
-      url: "/wiki/"
+    - title: "Docs"
+      url: "/docs/"
 
-wiki:
+docs:
     - title: "Getting Started"
       children:
           - title: "First application"
-            url: /wiki/starting/first-application
+            url: /docs/starting/first-application
           - title: "First game"
-            url: /wiki/starting/first-game
+            url: /docs/starting/first-game
     - title: "Overview"
       children:
           - title: "Context and ContextListener"
-            url: /wiki/overview/context-and-contextlistener
+            url: /docs/overview/context-and-contextlistener
           - title: "The Game Class"
-            url: /wiki/overview/the-game-class
+            url: /docs/overview/the-game-class
           - title: "Logging"
-            url: /wiki/overview/logging
+            url: /docs/overview/logging
     - title: "2D Graphics"
       children:
           - title: "SpriteBatch"
-            url: /wiki/2d/spritebatch
+            url: /docs/2d/spritebatch
           - title: "Textures and TextureSlices"
-            url: /wiki/2d/textures-and-texture-slices
+            url: /docs/2d/textures-and-texture-slices
           - title: "Texture Atlas"
-            url: /wiki/2d/texture-atlas
+            url: /docs/2d/texture-atlas
           - title: Bitmap Fonts
-            url: /wiki/2d/fonts/bitmap-fonts
+            url: /docs/2d/fonts/bitmap-fonts
           - title: "TTF Files and Rendering (TODO)"
-            url: /wiki/2d/fonts/ttf
+            url: /docs/2d/fonts/ttf
           - title: "Glyph Layout"
-            url: /wiki/2d/fonts/glyph-layouts
+            url: /docs/2d/fonts/glyph-layouts
           - title: "Cameras and Viewports (TODO)"
-            url: /wiki/2d/cameras-and-viewports
+            url: /docs/2d/cameras-and-viewports
           - title: "Animations"
-            url: /wiki/2d/animations
+            url: /docs/2d/animations
           - title: "Particles (TODO)"
-            url: /wiki/2d/particles
+            url: /docs/2d/particles
           - title: "2D Meshes (TODO)"
-            url: /wiki/2d/meshes
+            url: /docs/2d/meshes
           - title: "Frame Buffer Objects (TODO)"
-            url: /wiki/2d/frame-buffer-objects
+            url: /docs/2d/frame-buffer-objects
           - title: "LDtk"
-            url: /wiki/2d/tilemaps/ldtk
+            url: /docs/2d/tilemaps/ldtk
           - title: "Tiled (TODO)"
-            url: /wiki/2d/tilemaps/tiled
+            url: /docs/2d/tilemaps/tiled
     - title: "Audio"
       children:
           - title: "Audio Clips"
-            url: /wiki/audio/audio-clips
+            url: /docs/audio/audio-clips
           - title: "Audio Streaming"
-            url: /wiki/audio/audio-streaming
+            url: /docs/audio/audio-streaming
     - title: "Math"
       children:
           - title: "Vectors"
-            url: /wiki/math/vectors
+            url: /docs/math/vectors
           - title: "Matrices"
-            url: /wiki/math/matrices
+            url: /docs/math/matrices
           - title: "Math Extensions"
-            url: /wiki/math/math-extensions
+            url: /docs/math/math-extensions
           - title: "Geometry"
-            url: /wiki/math/geometry
+            url: /docs/math/geometry
     - title: "Inputs"
       children:
           - title: "Mouse and Keyboard"
-            url: /wiki/input/mouse-and-keyboard
+            url: /docs/input/mouse-and-keyboard
           - title: "Gamepads"
-            url: /wiki/input/gamepads
+            url: /docs/input/gamepads
           - title: "Polling"
-            url: /wiki/input/types/polling
+            url: /docs/input/types/polling
           - title: "Event-based"
-            url: /wiki/input/types/event-based
+            url: /docs/input/types/event-based
           - title: "Cursor"
-            url: /wiki/input/cursor
+            url: /docs/input/cursor
     - title: "I/O"
       children:
           - title: "Virtual File System"
-            url: /wiki/io/virtual-file-system
+            url: /docs/io/virtual-file-system
           - title: "Assets"
-            url: /wiki/io/assets
+            url: /docs/io/assets
     - title: "Scene Graph"
       children:
           - title: "The Scene Graph"
-            url: /wiki/scene-graph/the-scene-graph
+            url: /docs/scene-graph/the-scene-graph
           - title: "Creating a Scene"
-            url: /wiki/scene-graph/creating-a-scene
+            url: /docs/scene-graph/creating-a-scene
           - title: "Nodes"
-            url: /wiki/scene-graph/nodes
+            url: /docs/scene-graph/nodes
     - title: "User Interface (UI)"
       children:
           - title: "The User Interface"
-            url: /wiki/ui/the-user-interface
+            url: /docs/ui/the-user-interface
     - title: "Viewports"
       children:
           - title: ""
@@ -106,18 +106,18 @@ wiki:
     - title: "Shading"
       children:
           - title: "Shaders (TODO)"
-            url: /wiki/shading/shaders
+            url: /docs/shading/shaders
           - title: "GLSL Generator (TODO)"
-            url: /wiki/shading/glsl-generator
+            url: /docs/shading/glsl-generator
     - title: "Multi-threading / Coroutines"
       children:
           - title: "Coroutines and Threads"
-            url: /wiki/threading/coroutines-and-threads
+            url: /docs/threading/coroutines-and-threads
     - title: "Tools"
       children:
           - title: "Texture Packer"
-            url: /wiki/tools/texture-packer
+            url: /docs/tools/texture-packer
     - title: "Debugging"
       children:
           - title: "OpenGL Profiling (TODO)"
-            url: /wiki/debugging/opengl-profiling
+            url: /docs/debugging/opengl-profiling

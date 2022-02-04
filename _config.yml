@@ -15,25 +15,170 @@
 # in the templates via {{ site.myvariable }}.
 title: LittleKt
 description: A multiplatform 2D game framework written in Kotlin.
-logo: "/assets/images/brand/logo-outline.svg"
-github_username: littlektframework
-minimal_mistakes_skin: dark
-masthead_title: " "
-search: false
+
+text_skin: default # "default" (default), "dark", "forest", "ocean", "chocolate", "orange"
+highlight_theme: default # "default" (default), "tomorrow", "tomorrow-night", "tomorrow-night-eighties", "tomorrow-night-blue", "tomorrow-night-bright"
 
 # Build settings
 markdown: kramdown
-remote_theme: "mmistakes/minimal-mistakes@4.24.0"
+
+## => Author and Social
+##############################
+author:
+    type: organization # "person" (default), "organization"
+    name: LittleKt
+    url:
+    avatar:
+    bio: >
+        LittleKt is a multiplatform 2D game framework written in Kotlin using OpenGL.
+    email:
+    facebook:
+    twitter:
+    weibo:
+    googleplus:
+    telegram:
+    medium:
+    zhihu:
+    douban:
+    linkedin:
+    github: littlektframework/littlekt
+    npm:
+
+## => GitHub Repository (if the site is hosted by GitHub)
+##############################
+repository: littlektframework/littlektframework.github.io
+repository_tree: master
+
+## => Paths
+##############################
+paths:
+    root: # title link url, "/" (default)
+    home: # home layout url, "/" (default)
+    archive: # "/archive.html" (default)
+    rss: # "/feed.xml" (default)
+
+## => Post
+##############################
+## excerpt
+excerpt_separator: <!--more-->
+
+## => Markdown Enhancements
+##############################
+## Mathjax
+mathjax: # false (default), true
+mathjax_autoNumber: # false (default), true
+
+## Mermaid
+mermaid: # false (default), true
+
+## Chart
+chart: # false (default), true
+
+## => Paginate
+##############################
+paginate: 8
+paginate_path: /page:num # don't change this unless for special need
+
+## => Sources
+##############################
+sources: # bootcdn (default), unpkg
+
+## => Sharing
+##############################
+sharing:
+    provider: false # false (default), "addtoany", "addthis", "custom"
+
+    ## AddThis
+    addthis:
+        id: # AddThis pubid, e.g. ra-5xxxxxxxxxxx
+
+## => Comments
+##############################
+comments:
+    provider: false # false (default), "disqus", "gitalk", "valine", "custom"
+
+    ## Disqus
+    disqus:
+        shortname: # the Disqus shortname for the site
+
+    ## Gitalk
+    # please refer to https://github.com/gitalk/gitalk for more info.
+    gitalk:
+        clientID: # GitHub Application Client ID
+        clientSecret: # GitHub Application Client Secret
+        repository: # GitHub repo
+        owner: # GitHub repo owner
+        admin: # GitHub repo owner and collaborators, only these guys can initialize GitHub issues, IT IS A LIST.
+
+    ## Valine
+    # please refer to https://valine.js.org/en/ for more info.
+    valine:
+        app_id: # LeanCloud App id
+        app_key: # LeanCloud App key
+        placeholder: # Prompt information
+        visitor: # false (default)
+        meta: # "[nick, mail, link]" (default) nickname, E-mail, Personal-site
+
+## => Pageview
+##############################
+pageview:
+    provider: false # false (default), "leancloud", "custom"
+
+    ## Leancloud
+    leancloud:
+        app_id: # LeanCloud App id
+        app_key: # LeanCloud App key
+        app_class: # LeanCloud App class
+
+## => Search
+##############################
+search:
+    provider: false # "default" (default), false, "google", "custom"
+
+    ## Google Custom Search Engine
+    google:
+        custom_search_engine_id: # Google Custom Search Engine ID
+
+## => Analytics
+##############################
+analytics:
+    provider: false # false (default), "google", "custom"
+
+    ## Google Analytics
+    google:
+        tracking_id: # Google Analytics id for the site
+        anonymize_ip: false # Anonymize IP tracking for Analytics
+
 # Outputting
 permalink: /:categories/:title/
 
 collections:
-    wiki:
+    docs:
         output: true
         permalink: /:collection/:path/
 
 include:
     - _pages
+
+exclude:
+    - CHANGELOG.md
+    - HOW_TO_RELEASE.md
+    - Gemfile
+    - Gemfile.lock
+    - LICENSE
+    - README-*.md
+    - README.md
+    - gulpfile.js
+    - jekyll-text-theme.gemspec
+    - package-lock.json
+    - package.json
+    # - /docs
+    - /node_modules
+    # - /screenshots
+    # - /test
+    - /vendor
+    - /_posts
+    - /index.html
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
@@ -69,25 +214,24 @@ defaults:
           path: ""
           type: posts
       values:
-          layout: single
-          author_profile: false
-          read_time: false
-          comments: false
-          share: true
-          related: true
-          show_author: false
+          layout: article
+          comment: false
+          sharing: true
     # _pages
     - scope:
           path: "_pages"
           type: pages
       values:
-          layout: single
-          author_profile: false
+          layout: page
+          comment: false
     # _wiki
     - scope:
-          path: ""
-          type: wiki
+          path: "_docs"
       values:
-          layout: wiki
+          layout: article
+          nav_key: docs
+          aside:
+              toc: true
+          show_edit_on_github: true
           sidebar:
-              nav: "wiki"
+              nav: "docs"
