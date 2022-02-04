@@ -16,6 +16,18 @@ layout: wiki_base
         </div>
     </header>
     <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+
+        {% if page.title %}
+        <meta itemprop="headline" content="{{ page.title | markdownify | strip_html | strip_newlines | escape_once }}">
+        {% endif %}
+        {% if page.excerpt %}
+        <meta itemprop="description"
+            content="{{ page.excerpt | markdownify | strip_html | strip_newlines | escape_once }}">
+        {% endif %}
+        {% if page.last_modified_at %}
+        <meta itemprop="dateModified" content="{{ page.last_modified_at | date_to_xmlschema }}">
+        {% endif %}
+
         <div class="page__inner-wrap">
             <section class="page__content e-content markdown-body" itemprop="text">
                 <aside class="sidebar__right">
@@ -23,6 +35,9 @@ layout: wiki_base
                 </aside>
 
                 {{ content }}
+
+
+                {% include post_pagination.html %}
 
                 <div class="copyright_footer">
                     <p style="font-size: 13px;margin-bottom: 0px !important;">

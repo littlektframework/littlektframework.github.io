@@ -14,6 +14,10 @@ article.page {
     }
 }
 
+.masthead {
+    font-size: 22px;
+}
+
 // WIKI PAGE TITLE; META INFORMATION
 .page__title {
     font-size: 32px;
@@ -35,6 +39,10 @@ article.page {
 
 .header-meta .ico-ext {
     display: none;
+}
+
+.pagination {
+    float: none;
 }
 
 // PAGE FOOTER; legal links, etc.

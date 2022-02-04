@@ -20,17 +20,17 @@ wiki:
     - title: "Overview"
       children:
           - title: "Context and ContextListener"
-            url: /wiki/framework/context-and-contextlistener
+            url: /wiki/overview/context-and-contextlistener
           - title: "The Game Class"
-            url: /wiki/framework/the-game-class
+            url: /wiki/overview/the-game-class
           - title: "Logging"
-            url: /wiki/framework/logging
+            url: /wiki/overview/logging
     - title: "2D Graphics"
       children:
           - title: "SpriteBatch"
             url: /wiki/2d/spritebatch
           - title: "Textures and TextureSlices"
-            url: /wiki/2d/textures-and-textureslices
+            url: /wiki/2d/textures-and-texture-slices
           - title: "Texture Atlas"
             url: /wiki/2d/texture-atlas
           - title: Bitmap Fonts
@@ -104,7 +104,7 @@ wiki:
     - title: "Multi-threading / Coroutines"
       children:
           - title: "Coroutines and Threads"
-            url: /wiki/framework/coroutines-and-threads
+            url: /wiki/threading/coroutines-and-threads
     - title: "Tools"
       children:
           - title: "Texture Packer"
