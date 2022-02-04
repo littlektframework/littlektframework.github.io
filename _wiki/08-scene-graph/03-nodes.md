@@ -78,10 +78,10 @@ The `Node2D` class contains an implementation on transforming a node in 2D space
 ```kotlin
 val scene = sceneGraph(context) {
     node2d {
-        x = 10 // local position
+        x = 10f // local position
 
         node2d {
-            x = 10 // local position
+            x = 10f // local position
 
             onReady += {
                 println(globalX) // outputs 20
@@ -89,7 +89,7 @@ val scene = sceneGraph(context) {
         }
 
         node2d {
-            globalX = 5
+            globalX = 5f
         }
     }
 }
@@ -101,12 +101,12 @@ If a `Node2D` is a child to a base `Node`, it will not receive any 2D transforma
 val scene = sceneGraph(context) {
     node {
         node2d {
-            x = 10
+            x = 10f
             rotation = 90.degrees
 
             node {
                 node2d {
-                    x = 10
+                    x = 10f
 
                     onReady += {
                         println(globalX) // outputs 10
