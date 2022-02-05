@@ -11,6 +11,10 @@ dev:
       url: "/docs/"
 
 docs:
+    - title: "Docs"
+      children:
+          - title: "Overview"
+            url: /docs/
     - title: "Getting Started"
       children:
           - title: "First application"

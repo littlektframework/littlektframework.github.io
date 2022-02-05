@@ -1,9 +1,10 @@
 ---
-title: Home
+title: Documentation Overview
 layout: article
 permalink: /docs/
-collection: docs
 pagination: false
+aside:
+    toc: true
 sidebar:
     nav: "docs"
 ---
