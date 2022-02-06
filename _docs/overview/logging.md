@@ -17,7 +17,7 @@ Creating a `Logger` is very simple and straight forward. Generally, we can creat
 class MyClass {
 
     companion object {
-        private val logger = Logger<MyClass> // we use the classes 'simpleName' as the name by default
+        private val logger = Logger<MyClass>() // we use the classes 'simpleName' as the name by default
     }
 
     fun doSomething() {
@@ -45,7 +45,7 @@ By default the logging level is set to `Logger.Level.INFO`.
 We can set the level of a specific `Logger` by doing the following:
 
 ```kotlin
-val logger = Logger<MyClass>
+val logger = Logger<MyClass>()
 logger.level = Logger.Level.DEBUG
 ```
 
