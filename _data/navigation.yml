@@ -103,6 +103,8 @@ docs:
       children:
           - title: "The User Interface"
             url: /docs/ui/the-user-interface
+          - title: "Size and Anchors"
+            url: /docs/ui/size-and-anchors
     - title: "Viewports"
       children:
           - title: ""
