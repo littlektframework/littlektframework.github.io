@@ -105,6 +105,8 @@ docs:
             url: /docs/ui/the-user-interface
           - title: "Size and Anchors"
             url: /docs/ui/size-and-anchors
+          - title: "Containers"
+            url: /docs/ui/containers
     - title: "Shading"
       children:
           - title: "Shaders (TODO)"
