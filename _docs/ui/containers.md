@@ -55,21 +55,99 @@ There are several out of the box container types:
 
 Arranges child controls horizontally while expanding vertically (via [HBoxContainer](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/node/node2d/ui/HBoxContainer.kt)).
 
+![hBox container example](/assets/images/ui/hbox-example.png)
+
+```kotlin
+hBoxContainer {
+    button {
+        text = "Button"
+        horizontalSizeFlags = SizeFlag.FILL or SizeFlag.EXPAND
+    }
+    button {
+        text = "Button 2"
+        horizontalSizeFlags = SizeFlag.FILL or SizeFlag.EXPAND
+    }
+    button {
+        text = "Button 3"
+        horizontalSizeFlags = SizeFlag.FILL or SizeFlag.EXPAND
+    }
+}
+```
+
 #### VBox
 
 Arranges child controls vertically while expanding horizontally (via [VBoxContainer](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/node/node2d/ui/VBoxContainer.kt))
+
+![vBox container example](/assets/images/ui/vbox-example.png)
+
+```kotlin
+vBoxContainer {
+    button {
+        text = "Button"
+        verticalSizeFlags = SizeFlag.FILL or SizeFlag.EXPAND
+    }
+    button {
+        text = "Button 2"
+        verticalSizeFlags = SizeFlag.FILL or SizeFlag.EXPAND
+    }
+    button {
+        text = "Button 3"
+        verticalSizeFlags = SizeFlag.FILL or SizeFlag.EXPAND
+    }
+}
+```
 
 ### Center Container
 
 Arranges child controls directly in the center (via [CenterContainer](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/node/node2d/ui/CenterContainer.kt)).
 
+![center container example](/assets/images/ui/center-container-example.png)
+
+```kotlin
+centerContainer {
+    anchorRight = 1f
+    anchorBottom = 1f
+
+    button {
+        text = "Button"
+    }
+}
+```
+
 ### Padded Container
 
 Arranges child controls that are expanded toward the bounds (via [PaddedContainer](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/node/node2d/ui/PaddedContainer.kt)) with an additional padding that will be added to the margins which can be configured by the theme.
 
+![padded container example](/assets/images/ui/padded-container-example.png)
+
+```kotlin
+paddedContainer {
+    padding(10)
+
+    button {
+        text = "Button"
+    }
+}
+```
+
 ### Panel Container
 
 A container that renders a _Drawable_ and expands its children to cover the whole area (via [PanelContainer](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/node/node2d/ui/PanelContainer.kt)).
+
+![panel container example](/assets/images/ui/panel-container-example.png)
+
+```kotlin
+panelContainer {
+    width = 400f
+    height = 200f
+
+    label {
+        text = "my label"
+        verticalAlign = VAlign.CENTER
+        horizontalAlign = HAlign.CENTER
+    }
+}
+```
 
 ## Custom Container
 
