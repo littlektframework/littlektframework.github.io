@@ -3,8 +3,6 @@ title: Containers
 permalink: /docs/ui/containers
 ---
 
-# Using Containers
-
 Using [anchors](/docs/ui/size-and-anchors) can be efficient enough to handle multiple resolutions. But as the UI gets more complex, they become difficult to use.
 
 A way we can handle more complex and advanced layouts is by making use of [Containers](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/node/node2d/ui/Container.kt).

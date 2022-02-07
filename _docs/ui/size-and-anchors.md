@@ -3,8 +3,6 @@ title: Size and Anchors
 permalink: /docs/ui/size-and-anchors
 ---
 
-# Overview
-
 As we all know when creating a game we are most likely going to need to support devices using a different resolution and aspect ratio. We can handle this in several ways but for this instance we are going to imagine that the resolution is static and we are going to move each control into position.
 
 ## Margins
