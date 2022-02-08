@@ -5,6 +5,6 @@
 layout: home
 ---
 
-LittleKt is a multiplatform 2D game framework written in Kotlin. The framework is still under development but is usable. Check out some of the [features](/features/) currently implemented. The site is currently under construction.
+LittleKt (Little Kotlin) is a multiplatform 2D game framework written in Kotlin. The framework is still under development but is usable. Check out some of the [features](/features/) currently implemented.
 
 If you are interested in using LittleKt then check out the [docs](/docs/) to get started. Or check out the [source code](https://github.com/littlektframework/littlekt).
