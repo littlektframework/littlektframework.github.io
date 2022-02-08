@@ -31,5 +31,5 @@ Most `Node` operations are done in tree order, meaning parents and siblinings wi
 1. A `SceneGraph` is created.
 2. The root of the scene is created and initialized.
 3. Every node of the newly added scene will recevie that `onAddedToScene()` callback in top-to-bottom order.
-4. An second callback `ready()` is invoked when a node all of its children are inside the scene.
-5. An extra callback `onPostEnterScene()` is also invoked once all of its children inside the scene and active, from bottom-to-top order.
+4. A second callback `onPostEnterScene()` is also invoked once all of its children inside the scene and active, from bottom-to-top order.
+5. An extra callback `ready()` is invoked when a node all of its children are inside the scene.

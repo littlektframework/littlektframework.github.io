@@ -12,10 +12,14 @@ In the `SceneGraph` and each `Node` exists a DSL method that creates the node an
 ```kotlin
 val scene = sceneGraph(context) {
     // we are in the SceneGraph context - we can add nodes here!
+}.also {
+    it.initialize() // we must call initialize before calling 'update()'
 }
 ```
 
 The `SceneGraph`, by default, will use a `ScreenViewport`. If we want to use a different viewport, we can pass that in through both the constructor or the DSL. We can also pass in our own instance of a `SpriteBatch` that will be used internally by the scene graph for doing any sort of rendering. This can be useful if we want to lower draw calls. Due note that if we do pass in our own instance, we still need to manage and dispose it ourselves. If none is passed in, then a new instance will be created and managed by the `SceneGraph` itself.
+
+Before we can use the `SceneGraph`, we must first ensure we call the `initialize()` method. This will initialize the `root` Node and trigger the `root.onPostEnterScene()` lifecycle method. The reason we must explicilty intialize the graph is due to needing to pass in the instance of `SceneGraph` to the `root` in order to start the Node initializing and lifecycle callbacks on a non-final method. Because we can extend a `SceneGraph`, the Kotlin compiler warns us to not access non-final properties or methods in a partially constructed object.
 
 The `SceneGraph` is also an [InputProcessor](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/input/InputProcessor.kt). This is used mainly for determining input on the user interface nodes. When the scene graph is first created, it will add itself to the contexts list of input processors. When the scene graph is disposed, it will remove itself from that list.
 
