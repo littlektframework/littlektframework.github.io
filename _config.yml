@@ -17,7 +17,7 @@ title: LittleKt
 description: A multiplatform 2D game framework written in Kotlin.
 
 text_skin: default # "default" (default), "dark", "forest", "ocean", "chocolate", "orange"
-highlight_theme: default # "default" (default), "tomorrow", "tomorrow-night", "tomorrow-night-eighties", "tomorrow-night-blue", "tomorrow-night-bright"
+highlight_theme: tomorrow-night-bright # "default" (default), "tomorrow", "tomorrow-night", "tomorrow-night-eighties", "tomorrow-night-blue", "tomorrow-night-bright"
 
 # Build settings
 markdown: kramdown
