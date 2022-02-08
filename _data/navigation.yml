@@ -107,10 +107,12 @@ docs:
             url: /docs/ui/size-and-anchors
           - title: "Containers"
             url: /docs/ui/containers
-          - title: "Controls"
+          - title: "Controls (TODO)"
             url: /docs/ui/controls
           - title: "Themes"
             url: /docs/ui/themes
+          - title: "Drawables (TODO)"
+            url: /docs/ui/drawables
     - title: "Shading"
       children:
           - title: "Shaders (TODO)"
