@@ -41,6 +41,17 @@ val gl: GL = context.gl
 gl.activeTexture(GL.TEXTURE0)
 ```
 
+### Projection Matrix
+
+We can also set the projection matrix of the _SpriteBatch_ that will be used in the shader to render the items. This is mainly used with a [camera](/docs/2d/cameras-and-viewports) but can be any matrix:
+
+```kotlin
+batch.use(camera.viewProjection) {
+    // we are using the cameras view projection matrix to render
+}
+
+```
+
 ### Drawing textures and texture slices
 
 `SpriteBatch` contains many methods for drawing but the common draw methods are for drawing textures and slices of textures:

@@ -37,25 +37,27 @@ docs:
             url: /docs/2d/textures-and-texture-slices
           - title: "Texture Atlas"
             url: /docs/2d/texture-atlas
+          - title: "NinePatch"
+            url: /docs/2d/ninepatch
           - title: Bitmap Fonts
             url: /docs/2d/fonts/bitmap-fonts
-          - title: "TTF Files and Rendering (TODO)"
+          - title: "TTF Files and Rendering"
             url: /docs/2d/fonts/ttf
           - title: "Glyph Layout"
             url: /docs/2d/fonts/glyph-layouts
-          - title: "Cameras and Viewports (TODO)"
+          - title: "Cameras and Viewports"
             url: /docs/2d/cameras-and-viewports
           - title: "Animations"
             url: /docs/2d/animations
-          - title: "Particles (TODO)"
+          - title: "Particles"
             url: /docs/2d/particles
-          - title: "2D Meshes (TODO)"
+          - title: "2D Meshes"
             url: /docs/2d/meshes
-          - title: "Frame Buffer Objects (TODO)"
+          - title: "Frame Buffer Objects"
             url: /docs/2d/frame-buffer-objects
           - title: "LDtk"
             url: /docs/2d/tilemaps/ldtk
-          - title: "Tiled (TODO)"
+          - title: "Tiled"
             url: /docs/2d/tilemaps/tiled
     - title: "Audio"
       children:
@@ -107,17 +109,17 @@ docs:
             url: /docs/ui/size-and-anchors
           - title: "Containers"
             url: /docs/ui/containers
-          - title: "Controls (TODO)"
+          - title: "Controls"
             url: /docs/ui/controls
           - title: "Themes"
             url: /docs/ui/themes
-          - title: "Drawables (TODO)"
+          - title: "Drawables"
             url: /docs/ui/drawables
     - title: "Shading"
       children:
-          - title: "Shaders (TODO)"
+          - title: "Shaders"
             url: /docs/shading/shaders
-          - title: "GLSL Generator (TODO)"
+          - title: "GLSL Generator"
             url: /docs/shading/glsl-generator
     - title: "Multi-threading / Coroutines"
       children:
