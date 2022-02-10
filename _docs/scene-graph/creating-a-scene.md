@@ -75,6 +75,8 @@ Once a `SceneGraph` is created, we need to call the `update()` and `render()` me
 
 ```kotlin
 onRender { dt ->
+    gl.clear(ClearBufferMask.COLOR_BUFFER_BIT)
+
     scene.update(dt)
     scene.render() // this will call GL.viewport()
 

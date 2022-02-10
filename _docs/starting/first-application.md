@@ -36,6 +36,7 @@ class MyGame(context: Context) : ContextListener(context) {
         val texture = resourceVfs["texture.png"].readTexture() // reads a texture on the main thread from the resources
         onRender { dt -> // this adds a render updater that is called on every frame
             // render logic can go here
+            gl.clear(ClearBufferMask.COLOR_BUFFER_BIT)
         }
     }
 }

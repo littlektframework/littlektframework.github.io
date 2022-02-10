@@ -54,6 +54,7 @@ val anim = AnimaationPlayer<TextureSlice>()
 anim.playLooped(heroRun)
 
 onRender { dt ->
+    gl.clear(ClearBufferMask.COLOR_BUFFER_BIT)
     anim.update(dt) // handles requesting the next frames in the current animation
 }
 ```
@@ -70,6 +71,7 @@ anim.playOnce(heroIdle) // stops after one play through
 anim.play(heroIdle, times = 5) // stops after 5 play throughs
 
 onRender { dt ->
+    gl.clear(ClearBufferMask.COLOR_BUFFER_BIT)
     anim.update(dt)
 }
 ```

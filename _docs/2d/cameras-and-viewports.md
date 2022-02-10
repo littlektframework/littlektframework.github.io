@@ -34,6 +34,8 @@ val camera = OrthographicCamera(graphics.width, graphics.height).apply {
 }
 
 onRender {
+    gl.clear(ClearBufferMask.COLOR_BUFFER_BIT)
+
     camera.update()
     batch.use(camera.viewProjection) {
         // we are using the cameras view projection matrix to render
