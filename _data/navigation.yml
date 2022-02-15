@@ -87,6 +87,8 @@ docs:
             url: /docs/input/types/event-based
           - title: "Cursor"
             url: /docs/input/cursor
+          - title: "Create Input Bindings"
+            url: /docs/input/create-input-bindings
     - title: "I/O"
       children:
           - title: "Virtual File System"
