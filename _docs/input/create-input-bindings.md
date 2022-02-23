@@ -7,13 +7,13 @@ Using direct checks against `Input` for certain keys that have been pressed or i
 
 But what if we wanted to define our own input types that can have keys, gamepad buttons, and such bound to that one type so that when a player uses that action we can react without having to do all of the verbose checks.
 
-## InputMultiplexer
+## InputMapController
 
-The [InputMultiplexer](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/input/InputMultiplexer.kt) is a class that handles key, game buttons, and game axis inputs and converts them into a single custom input signal type. The multiplexer is also an [InputProcessor](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/input/InputProcessor.kt).
+The [InputMapController](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/input/InputMapController.kt) is a class that handles key, game buttons, and game axis inputs and converts them into a single custom input signal type. The controller is also an [InputProcessor](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/input/InputProcessor.kt).
 
-Using the multiplexer is easy and a one time setup. All we have to do is define our own `InputType` that we want to use as the signal and then add use it to add bindings to the multiplexer.
+Using the controller is easy and a one time setup. All we have to do is define our own `InputType` that we want to use as the signal and then add use it to add bindings to the controller.
 
-### Create a Multiplexer
+### Create an InputMapController
 
 For this example, we are going to create bindings that allows the user to run around using either the **WASD**, the arrow keys, or a gamepad along with adding a simple _jump_ binding.
 
@@ -32,17 +32,17 @@ enum class GameInput {
 }
 ```
 
-Next is to create the `InputMultiplexer` and then adding the bindings. We must also be sure to add the instance of the multiplexer to the list of input processors using `Context.input`.
+Next is to create the `InputMapController` and then adding the bindings. We must also be sure to add the instance of the controller to the list of input processors using `Context.input`.
 
 ```kotlin
-val controller = InputMultiplexer<GameInput>(input).also {
+val controller = InputMapController<GameInput>(input).also {
     input.addInputProcessor(it)
 }
 ```
 
 ### Create a Binding
 
-Now that we have our multiplexer setup we can finally create a binding. We can use the `addBinding()` method on the multiplexer by passing in the input type value and passing in a few list of bindings from keyboard and gamepad.
+Now that we have our controller setup we can finally create a binding. We can use the `addBinding()` method on the controller by passing in the input type value and passing in a few list of bindings from keyboard and gamepad.
 
 ```kotlin
 // the 'A' and 'left arrow' keys and the 'x-axis of the left stick' with trigger the 'MOVE_LEFT' input type
@@ -141,7 +141,7 @@ enum class GameInput {
     JUMP
 }
 
-val controller = InputMultiplexer<GameInput>(input).also {
+val controller = InputMapController<GameInput>(input).also {
     input.addInputProcessor(it)
 }
 
