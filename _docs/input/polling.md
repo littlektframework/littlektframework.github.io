@@ -35,11 +35,18 @@ We can find the amount of pressure applied one a pointer which returns a value b
 val pressure = input.getPressure(Pointer.POINTER1)
 ```
 
-To determine which buttons are pressed on desktop:
+To determine which mouse buttons are pressed on desktop:
 
 ```kotlin
-val leftPressed = input.isTouched(Pointer.POINTER1)
-val rightPressed = input.isTouched(Pointer.POINTER2)
+val leftPressed = input.isTouching(Pointer.MOUSE_LEFT)
+val rightPressed = input.isTouching(Pointer.MOUSE_RIGHT)
+```
+
+Determing if a pointer is just touched with the past frame or just released within the last frame:
+
+```kotlin
+val justTouched = input.isJustTouched(Pointer.POINTER1)
+val justReleased = input.isTouchJustReleased(Pointer.POINTER1)
 ```
 
 ### Polling Keyboard
