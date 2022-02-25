@@ -3,8 +3,11 @@ title: Drawables
 permalink: /docs/ui/drawables
 ---
 
-Checkout the following classes. Documentation still needs written!
+A [Drawable](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/node/component/Drawable.kt) is an interface that provides a draw method that takes in a `SpriteBatch`, position, scale, rotation, and color. The impelementation can draw anything it wants such as texture slices, nine patches, etc. Drawables are used in `Control` nodes for certain things such as backgrounds, foregrounds, and general themeing.
 
--   [Drawable](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/node/component/Drawable.kt)
--   [NinePatchDrawable](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/node/component/NinePatchDrawable.kt)
--   [TextureSliceDrawable](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/node/component/TextureSliceDrawable.kt)
+A `Drawable` contains properties for setting a minimum size, margins, and a color.
+
+## Types
+
+-   [NinePatchDrawable](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/node/component/NinePatchDrawable.kt): Renders a `NinePatch`.
+-   [TextureSliceDrawable](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/node/component/TextureSliceDrawable.kt): Renders a `TextureSlice`.
