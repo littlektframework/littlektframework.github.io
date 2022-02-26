@@ -16,7 +16,7 @@ To use shaders in LittleKt, we have two classes available to us that we can exte
 
 ### GLSL Generator
 
-The GLSL generator is a way to write shaders in Kotlin which will then be converted in GLSL code at runtime. It is very simple to get started with. Do note that there may be some features or syntax missing. If you run into such an issue feel free to open an issue on the GitHub repo and we can see on how we can get it added in. With that said, it might not be worth writing shaders directly in Kotlin if you are fighting the framework. We can write pure GLSL code instead and it will still work.
+The [GLSL generator](/docs/shading/glsl-generator) is a way to write shaders in Kotlin which will then be converted in GLSL code at runtime. It is very simple to get started with. Do note that there may be some features or syntax missing. If you run into such an issue feel free to open an issue on the GitHub repo and we can see on how we can get it added in. With that said, it might not be worth writing shaders directly in Kotlin if you are fighting the framework. We can write pure GLSL code instead and it will still work.
 
 #### A simple shader in Kotlin
 
@@ -59,9 +59,9 @@ class MyVertexShader(color: Color) : VertexShaderModel() {
 
     init {
         if (color == Color.RED) { // this if statement will not be in the actual GLSL code
-            v_color = vec4(1f.lit, 0f.lit, 0f.lit, 1f.lit)
+            v_color = vec4Lit(1f.lit, 0f.lit, 0f.lit, 1f.lit)
         } else {
-            v_color = vec4(1f.lit, 1f.lit, 1f.lit, 1f.lit)
+            v_color = vec4Lit(1f.lit, 1f.lit, 1f.lit, 1f.lit)
         }
         gl_Position = u_projTrans * a_position
     }
