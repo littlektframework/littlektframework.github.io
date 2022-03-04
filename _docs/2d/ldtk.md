@@ -16,7 +16,7 @@ val ldtkWorld = mapLoader.loadMap(loadAllLevels = true) // loads all levels at o
 val ldtkLevel = mapLoader.loadLevel(levelIdx = 0) // loads the first level
 ```
 
-## Using a `TextureAtlas`
+## Using a TextureAtlas
 
 As mentioned above, we can pass in a `TextureAtlas` which the `LDtkMapLoader` will use, if available, to create the `LDtkTileSet` objects from.
 
