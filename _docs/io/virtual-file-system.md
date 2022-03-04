@@ -133,16 +133,18 @@ val font: TtfFont = resourcesVfs["arial.ttf"].readTtfFont() // defaults to base 
 
 #### Reading an LDtk Map
 
-`readLDtkMap()`: reads file as a `LDtkWorld`. Accepts parameters for `loadAllLevels`, the specified level index `levelIdx`, if applicable, and the `tilesetBorder` thickness when slicing any corresponding tile textures to prevent atlas bleeding. Loading a `LDtk` file will have the loaders created to read and parse the data to prevent loading and rebinding textures that are shared across levels.
+`readLDtkMapLoader()`: reads file as an `LDtkMapLoader`. Accepts parameters for an optional `TextureAtlas` and a `tilesetBorder` thickness when slicing any corresponding tile textures to prevent atlas bleeding. Loading a `LDtk` file will have the loaders created to read and parse the data to prevent loading and rebinding textures that are shared across levels.
 
 ```kotlin
-val world: LDtkWorld = resourcesVfs["my_world.ldtk"].readLDtkMap()
+val mapLoader = resourcesVfs["my_world.ldtk"].readLDtkMapLoader()
+val world: LDtkWorld = mapLoader.loadMap()
 ```
 
-If we aren't loading all the levels of a `LDtk` file at once, we can load other levels later with `readLDtkLevel()`.
+If we aren't loading all the levels of a `LDtk` file at once, we can load other levels later with `loadLevel()`.
 
 ```kotlin
-val level: LDtkLevel = resourcesVfs["my_world.ldtk"].readLDtkLevel(levelIdx = 1)
+val mapLoader = resourcesVfs["my_world.ldtk"].readLDtkMapLoader()
+val level: LDtkLevel = mapLoader.loadLevel(levelIdx = 1) // loads the 2nd level
 ```
 
 #### Reading an AudioClip

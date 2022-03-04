@@ -7,11 +7,23 @@ LittleKt offers full [LDtk](https://ldtk.io) parsing, loading, and rendering.
 
 # Loading
 
-A LDtk map can be loaded using the `resourcesVfs` file by using the `readLDtkMap()` extension.
+A LDtk map can be loaded using the `resourcesVfs` file by using the `readLDtkMapLoader()` extension. This returns an `LDtkMapLoader` which has also parsed the initial map file. We just need to go an extra step to load either the entire map or load a level. This is done in order to reuse tilesets and image backgrounds that may be reused across multiple LDtk levels.
+We can also pass in our own `TextureAtlas` to do the same with all the textures preloaded using the name of the texture file.
 
 ```kotlin
-val map = resourcesVfs["ldtk/sample.ldtk"].readLDtkMap()
+val mapLoader = resourcesVfs["ldtk/sample.ldtk"].readLDtkMapLoader()
+val ldtkWorld = mapLoader.loadMap(loadAllLevels = true) // loads all levels at once
+val ldtkLevel = mapLoader.loadLevel(levelIdx = 0) // loads the first level
 ```
+
+## Using a `TextureAtlas`
+
+As mentioned above, we can pass in a `TextureAtlas` which the `LDtkMapLoader` will use, if available, to create the `LDtkTileSet` objects from.
+
+Two things we must do for this to work correctly:
+
+1. Load a `TextureAtlas` that contains all of the tileset images and image backgrounds used in LDtk. This can be created strategically so that all the images used for each level are on a single texture. We could also load each `Texture` individually and use a `MutableTextureAtlas` to combine them at runtime.
+2. Ensure that the names of each invidiual texture that is packed into the atlas matches the filename with extension of the image being loaded. For example, if we have a tileset image in the directly `ldtk/my_tileset.png`. We would ensure that in the `TextureAtlas` it has the name of `my_tileset.png`. No directory path.
 
 # Rendering
 
@@ -88,7 +100,8 @@ As we know, LDtk offers creating entities and setting certain field values on th
 One can do that by first grabbing the level from the `LDtkWorld` object and calling the `entities` method.
 
 ```kotlin
-val map = resourcesVfs["ldtk/sample.ldtk"].readLDtkMap()
+val mapLoader = resourcesVfs["ldtk/sample.ldtk"].readLDtkMapLoader()
+val map = mapLoader.loadMap()
 val level = map["MyLevelName"]
 
 // returns a list
@@ -102,7 +115,7 @@ val hero = level.entities("Hero")[0]
 
 Now that we have our entities, we can now access their field values by using either the `field` or `fieldArray` methods on the `LDtkEntity` object.
 
-#### Primitive types
+#### Types
 
 These methods expect a typed parameter to determine the value to return.
 For example, if the `Hero` entity had an integer field named `health` defined, one would expect the `field` method to return an `Int`. It even supports fields that can be `null`.
@@ -116,7 +129,7 @@ val canDie = hero.field<Boolean>("canDie").value
 val startingWep = hero.field<LDtkEnumValue?>.value
 ```
 
-One can pass in any primitive type passed on the LDtk field type. The goes for `Int`, `Float`, `Boolean`, `Color`, and `Point`.
+One can pass in any type passed on the LDtk field type that LDtk supports. The goes for `Int`, `Float`, `Boolean`, `Color`, `Point`, `LDtkEnumValue`, `LDtkTile`, and `LDtkEntityRef`.
 
 #### Enums
 
