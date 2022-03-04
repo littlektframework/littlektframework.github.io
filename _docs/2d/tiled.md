@@ -101,6 +101,12 @@ val health: Int = healthProp?.int ?: 100 // converts the prop to an Int
 
 **Note**: for **file**, **color**, and **object** properties they will be returned as a `String` inside the `Property`.
 
-## Disposing
+# Disposing
 
-Once we are finished with the `TiledMap` we can call the `dispose()` method on the loaded map. This will dispose any of the textures it owns. If a `TextureAtlas` was used then no textures will be disposed.
+## Disposing of a TiledMap
+
+Once we are finished with the `TiledMap` we can call the `dispose()` method on the loaded map. This will dispose any of the textures it owns. If a `TextureAtlas` was passed in then the loader won't own any of the textures and therefor won't dispose of any.
+
+```kotlin
+tiledMap.dispose()
+```
