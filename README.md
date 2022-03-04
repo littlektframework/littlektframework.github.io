@@ -1,6 +1,6 @@
 **LittleKt**
 
-This is the website repository for LittleKt, including the wiki.
+This is the website repository for LittleKt, including the docs.
 
 ## Run locally
 
