@@ -147,6 +147,14 @@ val mapLoader = resourcesVfs["my_world.ldtk"].readLDtkMapLoader()
 val level: LDtkLevel = mapLoader.loadLevel(levelIdx = 1) // loads the 2nd level
 ```
 
+#### Reading a Tiled Map
+
+`readTiledMap()`: read the file as a `TiledMap`.
+
+```kotlin
+val tiledMap = resourcesVfs["my_tiled_map.tmj"].readTiledMap()
+```
+
 #### Reading an AudioClip
 
 `readAudioClip()`: read the file as an `AudioClip`.
