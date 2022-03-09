@@ -19,6 +19,8 @@ docs:
       children:
           - title: "First application"
             url: /docs/starting/first-application
+          - title: "Template project"
+            url: /docs/starting/template-project
           - title: "Example game"
             url: /docs/starting/example-game
     - title: "Overview"
