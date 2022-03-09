@@ -3,8 +3,6 @@ title: Template Project
 permalink: /docs/starting/template-project
 ---
 
-## A Starter Game Template for the LittleKt Game Framework
-
 To get started on a clean slate, we can use the readily available [template starter project](https://github.com/littlektframework/littlekt-game-template). This is a base project that contains the bare necessities to get started with creating a game with LittleKt.
 
 The template project is set up to use all the available platforms that LittleKt currently supports: **JVM**, **Web**, and **Android**.
