@@ -18,7 +18,7 @@ Various useful tools and abstractions but still allow access to the underlying c
 
 #### Cross-platform
 
-Thanks to Kotlin - building for multiple platforms is easy. Currently supports **desktop via JVM** and **web** targets, as well as **mobile** and **desktop via native** planned in the future.
+Thanks to Kotlin - building for multiple platforms is easy. Currently supports **desktop via JVM**, **web**, and **Android** targets, as well as **iOS** and **desktop via native** planned in the future.
 
 #### Fonts
 
@@ -32,16 +32,20 @@ Loaders and renders to make font's easy to use.
 #### Higher-level 2D APIs
 
 -   Orthographic camera and viewports
+-   Batching
+-   Animations
+-   Particles
+-   Audio and audio streaming
 -   Texture atlases, slicing, and pixmap editing
 -   Shader GLSL generation DSL
 
 #### Tilemaps
 
-Includes first class support for [LDtk](https://ldtk.io) map loading and rendering.
+Includes first class support for [LDtk](https://ldtk.io) and [Tiled](https://www.mapeditor.org/) map loading and rendering.
 
 #### 2D Scene Graph and UI
 
-A light weight scene graph that is easily extensible that can be used to create your own engine. Includes a UI implementation that can be used along side.
+A light weight scene graph that is easily extensible that can be used to create your own engine. Includes a UI implementation with a fancy DSL that can be used along side.
 
 #### Low-level OpenGL utilies and access
 

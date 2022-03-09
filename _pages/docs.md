@@ -9,4 +9,4 @@ sidebar:
     nav: "docs"
 ---
 
-The wiki is currently under construction and many pages may not have been created or written yet. Checkout the sidebar for the table of contents. Or get started with your [first application](/docs/starting/first-application).
+The docs are currently under construction and some pages may not have been created or written yet. Checkout the sidebar for the table of contents. Or get started with your [first application](/docs/starting/first-application).

@@ -19,8 +19,8 @@ docs:
       children:
           - title: "First application"
             url: /docs/starting/first-application
-          - title: "First game"
-            url: /docs/starting/first-game
+          - title: "Example game"
+            url: /docs/starting/example-game
     - title: "Overview"
       children:
           - title: "Context and ContextListener"
@@ -109,10 +109,10 @@ docs:
             url: /docs/ui/the-user-interface
           - title: "Size and Anchors"
             url: /docs/ui/size-and-anchors
-          - title: "Containers"
-            url: /docs/ui/containers
           - title: "Controls"
             url: /docs/ui/controls
+          - title: "Containers"
+            url: /docs/ui/containers
           - title: "Themes"
             url: /docs/ui/themes
           - title: "Drawables"

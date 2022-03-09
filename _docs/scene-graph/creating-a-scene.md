@@ -95,3 +95,70 @@ onDispose {
     scene.dispose() // disposes managed SpriteBatch, if it exists, and removes itself as an input processor
 }
 ```
+
+### Using custom `InputMapController`
+
+If we used the default `sceneGraph` method for creating a new instance of `SceneGraph` we may have noticed that there is another method that we can use that takes in an `InputSignal` type along with an option of using our own [InputMapController](/docs/input/create-input-bindings).
+
+By passing in our own `InputMapController` we have the advatange of setting our own input mapping for how the **UI** is triggered, such as when a button is pressed using a keyboard or how `Control` nodes focus are cycled.
+
+Luckily, if we want to use the default bindings with our own input type, a helper method exists creating them easily. But first, we must define our UI input types, which again can of any type as long as they are the same:
+
+```kotlin
+enum class InputMap {
+    // ui related inputs
+    UI_LEFT,
+    UI_RIGHT,
+    UI_UP,
+    UI_DOWN,
+    UI_ACCEPT,
+    UI_FOCUS_NEXT,
+    UI_FOCUS_PREV,
+
+    // player related inputs
+    MOVE_LEFT,
+    MOVE_RIGHT,
+    MOVE_UP,
+    MOVE_DOWN,
+    HORIZONTAL,
+    VERTICAL,
+    MOVEMENT,
+    JUMP
+}
+```
+
+Next we must create a new `UiInputSignals` instance and pass in our `InputMap` types for our UI signals:
+
+```kotlin
+val uiSignals = SceneGraph.UiInputSignals(
+    uiLeft = InputMap.UI_LEFT,
+    uiRight = InputMap.UI_RIGHT,
+    uiUp = InputMap.UI_UP,
+    uiDown = InputMap.UI_DOWN,
+    uiAccept = InputMap.UI_ACCEPT,
+    uiFocusNext = InputMap.UI_FOCUS_NEXT,
+    uiFocusPrev = InputMap.UI_FOCUS_PREV
+    // there are a few additional that we purposely skipping. if left null they can't be triggered in the UI.
+)
+```
+
+Once we have our UI signals defined, we can do one of two things to set it on our own `InputMapController`.
+
+**Create a new controller with the default UI signal bindings:**
+
+```kotlin
+val controller: InputMapController<InputMap> = createDefaultSceneGraphController(context.input, uiSignals)
+```
+
+**Add the default UI signal bindings to an existing controller:**
+
+```kotlin
+val controller = InputMapController<InputMap>(context.input)
+controller.addDefaultUiInput(uiSignals)
+```
+
+Once added, they are set and ready to be used internall by `Control` nodes. We can also set our own custom bindings for the UI signals if we don't like the default values, just like any other binding:
+
+```kotlin
+controller.addBinding(InputMap.UI_ACCEPT, listOf(Key.SPACE, Key.ENTER), buttons = listOf(GameButton.XBOX_A))
+```
