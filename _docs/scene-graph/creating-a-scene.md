@@ -82,12 +82,12 @@ onRender { dt ->
 
     // we will need to make if we do other rendering with another camera / viewport
     // that we call GL.viewport using viewport.apply(context)
-    camera.viewport.apply(context)
+    viewport.apply(context)
     camera.update()
 }
 
 onResize { width, height ->
-    camera.update(width, height, context)
+    viewport.update(width, height, context)
     scene.resize(width, height)
 }
 

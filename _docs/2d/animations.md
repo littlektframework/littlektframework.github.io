@@ -49,6 +49,8 @@ Creating an `AnimationPlayer` expects a type parameter as well. This needs to ma
 ```kotlin
 val batch = SpriteBatch(this)
 val viewport = ExtendViewport(480, 270)
+val camera = viewport.camera
+
 val atlas: TextureAtlas = resourcesVfs["tiles.atlas.json"].readAtlas()
 val heroRun: Animation<TextureSlice> = atlas.getAnimation("heroRun")
 
@@ -130,8 +132,9 @@ Instead of having to handle playing animations manually we can register a state 
 ```kotlin
 val batch = SpriteBatch(this)
 val viewport = ExtendViewport(480, 270)
-val atlas: TextureAtlas = resourcesVfs["tiles.atlas.json"].readAtlas()
+val camera = viewport.camera
 
+val atlas: TextureAtlas = resourcesVfs["tiles.atlas.json"].readAtlas()
 val anim = AnimationPlayer<TextureSlice>()
 val atlas = resourcesVfs["tiles.atlas.json"].readAtlas()
 val heroSleep = atlas.getAnimation("heroSleeping")

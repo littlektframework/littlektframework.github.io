@@ -76,12 +76,6 @@ viewport2.apply(context)
 // draw using the second viewport
 ```
 
-If we are using a _Camera_ we can access the _Viewport_ directly:
-
-```kotlin
-camera.viewport.apply(context)
-```
-
 ## Types of Viewports
 
 ### Stretch Viewport
