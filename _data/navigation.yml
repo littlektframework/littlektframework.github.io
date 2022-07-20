@@ -39,6 +39,8 @@ docs:
             url: /docs/2d/textures-and-texture-slices
           - title: "Texture Atlas"
             url: /docs/2d/texture-atlas
+          - title: "Shapes, Lines, and Paths"
+            url: "/docs/2d/shape-renderer"
           - title: "NinePatch"
             url: /docs/2d/ninepatch
           - title: Bitmap Fonts
