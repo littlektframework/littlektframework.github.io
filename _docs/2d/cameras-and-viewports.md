@@ -18,20 +18,16 @@ The camera allows us to:
 
 ### Orthographic Camera
 
-By default, a _Camera_ uses the default implementation of _Viewport_. This will stretch and shrink the items that are rendered on screen unless we change the cameras viewport to something else.
+By default, a _Camera_ doesn't contain or use a _Viewport_. It contains two properties that can be used to calculate the `projection` matrix: `virtualWidth` and `virtualHeight`.
 
 ```kotlin
-val camera = OrthographicCamera(graphics.width, graphics.height).apply {
-    viewport = ScreenViewport(graphics.width, graphics.height)
-}
+val camera = OrthographicCamera(graphics.width, graphics.height)
 ```
 
 When using a camera we want to make sure we call the `update()` method on it before doing any rendering to ensure it updates that its matrices are up to date. We then can use the `viewProjection` matrix in the _Camera_ class to render to a [SpriteBatch](/docs/2d/spritebatch).
 
 ```kotlin
-val camera = OrthographicCamera(graphics.width, graphics.height).apply {
-    viewport = ScreenViewport(graphics.width, graphics.height)
-}
+val camera = OrthographicCamera(graphics.width, graphics.height)
 
 onRender {
     gl.clear(ClearBufferMask.COLOR_BUFFER_BIT)
@@ -43,30 +39,25 @@ onRender {
 }
 ```
 
-We can also update the _Viewport_ of the _Camera_ when the game window resizes:
+We can also update the `virtualWidth` and `virtualHeight` of the _Camera_ when the game window resizes:
 
 ```kotlin
 onResize { width, height ->
-    // this will update the viewport size and update the cameras matrices
-    camera.update(width, height, context)
+    camera.virtualWidth = width
+    camera.virtualHeight = height
 }
 ```
 
 ## Using a Viewport
 
-When using a _Camera_, we are already indirectly using a _Viewport_. A _Camera_ manages its own _Viewport_ and can be manipulated directly on the camera itself.
+Instead of managing the size of the camera ourselves, we can use a _Viewport_ instead to handle the sizing. When creating a new _Viewport_ we can either pass in our own _Camera_ instance or let the viewport create its own which we then can reference.
 
 ```kotlin
-// this will update the internal viewport to the following virtual sizes
-camera.virtualWidth = 480
-camera.virtualHeight = 270
-
-
-viewport.virtualWidth = 480
-viewport.virtualHeight = 480
+val viewport = ExtendViewport(480, 270)
+val camera: OrthographicCamera = viewport.camera
 ```
 
-Resizing a viewport is also done in the _Camera_ class but can also be done directly on the _Viewport_ itself:
+A viewport can be resized by using the `update()` method which will also update the _Camera_ instance:
 
 ```kotlin
 onResize { width, height ->
@@ -83,12 +74,6 @@ viewport.apply(context)
 // draw using first viewport
 viewport2.apply(context)
 // draw using the second viewport
-```
-
-If we are using a _Camera_ we can access the _Viewport_ directly:
-
-```kotlin
-camera.viewport.apply(context)
 ```
 
 ## Types of Viewports
