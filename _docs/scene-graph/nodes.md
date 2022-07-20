@@ -16,7 +16,10 @@ For example, the `Node` class contains the following signals:
 -   `onReady`: is emitted when the `ready()` callback is invoked
 -   `onRender`: is emitted when the `render()` callback is invoked
 -   `onDebugRender`: is emitted when `onDebugRender()` callback is invoked
+-   `onPreUpdate`: is emitted when `preUpdate()` callback is invoked
 -   `onUpdate`: is emitted when `update()` callback is invoked
+-   `onPostUpdate`: is emitted when `postUpdate()` callback is invoked
+-   `onFixedUpdate`: is emitted when `fixedUpdate()` callback is invoked
 
 These signals can allow us to subscribe to these node lifecycle events without having to create a new class that inherits `Node`. This is useful if we want to do something simple with a node without having to go through all the trouble of creating a specific node to do so.
 
@@ -71,9 +74,9 @@ val scene = sceneGraph(context) {
 }
 ```
 
-## Node2D
+## CanvasItem and Node2D
 
-The `Node2D` class contains an implementation on transforming a node in 2D space. The includes position, rotation, and scale. We have access to the local and global versions of these components. Making a change to any of these properties will dirty the hiearchy and update it's children.
+The `CanvasItem` class (and the `Node2D` class which extends `CanvasItem`) contains an implementation on transforming a node in 2D space. The includes position, rotation, and scale. We have access to the local and global versions of these components. Making a change to any of these properties will dirty the hiearchy and update it's children.
 
 ```kotlin
 val scene = sceneGraph(context) {
@@ -121,7 +124,7 @@ val scene = sceneGraph(context) {
 
 By design, the `position`, `globalPosition`, `scale`, and `globalScale` properties return an immutable `Vec2f`. This prevents us from accidentally updating the vector directly which would skip over needing to update the hiearchy. If we want to set a component of the vector directly, we can use the `x` and `y` properties instead:
 
--   `posotion`: local position immutable vector
+-   `position`: local position immutable vector
 -   `x`: local position x
 -   `y`: local position y
 -   `globalPosition`: global position immutable vector
@@ -133,3 +136,119 @@ By design, the `position`, `globalPosition`, `scale`, and `globalScale` properti
 -   `globalScale`: global scale immutable vector
 -   `globalScaleX`: global scale x
 -   `globalScaleY`: global scale y
+
+### Material
+
+A `CanvasItem` contains [Material](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/node/render/Material.kt) instance that can be used to set shaders, blend modes, and depth/stencil modes. The `SceneGraph` handles any changes of the material of a `CanvasItem` which will flush the current batch thus increasing by a draw call.
+
+```kotlin
+node2d {
+    material.blendMode = BlendMode.Add
+    material.depthStencilMode = DepthStencilMode.StencilWrite
+
+    // or we can set shader
+    material = Material(ShaderProgram(MyFragmentShader(), MyVertexShader()))
+```
+
+#### Blend Mode Types
+
+All the blend modes that can be used in a material are all under the [BlendMode](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/node/render/BlendMode.kt) class. Each type is a singleton object that can be accessed directly as so: `BlendMode.Alpha`.
+
+-   `Alpha`
+-   `Opaque`
+-   `NonPreMultiplied`
+-   `Add`
+-   `Subtract`
+-   `Difference`
+-   `Multiply`
+-   `Lighten`
+-   `Darken`
+-   `Screen`
+-   `LinearDodge`
+-   `LinearBurn`
+
+#### Depth/Stencil Mode Types
+
+All the blend modes that can be used in a material are all under the [DepthStencilMode](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/node/render/DepthStencilMode.kt) class. Each type is a singleton object that can be accessed directly as so: `DepthStencilMode.None`.
+
+-   `Default`
+-   `DepthRead`
+-   `None`
+-   `StencilWrite`
+-   `StencilRead`
+
+## CanvasLayer
+
+A `CanvasLayer` node is the node that contains an `OrthographicCamera` that is used for rendering any children nodes as well as a `Viewport`. This node can be used to render nodes using different viewport and camera dimensions and positions. For example, this can be useful when we want to separate rendering a high resolution UI with a low resolution game. Due note that the based `CanvasLayer` node does **NOT** apply the _Viewport_ before rendering. Setting any viewport properties will have no affect. We can either extend and override the render method of the `CanvasLayer` or use the _ViewportCanvasLayer_ node below to use the viewport.
+
+```kotlin
+val scene = sceneGraph(context) {
+    canvasLayer {
+        node2d {
+           // render my game nodes based on the canvasLayer camera!
+        }
+    }
+    control {
+        name = "UI
+        // render my UI based on the scene graph viewport!
+    }
+}
+```
+
+### ViewportCanvasLayer
+
+A `ViewportCanvasLayer` is a `CanvasLayer` node that handles updating the viewport and uses it to render its children. Due note, that the DSL method to create a _ViewportCanvasLayer_ is called `viewport`!
+
+```kotlin
+val scene = sceneGraph(context) {
+    viewport {
+        viewport = ExtendViewport(480, 270)
+        // any children now will be rendered using the viewport above!
+
+        node2d {
+           // render my game nodes based on the viewport.
+        }
+    }
+    control {
+        name = "UI
+        // render my UI based on the scene graph viewport!
+    }
+}
+```
+
+### FrameBufferNode
+
+A `FrameBufferNode` is another `CanvasLayer` node that renders any of its children to a frame buffer of a specified size.
+
+```kotlin
+val scene = sceneGraph(context) {
+    val fbo = frameBuffer {
+        width = 480
+        height = 270
+
+        node2d {
+            // render in frame buffer
+        }
+    }
+
+    // we still need to render the FBO. To do so we can subscribe to the FBO onFboChanged signal.
+    node2d {
+        var slice: TextureSlice? = null
+        // subscribe to the FBO node whenever the FBO is changed
+        fbo.onFboChanged.connect(this) { fboTexture ->
+            slice = fboTexture.slice() // create new slice from the FBO texture
+        }
+
+        onRender += { batch, camera ->
+            slice?.let {
+                batch.draw(
+                    it,
+                    x = 0,
+                    y = 0,
+                    flipY = true
+                )
+            }
+        }
+    }
+}
+```
