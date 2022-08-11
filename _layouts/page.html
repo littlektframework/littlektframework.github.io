@@ -62,8 +62,6 @@ layout: base
     {%- endif -%}
     {%- if page.aside -%}
       {%- assign _page_main_class = _page_main_class | append: ' has-aside' -%}
-    {%- elsif _full_width -%}
-      {%- assign _page_main_class = _page_main_class | append: ' full-width' -%}
     {%- endif -%}
     <div class="{{ _page_main_class }} cell cell--auto">
 
@@ -82,7 +80,12 @@ layout: base
       {%- endif -%}
 
 
-        <div class="page__content">
+        {%- assign _page_content_class = 'page__content' -%}
+        {%- if _full_width -%}
+          {%- assign _page_content_class = _page_content_class | append: ' full-width' -%}
+        {%- endif -%}
+
+        <div class="{{ _page_content_class }} ">
         {%- if _article_header_type == 'overlay' or _article_header_type == 'cover' -%}
 
           {%- if _article_header_type == 'overlay' -%}
