@@ -29,7 +29,7 @@ data:
         - title: Features
           children:
               - title: Multiplatform
-                excerpt: Deploy your game on desktop, mobile, and web using the same code base.
+                excerpt: Deploy your game on desktop, mobile, and web using a single code base.
               - title: Open Source
                 excerpt: Licensed under a very the very permissive Apache 2.0 and open to contributions.
               - title: Lightweight
@@ -40,7 +40,7 @@ data:
           theme: dark
           background_color: "#643fea"
           excerpt: >
-              Join the community and help contribute to create a framework that everyone can use
+              Join the community and help contribute to create a framework that everyone can use.
           actions:
               - text: GitHub
                 type: outline-secondary
