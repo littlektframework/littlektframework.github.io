@@ -16,9 +16,9 @@ article_header:
     background_image:
         gradient: "linear-gradient(rgba(100, 63, 234, .2), rgba(242, 50, 97, .2))"
         src: /assets/images/index.png
-title: LittleKt
+title: A Kotlin Multiplatform 2D Game Framework
 excerpt: >
-    A Kotlin Multiplatform 2D Game Framework that works on Desktop, Mobile, and Browser.
+    A multiplatform OpenGL framework that Works on Desktop, Mobile, and Browser.
 data:
     sections:
         - title: What is it?
