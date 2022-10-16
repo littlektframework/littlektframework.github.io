@@ -226,3 +226,11 @@ override fun render(batch: Batch, camera: Camera) {
     )
 }
 ```
+
+### Debugging
+
+The scene graph contains a flag `showDebugInfo` that is set to `false` by default. Setting this to `true` will allow the `CanvasLayer` to call the interal debug render method to allow propagation through the tree. This will ultimately invoke the `debugRender` method in a node.
+
+A `Control` node, by default, overrides the `debugRender` and will render the bounds of the node. This is useful for helping with positioning of the UI.
+
+![center container example](/assets/images/ui/control-debugging.png)
