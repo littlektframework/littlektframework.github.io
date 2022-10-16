@@ -137,6 +137,31 @@ By design, the `position`, `globalPosition`, `scale`, and `globalScale` properti
 -   `globalScaleX`: global scale x
 -   `globalScaleY`: global scale y
 
+### Render Sorting
+
+A [Node2D] contains an option to sort it's child nodes by their y-position setting the `ySort` property to `true`. All this simply does is set the `nodes.sort` property to the internal `SORT_BY_Y` comparator.
+
+We can use `nodes.sort` to set our own render sorting while keeping the same update order. By default, rendering is done by tree order, top to bottom.
+
+```kotlin
+val SORT_BY_Y: Comparator<Node> = Comparator { a, b ->
+    if (a is CanvasItem && b is CanvasItem) {
+        return@Comparator a.globalY.compareTo(b.globalY)
+    }
+    if (a is CanvasItem) {
+        return@Comparator 1
+    }
+    if (b is CanvasItem) {
+        return@Comparator -1
+    }
+    return@Comparator 0
+}
+
+node2d {
+    nodes.sort = SORT_BY_Y
+}
+```
+
 ### Material
 
 A `CanvasItem` contains [Material](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/node/render/Material.kt) instance that can be used to set shaders, blend modes, and depth/stencil modes. The `SceneGraph` handles any changes of the material of a `CanvasItem` which will flush the current batch thus increasing by a draw call.
@@ -239,7 +264,7 @@ val scene = sceneGraph(context) {
             slice = fboTexture.slice() // create new slice from the FBO texture
         }
 
-        onRender += { batch, camera ->
+        onRender += { batch, camera, shapeRenderer ->
             slice?.let {
                 batch.draw(
                     it,
