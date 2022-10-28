@@ -27,12 +27,12 @@ abstract class Scene(val context: Context) : Disposable {
     /**
      * Invoked on every render frame.
      */
-    open suspend fun Context.render(dt: Duration) = Unit
+    open fun Context.render(dt: Duration) = Unit
 
     /**
      * Invoked when a resize event occurs.
      */
-    open suspend fun Context.resize(width: Int, height: Int) = Unit
+    open fun Context.resize(width: Int, height: Int) = Unit
 
     /**
      * Invoked when this scene is hidden from view.
@@ -59,7 +59,7 @@ class MyGameScene(context: Context, private val font: BitmapFont) : Scene(contex
 
     private val batch = SpriteBatch(context)
 
-    override suspend fun Context.render(dt: Duration) {
+    override fun Context.render(dt: Duration) {
         batch.use {
             font.draw(it, "Hello World", 50f, 50f)
         }
