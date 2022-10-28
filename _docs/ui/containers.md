@@ -72,6 +72,25 @@ hBoxContainer {
 }
 ```
 
+We can also use `row` isntead which is the same as `hBoxContainer`.
+
+```kotlin
+row {
+    button {
+        text = "Button"
+        horizontalSizeFlags = SizeFlag.FILL or SizeFlag.EXPAND
+    }
+    button {
+        text = "Button 2"
+        horizontalSizeFlags = SizeFlag.FILL or SizeFlag.EXPAND
+    }
+    button {
+        text = "Button 3"
+        horizontalSizeFlags = SizeFlag.FILL or SizeFlag.EXPAND
+    }
+}
+```
+
 #### VBox
 
 Arranges child controls vertically while expanding horizontally (via [VBoxContainer](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/node/node2d/ui/VBoxContainer.kt))
@@ -80,6 +99,24 @@ Arranges child controls vertically while expanding horizontally (via [VBoxContai
 
 ```kotlin
 vBoxContainer {
+        text = "Button"
+        verticalSizeFlags = SizeFlag.FILL or SizeFlag.EXPAND
+    }
+    button {
+        text = "Button 2"
+        verticalSizeFlags = SizeFlag.FILL or SizeFlag.EXPAND
+    }
+    button {
+        text = "Button 3"
+        verticalSizeFlags = SizeFlag.FILL or SizeFlag.EXPAND
+    }
+}
+```
+
+We can also use `column` instead which does the same as `vBoxContainer`.
+
+```kotlin
+column {
     button {
         text = "Button"
         verticalSizeFlags = SizeFlag.FILL or SizeFlag.EXPAND
@@ -143,6 +180,26 @@ panelContainer {
         text = "my label"
         verticalAlign = VAlign.CENTER
         horizontalAlign = HAlign.CENTER
+    }
+}
+```
+
+### Scroll Container
+
+A container that will automatically create a [ScrollBar](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/node/ui/ScrollBar.kt) child (`HScrollBar` or `VScrollBar` or both) when needed. (via [ScrollContainer](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/node/ui/ScrollContainer.kt)).
+
+![scroll container example](/assets/images/ui/scroll-container-example.png)
+
+```kotlin
+scrollContainer {
+    minHeight = 100f
+    vBoxContainer {
+        repeat(20) {
+            label {
+                text =
+                    "I am really super duper long and awesome label ${it + 1}"
+            }
+        }
     }
 }
 ```
