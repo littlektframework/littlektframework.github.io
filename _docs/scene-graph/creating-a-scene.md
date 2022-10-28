@@ -17,7 +17,7 @@ val scene = sceneGraph(context) {
 }
 ```
 
-The `SceneGraph`, by default, will use a `ScreenViewport`. If we want to use a different viewport, we can pass that in through both the constructor or the DSL. We can also pass in our own instance of a `SpriteBatch` that will be used internally by the scene graph for doing any sort of rendering. This can be useful if we want to lower draw calls. Due note that if we do pass in our own instance, we still need to manage and dispose it ourselves. If none is passed in, then a new instance will be created and managed by the `SceneGraph` itself.
+The `SceneGraph`, by default, will use a `ScreenViewport`. If we want to use a different viewport, we can pass that in through both the constructor or the DSL. We can also pass in our own instance of a `SpriteBatch` that will be used internally by the scene graph for doing any sort of rendering. This can be useful if we want to lower draw calls. Do note that if we do pass in our own instance, we still need to manage and dispose it ourselves. If none is passed in, then a new instance will be created and managed by the `SceneGraph` itself.
 
 Before we can use the `SceneGraph`, we must first ensure we call the `initialize()` method. This will initialize the `root` Node and trigger the `root.onPostEnterScene()` lifecycle method. The reason we must explicilty intialize the graph is due to needing to pass in the instance of `SceneGraph` to the `root` in order to start the Node initializing and lifecycle callbacks on a non-final method. Because we can extend a `SceneGraph`, the Kotlin compiler warns us to not access non-final properties or methods in a partially constructed object.
 
@@ -157,7 +157,7 @@ val controller = InputMapController<InputMap>(context.input)
 controller.addDefaultUiInput(uiSignals)
 ```
 
-Once added, they are set and ready to be used internall by `Control` nodes. We can also set our own custom bindings for the UI signals if we don't like the default values, just like any other binding:
+Once added, they are set and ready to be used internally by `Control` nodes. We can also set our own custom bindings for the UI signals if we don't like the default values, just like any other binding:
 
 ```kotlin
 controller.addBinding(InputMap.UI_ACCEPT, listOf(Key.SPACE, Key.ENTER), buttons = listOf(GameButton.XBOX_A))

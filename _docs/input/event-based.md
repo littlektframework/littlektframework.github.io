@@ -70,7 +70,7 @@ Gamepad events:
 class MyGame(context: Context) : ContextListener(context) {
 
     // override any of the methods in InputProcessor that we want to actually make use of.
-    override suspend fun Context.run() {
+    override suspend fun Context.start() {
         val processor = input.inputProcessor { // creates a new InputProcessor and adds it the the current conext
             onKeyDown { key -> logger.info { "Key $:key is down!" } }
         }
@@ -93,7 +93,7 @@ class MyGame(context: Context) : ContextListener(context), InputProcessor {
 
 
     // override any of the methods in InputProcessor that we want to actually make use of.
-    override suspend fun Context.run() {
+    override suspend fun Context.start() {
         onDispose {
             removeInputProcessor(this) // we don't have to do this if we are closing the application
         }

@@ -151,6 +151,21 @@ textureRect {
 }
 ```
 
+### ScrollBar
+
+An abstract `Range`-based `Control` that displays a draggable area (`page`) (via [ScrollBar](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/node/ui/ScrollBar.kt)). See [HScrollBar](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/node/ui/HScrollBar.kt) or [VScrollBar](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/node/ui/VScrollBar.kt) in order to use it.
+
+```kotlin
+vScrollBar {
+    page = 10f
+    height = 100f
+}
+hScrollBar {
+    page = 10f
+    width = 100f
+}
+```
+
 ## Custom Control
 
 For something not available out of the box, we can go about creating our own implemenation by extending a `Control`. There are a few things we need to ensure we do in order for it to be used properly by parent containers and such.

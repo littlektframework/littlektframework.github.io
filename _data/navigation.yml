@@ -93,6 +93,8 @@ docs:
             url: /docs/input/cursor
           - title: "Create Input Bindings"
             url: /docs/input/create-input-bindings
+          - title: "Gesture Controller"
+            url: /docs/input/gesture-controller
     - title: "I/O"
       children:
           - title: "Virtual File System"
