@@ -204,7 +204,7 @@ All the blend modes that can be used in a material are all under the [DepthStenc
 
 ## CanvasLayer
 
-A `CanvasLayer` node is the node that contains an `OrthographicCamera` that is used for rendering any children nodes as well as a `Viewport`. This node can be used to render nodes using different viewport and camera dimensions and positions. For example, this can be useful when we want to separate rendering a high resolution UI with a low resolution game. Due note that the based `CanvasLayer` node does **NOT** apply the _Viewport_ before rendering. Setting any viewport properties will have no affect. We can either extend and override the render method of the `CanvasLayer` or use the _ViewportCanvasLayer_ node below to use the viewport.
+A `CanvasLayer` node is the node that contains an `OrthographicCamera` that is used for rendering any children nodes as well as a `Viewport`. This node can be used to render nodes using different viewport and camera dimensions and positions. For example, this can be useful when we want to separate rendering a high resolution UI with a low resolution game. Do note that the based `CanvasLayer` node does **NOT** apply the _Viewport_ before rendering. Setting any viewport properties will have no affect. We can either extend and override the render method of the `CanvasLayer` or use the _ViewportCanvasLayer_ node below to use the viewport.
 
 ```kotlin
 val scene = sceneGraph(context) {
@@ -222,7 +222,7 @@ val scene = sceneGraph(context) {
 
 ### ViewportCanvasLayer
 
-A `ViewportCanvasLayer` is a `CanvasLayer` node that handles updating the viewport and uses it to render its children. Due note, that the DSL method to create a _ViewportCanvasLayer_ is called `viewport`!
+A `ViewportCanvasLayer` is a `CanvasLayer` node that handles updating the viewport and uses it to render its children. Do note, that the DSL method to create a _ViewportCanvasLayer_ is called `viewport`!
 
 ```kotlin
 val scene = sceneGraph(context) {
