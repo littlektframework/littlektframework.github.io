@@ -54,7 +54,7 @@ controller.addBinding(GameInput.MOVE_UP, listOf(Key.W, Key.ARROW_UP), axes = lis
 controller.addBinding(GameInput.MOVE_DOWN, listOf(Key.S, Key.ARROW_DOWN), axes = listOf(GameAxis.LY))
 
 // define jumping with a key and a gamepad button
-controller.addBinding(GameInput.JUMP, listOf(Key.SPACE), listOf(GameButton.XBOX_A))
+controller.addBinding(GameInput.JUMP, listOf(Key.SPACE), buttons = listOf(GameButton.XBOX_A))
 ```
 
 ### Use a Binding
