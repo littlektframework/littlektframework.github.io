@@ -5,7 +5,7 @@ permalink: /docs/debugging/opengl-profiling
 
 # App Stats
 
-We can view app related stats by accessing the `Context.stats` property. By default, this tracks the app run time, the last delta time, the total rendered frames, the current fps (averaged over last 25 frames), and OpenGL related stats refered to as engine stats.
+We can view app-related stats by accessing the `Context.stats` property. By default, this tracks the app run time, the last delta time, the total rendered frames, the current fps (averaged over the last 25 frames), and OpenGL-related stats referred to as engine stats.
 
 ## Engine Stats
 
@@ -21,7 +21,7 @@ Engine stats tracks OpenGL related stats. This is enabled by default. The list o
 
 ## Outputting Stats to the Console
 
-Fortunately we don't have to worry about formatting all these stats to render to the console. By default, `AppStats.toString()` handles this formatting already. All we have to do is just add it to our logger message and it will output in a nicely formatted way.
+Fortunately, we don't have to worry about formatting all these stats to render to the console. By default, `AppStats.toString()` handles this formatting already. All we have to do is just add it to our logger message and it will output in a nicely formatted way.
 
 ```kotlin
 onRender { dt ->
