@@ -23,7 +23,7 @@ Only one `Control` can have keyboard focus at a time. When a `Control` receives 
 
 ### Theme
 
-When a the theme is set on a `Control` node, it affects all of its children. To override some of the theme values, use one of the `_override` maps defined in the `Control` class. See [Themes](/docs/ui/themes) for more information on how to use themes.
+When a theme is set on a `Control` node, it affects all of its children. To override some of the theme values, use one of the `_override` maps defined in the `Control` class. See [Themes](/docs/ui/themes) for more information on how to use themes.
 
 ## Types of Controls
 
@@ -148,6 +148,9 @@ Draws a texture slice (via [TextureRect](https://github.com/littlektframework/li
 textureRect {
     slice = myTextureSlice
     stretchMode = TextureRect.StretchMode.TILE
+
+    // this is false by default. Useful for positiong the TextureSlice based off the oringal size before packing and trimming.
+    useOriginalSize = true
 }
 ```
 
@@ -168,13 +171,13 @@ hScrollBar {
 
 ## Custom Control
 
-For something not available out of the box, we can go about creating our own implemenation by extending a `Control`. There are a few things we need to ensure we do in order for it to be used properly by parent containers and such.
+For something not available out of the box, we can go about creating our own implementation by extending a `Control`. There are a few things we need to ensure we do in order for it to be used properly by parent containers and such.
 
 ### Calculating Size
 
 Override the `calclateMinSize()` method from `Control`. This is where we should place our calculations for determining the minimum size that a control should be. How that is calculated is up to you. For example, the below code is calculating the minimum size by taking the bigger value of the background drawable size or the specified `minWidth` / `minHeight` properties.
 
-We need to ensure we set the `_internalMinWidth` and `_internalMinHeight` properties of the control. Notice the underscore `_`. Do not set the properties internal size properties that do not start with an underscore. Doing so will cause an infinite loop of minimum size calculations.
+We need to ensure we set the `_internalMinWidth` and `_internalMinHeight` properties of the control. Notice the underscore `_`. Do not set the properties internal size properties that do not start with an underscore. Doing so will cause an infinite loop of minimum-size calculations.
 
 ```kotlin
 override fun calculateMinSize() {
@@ -192,7 +195,7 @@ override fun calculateMinSize() {
 
 ### Handling Input Events
 
-Overriding the `uiInput()` method allows the `Control` to view any input events that make it through the graph to the node. The `InputEvent` contains information on what type of event has occured, what invoked the event (key, pointer, movement, etc). We can then mark the event has handled if we want to ensure that the event doesn't propagate down to any other controls.
+Overriding the `uiInput()` method allows the `Control` to view any input events that make it through the graph to the node. The `InputEvent` contains information on what type of event has occurred, and what invoked the event (key, pointer, movement, etc). We can then mark the event as handled if we want to ensure that the event doesn't propagate down to any other controls.
 
 ```kotlin
 override fun uiInput(event: InputEvent<*>) {
@@ -225,7 +228,7 @@ override fun onFocusLost() {
 
 ### Rendering
 
-In order to render a `Control` we have access to the `render()` method that we can override. The method is provided with a `Batch` instance that we can use to draw any textures and such to the screen as well as the scenes `Camera` instance.
+In order to render a `Control` we have access to the `render()` method that we can override. The method is provided with a `Batch` instance that we can use to draw any textures and such to the screen as well as the scene's `Camera` instance.
 
 ```kotlin
 override fun render(batch: Batch, camera: Camera) {
@@ -248,6 +251,6 @@ override fun render(batch: Batch, camera: Camera) {
 
 The scene graph contains a flag `showDebugInfo` that is set to `false` by default. Setting this to `true` will allow the `CanvasLayer` to call the interal debug render method to allow propagation through the tree. This will ultimately invoke the `debugRender` method in a node.
 
-A `Control` node, by default, overrides the `debugRender` and will render the bounds of the node. This is useful for helping with positioning of the UI. We can override this method to provide our own debug rendering of any sort.
+A `Control` node, by default, overrides the `debugRender` and will render the bounds of the node. This is useful for helping with the positioning of the UI. We can override this method to provide our own debug rendering of any sort.
 
 ![center container example](/assets/images/ui/control-debugging.png)
