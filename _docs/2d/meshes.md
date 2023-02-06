@@ -79,49 +79,58 @@ mesh.indicesAsQuad() // sets the indices as a quad shape
 mesh.indicesAsTri() // sets the indices as a triangle shape
 ```
 
-### Vertex Builder DSL
+### Using MeshGeometry to build a Mesh
 
-By default, a `Mesh` uses an internal class called `MeshBatcher` that helps with building of vertex info. This handles total vertex size count as well as setting the vertices automatically. All we have to worry about is creating the mesh and setting each vertex. To use the vertex builder DSL, all we have to do is invoke the `setVertex()` method and set the `VertexProps` data properties inside the lambda.
+By default, a `Mesh` uses a class called `MeshGeometry` that helps with building the vertex and index data. This handles total vertex size count as well as setting the vertices automatically. All we have to worry about is creating the mesh and setting each vertex. To use the vertex builder DSL, all we have to do is invoke the `addVertex()` method and set the `VertexView` data properties inside the lambda.
 
 ```kotlin
 val mesh = textureMesh {
     maxVertices = 4
 }.apply {
-    addVertex {
-        position.x = 50f
-        position.y = 50f
-        colorPacked.value = colorBits
-        texCoords.u = 0f
-        texCoords.v = 0f
-    }
+    geometry.run {
+        addVertex {
+            position.x = 50f
+            position.y = 50f
+            colorPacked.value = colorBits
+            texCoords.u = 0f
+            texCoords.v = 0f
+        }
 
-    addVertex {
-        position.x = 66f
-        position.y = 50f
-        colorPacked.value = colorBits
-        texCoords.u = 1f
-        texCoords.v = 0f
-    }
+        addVertex {
+            position.x = 66f
+            position.y = 50f
+            colorPacked.value = colorBits
+            texCoords.u = 1f
+            texCoords.v = 0f
+        }
 
-    addVertex {
-        position.x = 66f
-        position.y = 66f
-        colorPacked.value = colorBits
-        texCoords.u = 1f
-        texCoords.v = 1f
-    }
+        addVertex {
+            position.x = 66f
+            position.y = 66f
+            colorPacked.value = colorBits
+            texCoords.u = 1f
+            texCoords.v = 1f
+        }
 
-    addVertex {
-        position.x = 50f
-        position.y = 66f
-        colorPacked.value = colorBits
-        texCoords.u = 0f
-        texCoords.v = 1f
-    }
+        addVertex {
+            position.x = 50f
+            position.y = 66f
+            colorPacked.value = colorBits
+            texCoords.u = 0f
+            texCoords.v = 1f
+        }
 
-    indicesAsQuad()
+        indicesAsQuad()
+    }
 }
 
 texture.bind()
 mesh.render(shader) // no need to set the vertices or the count as the mesh batcher handles it automatically!
+```
+
+We can also use `MeshGeometry` directly without creating `Mesh` instance to allow the building of mesh geometry without needing to bind to OpenGL with a `Mesh`. We then can pass in the `MeshGeometry` instance when building the mesh and it will use that data to render.
+
+```kotlin
+val geometry = MeshGeometry(Usage.STATIC_DRAW, VertexAttributes(listOf(VertexAttribute.POSITION_2D, VertexAttribute.COLOR_PACKED)))
+val mesh = Mesh(context.gl, geometry)
 ```
