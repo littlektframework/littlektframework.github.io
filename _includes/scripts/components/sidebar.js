@@ -7,7 +7,7 @@
         var $sidebarShow = $(".js-sidebar-show");
         var $sidebarHide = $(".js-sidebar-hide");
         document.querySelector(".scroll-to").scrollIntoView({
-            behavior: "smooth",
+            behavior: "instant",
         });
         function freeze(e) {
             if (e.target === $pageMask[0]) {
