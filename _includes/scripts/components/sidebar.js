@@ -1,9 +1,7 @@
 (function () {
     var SOURCES = window.TEXT_VARIABLES.sources;
-    window.addEventListener("load", function(event) {
-      document.querySelector(".scroll-to").scrollIntoView({
-            behavior: "instant",
-        });
+    document.querySelector(".scroll-to").scrollIntoView({
+        behavior: "instant",
     });
     window.Lazyload.js(SOURCES.jquery, function () {
         var $pageMask = $(".js-page-mask");
