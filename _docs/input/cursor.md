@@ -17,7 +17,7 @@ val cursor = Cursor(cursorImage, (cursorImage.width * 0.5f).roundToInt(), (curso
 
 context.graphics.setCursor(cursor)
 
-onDispose {
+onRelease {
     cursor.dispose() // we need to dispose if we are done with it
 }
 ```

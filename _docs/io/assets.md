@@ -43,7 +43,7 @@ class MyGame(context: Context) : ContextListener(context) {
         // access any of the variables from above
         // do any of the rendering and update logic here
 
-        onRender {
+        onUpdate {
             if(!provider.isFullyLoaded) {
                 provider.update()
                 return

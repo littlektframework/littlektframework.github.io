@@ -57,7 +57,7 @@ val heroRun: Animation<TextureSlice> = atlas.getAnimation("heroRun")
 val anim = AnimaationPlayer<TextureSlice>()
 anim.playLooped(heroRun)
 
-onRender { dt ->
+onUpdate { dt ->
     gl.clear(ClearBufferMask.COLOR_BUFFER_BIT)
     anim.update(dt) // handles requesting the next frames in the current animation
     camera.update()
@@ -84,7 +84,7 @@ val anim = AnimaationPlayer<TextureSlice>()
 anim.playOnce(heroIdle) // stops after one play through
 anim.play(heroIdle, times = 5) // stops after 5 play throughs
 
-onRender { dt ->
+onUpdate { dt ->
     gl.clear(ClearBufferMask.COLOR_BUFFER_BIT)
     anim.update(dt)
     camera.update()
@@ -159,7 +159,7 @@ anim.apply {
 }
 
 
-onRender { dt ->
+onUpdate { dt ->
     gl.clearColor(Color.CLEAR)
     gl.clear(ClearBufferMask.COLOR_BUFFER_BIT)
 

@@ -67,7 +67,7 @@ class MyGame(context: Context) : ContextListener(context) {
             }
         }
 
-        onDispose {
+        onRelease {
             removeInputProcessor(processor) // we don't have to do this if we are closing the application
         }
     }

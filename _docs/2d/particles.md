@@ -52,7 +52,7 @@ The `ParticleSimulator` comes with two methods we must call in order to update a
 val simulator = ParticleSimulator(2048)
 val batch = SpriteBatch(context)
 
-onRender { dt ->
+onUpdate { dt ->
     simulator.update(dt)
 
     batch.use(camera.viewProjection) {

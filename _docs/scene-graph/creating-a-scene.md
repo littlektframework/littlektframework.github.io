@@ -74,7 +74,7 @@ For example, the scene graph above would like this:
 Once a `SceneGraph` is created, we need to call the `update()` and `render()` methods in `Context.onRender` in order for the nodes to do any updates and rendering. We will also want to make sure is receives `resize` events as well.
 
 ```kotlin
-onRender { dt ->
+onUpdate { dt ->
     gl.clear(ClearBufferMask.COLOR_BUFFER_BIT)
 
     scene.update(dt)
@@ -91,7 +91,7 @@ onResize { width, height ->
     scene.resize(width, height)
 }
 
-onDispose {
+onRelease {
     scene.dispose() // disposes managed SpriteBatch, if it exists, and removes itself as an input processor
 }
 ```

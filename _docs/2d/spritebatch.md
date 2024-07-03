@@ -21,7 +21,7 @@ A [SpriteBatch](https://github.com/littlektframework/littlekt/blob/master/core/s
 ```kotlin
 val batch = SpriteBatch(context)
 
-onRender {
+onUpdate {
     gl.clear(ClearBufferMask.COLOR_BUFFER_BIT)
     batch.use {
        // drawing logic goes here
@@ -63,7 +63,7 @@ val texture: Texture = resourcesVfs["texture.png"].readTexture()
 val slices = texture.slice(16, 16)
 val person = slices[0][0]
 
-onRender {
+onUpdate {
     gl.clear(ClearBufferMask.COLOR_BUFFER_BIT)
     batch.use {
        // the draw method also contains a few more parameters such as origin, scale, rotation, colors, and flipping.

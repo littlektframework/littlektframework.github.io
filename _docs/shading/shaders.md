@@ -140,7 +140,7 @@ val shader = ShaderProgram<SimpleColorVertexShader, SimpleColorFragmentShader>(v
 val batch = SpriteBatch(context)
 batch.shader = shader
 
-onRender {
+onUpdate {
     // use batch to draw with the new shader!
 }
 ```

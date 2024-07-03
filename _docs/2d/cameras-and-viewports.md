@@ -29,7 +29,7 @@ When using a camera we want to make sure we call the `update()` method on it bef
 ```kotlin
 val camera = OrthographicCamera(graphics.width, graphics.height)
 
-onRender {
+onUpdate {
     gl.clear(ClearBufferMask.COLOR_BUFFER_BIT)
 
     camera.update()
@@ -81,14 +81,6 @@ viewport2.apply(context)
 ### Stretch Viewport
 
 A viewport that supports using a virtual size (via [StretchViewport](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/util/viewport/ScalingViewports.kt#L34)). The virtual viewport is strechted to fit the screen. There are no black bars and the aspect ratio can change after scaling.
-
-### Fit Viewport
-
-A viewport that supports using a virtual size (via [FitViewport](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/util/viewport/ScalingViewports.kt#L29)). The virtual viewport will maintain its aspect ratio while attempting to fit as much as possible onto the screen. Black bars may appear.
-
-### Fill Viewport
-
-A viewport that supports using a virtual size (via [FillViewport](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/util/viewport/ScalingViewports.kt#L39)). The virtual viewport will maintain its aspect ratio but in an attempt to fiill the screen parts of the viewport may be cut off. No black bars may appear.
 
 ### Extend Viewport
 

@@ -163,7 +163,7 @@ init {
 }
 
 override suspend fun Context.start() {
-    onRender { dt ->
+    onUpdate { dt ->
         val dir = controller.vector(GameInput.MOVEMENT)
         // ...
     }

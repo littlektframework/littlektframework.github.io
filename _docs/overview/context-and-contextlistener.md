@@ -13,20 +13,19 @@ To get access to a `Context` instance we can create a [ContextListener](https://
 
 As stated above, the context contains all the references to the actual "meat" of LittleKt. The `Context` itself is just an interface that is implemented for each target platform. Through the access we can poll for input, add input processors, access the virtual file system, load assets through resources, store data, and even determine what platform it is currently running on run.
 
-The context also provides creating callbacks for certain events such as rendering, resizing, and disposing. We can add as many callbacks as we needed. They will be called in the order they were added. Anytime we subscribe to an event, it returns a callback that we can invoke to unsubscribe.
+The context also provides creating callbacks for certain events such as updating, resizing, and releasing. We can add as many callbacks as we need. They will be called in the order they were added. Anytime we subscribe to an event, it returns a callback that we can invoke to unsubscribe.
 
 ```kotlin
 override suspend fun Context.start() {
-    val unsubscribeRender = onRender { dt ->
-        // render logic
-        gl.clear(ClearBufferMask.COLOR_BUFFER_BIT)
+    val unsubscribeUpdate = onUpdate { dt ->
+        // update logic
     }
 
-    onPostRender { dt ->
-        // the same as render but runs after any render callbacks
+    onPostUpdate { dt ->
+        // the same as update but runs after any update callbacks
 
         if (input.isKeyJustPressed(Keys.ENTER)) {
-            unsubscribeRender() // we removed the render callback!
+            unsubscribeUpdate() // we removed the update callback!
         }
     }
 
@@ -34,7 +33,7 @@ override suspend fun Context.start() {
         // handle resize logic
     }
 
-    onDispose {
+    onRelease {
         // dispose any assets here
     }
 }

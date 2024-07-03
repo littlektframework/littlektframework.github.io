@@ -24,7 +24,7 @@ Engine stats tracks OpenGL related stats. This is enabled by default. The list o
 Fortunately, we don't have to worry about formatting all these stats to render to the console. By default, `AppStats.toString()` handles this formatting already. All we have to do is just add it to our logger message and it will output in a nicely formatted way.
 
 ```kotlin
-onRender { dt ->
+onUpdate { dt ->
     if (input.isKeyJustPressed(Key.P)) {
         logger.info { stats }
     }

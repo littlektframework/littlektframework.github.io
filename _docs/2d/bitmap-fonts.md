@@ -88,7 +88,7 @@ Once we are done we can call the `dispose()` method on the `BitmapFont` object.
 ```kotlin
 val font: BitmapFont = resourcesVfs["arial_32.fnt"].readBitmapFont()
 
-onDispose {
+onRelease {
     font.dispose() // font is no longer usable
 }
 ```

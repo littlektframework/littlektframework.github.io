@@ -129,8 +129,6 @@ docs:
       children:
           - title: "Shaders"
             url: /docs/shading/shaders
-          - title: "GLSL Generator"
-            url: /docs/shading/glsl-generator
     - title: "Multi-threading / Coroutines"
       children:
           - title: "Coroutines and Threads"
