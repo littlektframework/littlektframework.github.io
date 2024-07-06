@@ -40,7 +40,7 @@ If the map needs to be rendered entirely at one time, the `LDtkWorld` class offe
 ```kotlin
 val batch = SpriteBatch(context)
 val camera = OrthographicCamera(context.graphics.width, context.graphics.height)
-batch.use(camere.viewProjection) {
+batch.use(renderPass, camere.viewProjection) {
     map.render(it, camera)
 }
 ```
@@ -58,7 +58,7 @@ To render it one can simply call the `render` method on the level object.
 ```kotlin
 val batch = SpriteBatch(context)
 val camera = OrthographicCamera(context.graphics.width, context.graphics.height)
-batch.use(camere.viewProjection) {
+batch.use(renderPass, camere.viewProjection) {
     level.render(it, camera)
 }
 ```
@@ -76,7 +76,7 @@ As with the LDtk world and level objects, rendering the layer is done the same:
 ```kotlin
 val batch = SpriteBatch(context)
 val camera = OrthographicCamera(context.graphics.width, context.graphics.height)
-batch.use(camere.viewProjection) {
+batch.use(renderPass, camere.viewProjection) {
     layer.render(it, camera)
 }
 ```
@@ -86,7 +86,7 @@ Rendering each layer separately can be advantageous due to being able to render 
 ```kotlin
 val bgLayer = level["background"]
 val foregroundLayer = level["foreground"]
-batch.use(camere.viewProjection) {
+batch.use(renderPass, camere.viewProjection) {
     bgLayer.render(it, camera)
     player.render(it)
     foregroundLayer.render(it, camera)

@@ -28,7 +28,7 @@ val hero: TextureAtlas.Entry = atlas.getByPrefix("heroRun")
 ```kotlin
 val hero: TextureAtlas.Entry = atlas.getByPrefix("heroRun")
 
-batch.use {
+batch.use(renderPass)
     it.draw(hero.slice, 5f, 5f)
 }
 ```

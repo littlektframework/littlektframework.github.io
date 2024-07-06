@@ -26,7 +26,7 @@ If a `TextureSlice` is not provided then the `ShapeRenderer` will default to `Te
 Simplying call any of the draw methods between `Batch.begin()` and `Batch.end()` or in `Batch.use()`.
 
 ```kotlin
-batch.use {
+batch.use(renderPass)
     shapeRenderer.line(0f, 0f, 10f, 10f)
 }
 ```

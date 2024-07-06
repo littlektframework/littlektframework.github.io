@@ -24,7 +24,7 @@ Once we have created a `NinePatch` using it is as simple as calling the `draw` m
 val texture = resourcesVfs["my_texuture_9.png"].readTexture()
 val ninepatch = NinePatch(texture, left = 2, right = 2, top = 2, bottom = 2)
 
-batch.use(camera.viewProjection) {
+batch.use(renderPass, camera.viewProjection) {
     ninepatch.draw(
         batch = it,
         x = 0f,

@@ -27,7 +27,7 @@ Multi-line texts, wrapping, and horizontally aligning text are all supported. Wr
 val batch = SpriteBatch(context)
 val font: BitmapFont = resourcesVfs["arial_32.fnt"].readBitmapFont()
 
-batch.use {
+batch.use(renderPass)
     // we don't actually have to specify each parameter as most have default options.
     font.draw(batch, "This is my test", x = 5f, y = 5f, rotation = Angle.ZERO, color = Color.WHITE, targetWidth = 0f, align = HAlign.LEFT, wrap = false)
 }
@@ -48,7 +48,7 @@ val cache = BitmapFontCache(font)
 cache.addText("This is my test", x = 5f, y = 5f)
 cache.addText("This is another line", x = 50f, y = 5f)
 
-batch.use {
+batch.use(renderPass)
     // draws any stored text data
     cache.draw(batch)
 }
@@ -65,7 +65,7 @@ cache.addText("This is my first line", x = 50f, y = 5f)
 
 cache.setText("This is my test", x = 5f, y = 5f) // this will clear the data from the 'addText' method.
 
-batch.use {
+batch.use(renderPass)
     // draws any stored text data
     cache.draw(batch) // will only draw "This is my test"
 }

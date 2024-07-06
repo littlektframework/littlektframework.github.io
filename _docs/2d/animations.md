@@ -249,7 +249,6 @@ onUpdate { dt ->
 
     anim.update(dt)
     camera.update()
-    batch.use(camera.viewProjection) { batch ->
 
     val surfaceTexture = graphics.surface.getCurrentTexture()
     val swapChainTexture = checkNotNull(surfaceTexture.texture)
