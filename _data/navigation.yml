@@ -21,6 +21,8 @@ docs:
       children:
           - title: "First application"
             url: /docs/starting/first-application
+          - title: "First render"
+            url: /docs/starting/first-render
           - title: "Template project"
             url: /docs/starting/template-project
           - title: "Example game"
@@ -29,8 +31,6 @@ docs:
       children:
           - title: "Context and ContextListener"
             url: /docs/overview/context-and-contextlistener
-          - title: "The Game Class"
-            url: /docs/overview/the-game-class
           - title: "Logging"
             url: /docs/overview/logging
     - title: "2D Graphics"
