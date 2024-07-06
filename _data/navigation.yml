@@ -59,8 +59,8 @@ docs:
             url: /docs/2d/particles
           - title: "2D Meshes"
             url: /docs/2d/meshes
-          - title: "Frame Buffer Objects"
-            url: /docs/2d/frame-buffer-objects
+          - title: "Render Targets"
+            url: /docs/2d/render-targets
           - title: "LDtk"
             url: /docs/2d/tilemaps/ldtk
           - title: "Tiled"
