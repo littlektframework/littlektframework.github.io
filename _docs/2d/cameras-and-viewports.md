@@ -7,7 +7,7 @@ The _Camera_ class and _Viewport_ class will seem very familiar if one has every
 
 ## Using a Camera
 
-The [Camera](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graphics/Camera.kt) class is an abstract base that can be extended to create our own implementation of a camera. Luckily, we can use the [OrthographicCamera](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graphics/Camera.kt#L339) implementation that is already offered.
+The [Camera](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/Camera.kt) class is an abstract base that can be extended to create our own implementation of a camera. Luckily, we can use the [OrthographicCamera](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/Camera.kt#L339) implementation that is already offered.
 
 The camera allows us to:
 
@@ -68,12 +68,12 @@ onResize { width, height ->
 
 ### Stretch Viewport
 
-A viewport that supports using a virtual size (via [StretchViewport](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/util/viewport/ScalingViewports.kt#L34)). The virtual viewport is strechted to fit the screen. There are no black bars and the aspect ratio can change after scaling.
+A viewport that supports using a virtual size (via [StretchViewport](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/util/viewport/ScalingViewports.kt#L34)). The virtual viewport is strechted to fit the screen. There are no black bars and the aspect ratio can change after scaling.
 
 ### Extend Viewport
 
-A viewport that supports using a virtual size (via [ExtendViewport](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/util/viewport/ExtendViewport.kt)). The virtual viewport maintains the aspect ratio by extending the game world horizontally or vertically. The world is scaled to fit within the viewport and then the shorter dimension is lengthened to fill the viewport.
+A viewport that supports using a virtual size (via [ExtendViewport](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/util/viewport/ExtendViewport.kt)). The virtual viewport maintains the aspect ratio by extending the game world horizontally or vertically. The world is scaled to fit within the viewport and then the shorter dimension is lengthened to fill the viewport.
 
 ### Screen Viewport
 
-A viewport that uses a virtual size that will always match the window size (via [ScreenViewport](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/util/viewport/ScreenViewport.kt)). No scaling happens along with no black bars appearing.
+A viewport that uses a virtual size that will always match the window size (via [ScreenViewport](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/util/viewport/ScreenViewport.kt)). No scaling happens along with no black bars appearing.

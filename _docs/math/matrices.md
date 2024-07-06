@@ -3,7 +3,7 @@ title: Matrices
 permalink: /docs/math/matrices
 ---
 
-There are two implementations for matrices that are offered. A **3x3 column major** matrix [Mat3](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/math/Mat3.kt) and a **4x4 column major** matrix [Mat4](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/math/Mat4.kt).
+There are two implementations for matrices that are offered. A **3x3 column major** matrix [Mat3](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/math/Mat3.kt) and a **4x4 column major** matrix [Mat4](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/math/Mat4.kt).
 
 Unlike vectors, these matrices are mutable by default and do not offer any immutable versions.
 

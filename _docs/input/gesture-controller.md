@@ -3,11 +3,11 @@ title: Gesture Controller
 permalink: /docs/input/gesture-controller
 ---
 
-A [GestureController](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/input/gesture/GestureController.kt) is an [InputProcessor](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/input/InputProcessor.kt) that handles input events and detects any gesture related events and emits them as a new event.
+A [GestureController](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/input/gesture/GestureController.kt) is an [InputProcessor](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/input/InputProcessor.kt) that handles input events and detects any gesture related events and emits them as a new event.
 
 ## Detecting Gestures
 
-Using a `GestureController` is as simple as using an `InputProcessor` except that it expects a [GestureProcessor](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/input/gesture/GestureProcessor.kt) as an input to handle gesture events. Gesture events can be seen as anything related to touching the screen such as pinch zooming, panning. fling scrolling, etc.
+Using a `GestureController` is as simple as using an `InputProcessor` except that it expects a [GestureProcessor](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/input/gesture/GestureProcessor.kt) as an input to handle gesture events. Gesture events can be seen as anything related to touching the screen such as pinch zooming, panning. fling scrolling, etc.
 
 ### GestureProcessor
 

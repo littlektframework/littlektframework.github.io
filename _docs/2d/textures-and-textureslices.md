@@ -5,7 +5,7 @@ permalink: /docs/2d/textures-and-texture-slices
 
 # Texture
 
-A [Texture](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graphics/Texture.kt) object handles the decoded data of an image file and uploading it to the GPU. If a `Texture` is created manually, we must then call the `prepare()` method which grabs the `GL` instance from the `Context` and uploads the image to the GPU.
+A [Texture](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/Texture.kt) object handles the decoded data of an image file and uploading it to the GPU. If a `Texture` is created manually, we must then call the `prepare()` method which grabs the `GL` instance from the `Context` and uploads the image to the GPU.
 
 ### Reading a Texture
 
@@ -16,7 +16,7 @@ val texture: Texture = resourcesVfs["texture.png"].readTexture()
 
 # TextureSlice
 
-A [TextureSlice](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graphics/TextureSlice.kt) describes a rectangular portion inside a texture. This is useful for only drawing a portion of the texture.
+A [TextureSlice](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/TextureSlice.kt) describes a rectangular portion inside a texture. This is useful for only drawing a portion of the texture.
 
 ```kotlin
 val texture: Texture = resourcesVfs["texture.png"].readTexture()

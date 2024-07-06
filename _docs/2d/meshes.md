@@ -3,40 +3,59 @@ title: 2D Meshes
 permalink: /docs/2d/meshes
 ---
 
-A [Mesh](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graphics/Mesh.kt) is a collection of vertices and indices that are used to describe geometry in order to render. By default, a mesh makes use of vertex buffer objects (VBOs) and vertex array objects (VAOs) whereever available.
+A [Mesh](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/Mesh.kt) is a collection of vertices that are used to describe geometry in order to render. By default, a mesh makes use of vertex buffer objects (VBOs). An [IndexedMesh](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/IndexedMesh.kt) extends a `Mesh` and uses a collection of indices, in addition to vertices, to describe geometry. 
 
-`Mesh` is used in [SpriteBatch](/docs/2d/spritebatch) in order to store the geomtery to upload all the vertex information in a single batch for rendering which allows for performance gains by reducing draw calls.
+`IndexedMesh` is used in [SpriteBatch](/docs/2d/spritebatch) to store the geometry to upload all the vertex information in a single batch for rendering which allows for performance gains by reducing draw calls.
 
 ## Creating a Mesh
 
-To create a `Mesh` we must describe the data in each vertex by defining a `VertexAttribute`.
+To create a `Mesh` we must describe the data in each vertex by defining a `VertexAttribute` by first creating the `MeshGeometry`.
 
 ```kotlin
-val mesh = Mesh(context.gl, isStatic = true, maxVertices = 4, maxIndices = 0, useBatcher = false, attributes = listOf(VertexAttribute.POSITION_VEC3 VertexAttribute.TEX_COORDS(0)))
-
+val geometry = CommonMeshGeometry(
+                    VertexBufferLayout(
+                        listOf(
+                            VertexAttribute(VertexFormat.FLOAT32x3, 0, 0, VertexAttrUsage.POSITION),
+                            VertexAttribute(
+                                VertexFormat.FLOAT32x2,
+                                VertexFormat.FLOAT32x4.bytes.toLong() + VertexFormat.FLOAT32x3.bytes.toLong(),
+                                2,
+                                VertexAttrUsage.TEX_COORDS
+                            )
+                        ).calculateStride().toLong()
+                    ),
+                    size = 1000
+                )
 val vertices = floatArrayOf(
     -1f, -1f, 0f, 0f, 0f, // x1, y1, z1, u1, v1,
     1f, -1f, 0f, 1f, 0f, // x2, y2, z2, u2, v2
     1f, 1f, 0f, 1f, 1f, // x3, y3, z3, u3, v3
     -1f, 1f, 0f, 0f, 1f // x4, y4, z4, u4, v4
 )
-mesh.setVertices(vertices)
+geometry.add(vertices)
+
+val mesh = Mesh(device, geometry)
 ```
 
-The mesh above was created using a `FloatArray` to describe the vertex data. The mesh is using a `POSTION_VEC3`, which has a size of three, and a `TEX_COORDS(0)` which has a size of two. Our total vertex size would then be 5. The first three points are the position coordinates and the next two would then be the texture coordinates. This is repeated for each vertex.
+The mesh above was created using a `FloatArray` to describe the vertex data. The mesh is using a `POSITION`, which has a size of three floats, and a `TEX_COORDS` which has a size of two floats. Our total vertex size would then be 5. The first three points are the position coordinates and the next two would then be the texture coordinates. This is repeated for each vertex.
 
 ## Rendering
 
-To render the mesh, all we have to do is call the `render` method after we setup our mesh and set our vertices. By default, a `Mesh` will call autobind itself when rendering. We can disable this by setting `autoBind = false` when constructing the mesh.
+To render a mesh, we must pass the mesh geometry info into a `RenderPassEncoder`. But before we do any of that, we must first call `mesh.update()` in order to update the underlying mesh buffers (vertex and/or index buffers), if the underlying geometry has changed. This will recreate any buffers that have ran out of room and upload it to the GPU.
 
 ```kotlin
-mesh.render(drawMode = DrawMode.TRIANGLES) // omitting a shader
-```
+mesh.update() // update the mesh
+renderPass.setIndexBuffer(mesh.ibo, IndexFormat.UINT16) // if we are using an IndexedMesh
+renderPass.setVertexBuffer(0, mesh.vbo)
 
-Typically, we will want to pass in a [Shader](/docs/shading/shaders) to the `render()` method. By doing so, we will need to ensure we are passing in the correct data, binding any `Texture`, and set any model transformations before binding the shader and setting it's uniforms.
+// set render pass pipeline & bind groups
+renderPass.setPipeline(...)
 
-```kotlin
-mesh.render(shader) // defaults to DrawMode.TRIANGLES
+// draw if using we set an index buffer
+renderPass.drawIndexed(indexCount = 6, instanceCount = 1)
+
+// otherwise, draw with vertex
+renderPass.draw(vertexCount = 4, instanceCount = 1)
 ```
 
 ## Mesh Utilities
@@ -45,38 +64,46 @@ Creating and setting the vertex information manually is great when we need fine 
 
 ### Creation
 
-For example, if we wanted a `Mesh` that contained position coordinates, a packer color, and texture coordinates, we could simply use the helper extension as so:
+For example, if we wanted a `Mesh` that contained position coordinates, a packer color, and texture coordinates, we could simply use the helper extension as so.
 
 ```kotlin
-val mesh = textureMesh(context.gl) { // we have access to MeshProps here which is used to construct a Mesh
-    maxVertices = 4
-    maxIndicies = 6
+val mesh = textureMesh(device, size = 100) {
+    // we have CommonMeshGeometry scoped in here, so we can manipulate as we need
+    // e.g:
+    addVertex { 
+        position.x = 0f
+        position.y = 0f
+        texCoords.x = 0f
+        texCoords.y = 0f
+    }
 }
 
 // if in Context scope
-val mesh = textureMesh {
-    maxVertices = 4
-    maxIndicies = 6
+val mesh = textureMesh(size = 100) {
+    // we have CommonMeshGeometry scoped in here, so we can manipulate as we need
 }
 ```
 
-Built in mesh creation methods:
+Built-in mesh creation methods:
 
 -   `mesh()`: Requires passing in a list of `VertexAttribute`. This is the base method the other builder methods use to construct the mesh.
--   `colorMesh()`: A mesh with vertex info of `POSITION_2D` and `COLOR_PACKED`
--   `colorMeshUnpacked()`: A mesh with vertex info of `POSITION_2D` and `COLOR_UNPACKED`
--   `textureMesh()`: A mesh with vertex info of `POSITION_2D`, `COLOR_PACKED` and `TEX_COORDS(0)`
--   `positionMesh()`: A mesh with vertex info of `POSITION_2D`.
--   `position3Mesh()`: A mesh with vertex info of `POSITION_VEC3`.
--   `position4Mesh()`: A mesh with vertex info of `POSITION_VEC4`.
+-   `colorMesh()`: A mesh with vertex info of `POSITION` and `COLOR`
+-   `textureMesh()`: A mesh with vertex info of `POSITION`, `COLOR` and `TEX_COORDS`
+
+
+Built-in indexed mesh creation methods:
+
+-   `indexedMesh()`: Requires passing in a list of `VertexAttribute`. This is the base method the other builder methods use to construct the mesh.
+-   `colorIndexedMesh()`: An indexed mesh with vertex info of `POSITION` and `COLOR`
+-   `textureIndexedMesh()`: An indexed mesh with vertex info of `POSITION`, `COLOR` and `TEX_COORDS`
 
 ### Setting common patterns for Indices
 
-When creating a mesh, usually we either want to use a quad or a triangle. A mesh offers methods for constructing the indices automatically for these two types. Any other way would need to be manually set.
+When creating an indexed mesh, usually we either want to use a quad or a triangle. A mesh offers methods for constructing the indices automatically for these two types. Any other way would need to be manually set.
 
 ```kotlin
-mesh.indicesAsQuad() // sets the indices as a quad shape
-mesh.indicesAsTri() // sets the indices as a triangle shape
+indexedMesh.indicesAsQuad() // sets the indices as a quad shape
+indexedMesh.indicesAsTri() // sets the indices as a triangle shape
 ```
 
 ### Using MeshGeometry to build a Mesh
@@ -85,52 +112,38 @@ By default, a `Mesh` uses a class called `MeshGeometry` that helps with building
 
 ```kotlin
 val mesh = textureMesh {
-    maxVertices = 4
-}.apply {
-    geometry.run {
-        addVertex {
-            position.x = 50f
-            position.y = 50f
-            colorPacked.value = colorBits
-            texCoords.u = 0f
-            texCoords.v = 0f
-        }
-
-        addVertex {
-            position.x = 66f
-            position.y = 50f
-            colorPacked.value = colorBits
-            texCoords.u = 1f
-            texCoords.v = 0f
-        }
-
-        addVertex {
-            position.x = 66f
-            position.y = 66f
-            colorPacked.value = colorBits
-            texCoords.u = 1f
-            texCoords.v = 1f
-        }
-
-        addVertex {
-            position.x = 50f
-            position.y = 66f
-            colorPacked.value = colorBits
-            texCoords.u = 0f
-            texCoords.v = 1f
-        }
-
-        indicesAsQuad()
+    addVertex {
+        position.x = 50f
+        position.y = 50f
+        colorPacked.value = colorBits
+        texCoords.u = 0f
+        texCoords.v = 0f
     }
+
+    addVertex {
+        position.x = 66f
+        position.y = 50f
+        colorPacked.value = colorBits
+        texCoords.u = 1f
+        texCoords.v = 0f
+    }
+
+    addVertex {
+        position.x = 66f
+        position.y = 66f
+        colorPacked.value = colorBits
+        texCoords.u = 1f
+        texCoords.v = 1f
+    }
+
+    addVertex {
+        position.x = 50f
+        position.y = 66f
+        colorPacked.value = colorBits
+        texCoords.u = 0f
+        texCoords.v = 1f
+    }
+
+    indicesAsQuad()
 }
-
-texture.bind()
-mesh.render(shader) // no need to set the vertices or the count as the mesh batcher handles it automatically!
-```
-
-We can also use `MeshGeometry` directly without creating `Mesh` instance to allow the building of mesh geometry without needing to bind to OpenGL with a `Mesh`. We then can pass in the `MeshGeometry` instance when building the mesh and it will use that data to render.
-
-```kotlin
-val geometry = MeshGeometry(Usage.STATIC_DRAW, VertexAttributes(listOf(VertexAttribute.POSITION_2D, VertexAttribute.COLOR_PACKED)))
-val mesh = Mesh(context.gl, geometry)
 ```

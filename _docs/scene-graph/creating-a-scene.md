@@ -3,7 +3,7 @@ title: Creating a Scene
 permalink: /docs/scene-graph/creating-a-scene
 ---
 
-Creating and using a [SceneGraph](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/SceneGraph.kt) can done in an idiomatic way without all the verbose code of constantly adding nodes to a parent. **LittleKt** offers a DSL to do this very easily and enjoyably.
+Creating and using a [SceneGraph](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/SceneGraph.kt) can done in an idiomatic way without all the verbose code of constantly adding nodes to a parent. **LittleKt** offers a DSL to do this very easily and enjoyably.
 
 ## Create a SceneGraph
 
@@ -21,7 +21,7 @@ The `SceneGraph`, by default, will use a `ScreenViewport`. If we want to use a d
 
 Before we can use the `SceneGraph`, we must first ensure we call the `initialize()` method. This will initialize the `root` Node and trigger the `root.onPostEnterScene()` lifecycle method. The reason we must explicilty intialize the graph is due to needing to pass in the instance of `SceneGraph` to the `root` in order to start the Node initializing and lifecycle callbacks on a non-final method. Because we can extend a `SceneGraph`, the Kotlin compiler warns us to not access non-final properties or methods in a partially constructed object.
 
-The `SceneGraph` is also an [InputProcessor](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/input/InputProcessor.kt). This is used mainly for determining input on the user interface nodes. When the scene graph is first created, it will add itself to the contexts list of input processors. When the scene graph is disposed, it will remove itself from that list.
+The `SceneGraph` is also an [InputProcessor](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/input/InputProcessor.kt). This is used mainly for determining input on the user interface nodes. When the scene graph is first created, it will add itself to the contexts list of input processors. When the scene graph is disposed, it will remove itself from that list.
 
 ### Adding Nodes
 

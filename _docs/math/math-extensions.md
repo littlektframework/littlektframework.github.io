@@ -3,7 +3,7 @@ title: Math Extensions
 permalink: /docs/math/math-extensions
 ---
 
-On top of all the math implementations, **LittleKt** also has a bunch of helper and utility math extensions that will aim to make math just a bit easier. They are all contained in the [math.kt](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/math/math.kt) file. There are many extensions offered so it is best to check them out and try them ourselves.
+On top of all the math implementations, **LittleKt** also has a bunch of helper and utility math extensions that will aim to make math just a bit easier. They are all contained in the [math.kt](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/math/math.kt) file. There are many extensions offered so it is best to check them out and try them ourselves.
 
 Here are a few notable ones:
 

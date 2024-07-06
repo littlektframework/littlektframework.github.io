@@ -7,7 +7,7 @@ LittleKt offers a more manual way of creating and simulating particles. It is a 
 
 ## Overview
 
-A [Particle](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graphics/Particle.kt) itself is just a class that holds the particle data such as position, scale, color, deltas, multipliers, and others. All of this data we can set manually and then is used within a [ParticleSimulator](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graphics/ParticleSimulator.kt) to simulate it.
+A [Particle](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/Particle.kt) itself is just a class that holds the particle data such as position, scale, color, deltas, multipliers, and others. All of this data we can set manually and then is used within a [ParticleSimulator](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/ParticleSimulator.kt) to simulate it.
 
 
 ## Creating a Particle and ParticleSimulator

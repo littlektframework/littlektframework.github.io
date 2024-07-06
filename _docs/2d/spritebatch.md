@@ -15,7 +15,7 @@ A `SpriteBatch` is given a texture and coordinates of each portion of that textu
 
 ## SpriteBatch
 
-A [SpriteBatch](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graphics/SpriteBatch.kt) batches the geometry for drawing a single texture into a single draw call. A `SpriteBatch` uses a [Mesh](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graphics/Mesh.kt) internally to render the geometry. A `Spritebatch` must either called `begin` and `end` methods or the `use` method to do any drawing. The drawing must be done between the calls of these methods.
+A [SpriteBatch](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/SpriteBatch.kt) batches the geometry for drawing a single texture into a single draw call. A `SpriteBatch` uses a [Mesh](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/Mesh.kt) internally to render the geometry. A `Spritebatch` must either called `begin` and `end` methods or the `use` method to do any drawing. The drawing must be done between the calls of these methods.
 ``
 
 ```kotlin

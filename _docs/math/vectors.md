@@ -3,7 +3,7 @@ title: Vectors
 permalink: /docs/math/vectors
 ---
 
-The [math](https://github.com/littlektframework/littlekt/tree/master/core/src/commonMain/kotlin/com/lehaine/littlekt/math) module offers a bunch of classes dealing with Vectors of different sizes. `Vec2`, `Vec3`, and `Vec4`. **It should be noted that the `Vec4` is not a `Quaternion` implementation!**
+The [math](https://github.com/littlektframework/littlekt/tree/master/core/src/commonMain/kotlin/com/littlekt/math) module offers a bunch of classes dealing with Vectors of different sizes. `Vec2`, `Vec3`, and `Vec4`. **It should be noted that the `Vec4` is not a `Quaternion` implementation!**
 
 Each vector comes with a `Float` and `Int` types. They ended with `f` and `i` respectively. For each of these types, these vectors come with an **immutable** and **mutable** versions. By default, **LittleKt** will use immutable vectors.
 

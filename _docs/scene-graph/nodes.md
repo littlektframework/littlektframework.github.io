@@ -3,13 +3,13 @@ title: Nodes
 permalink: /docs/scene-graph/nodes
 ---
 
-There are three main implemenations of nodes in the scene graph that LittleKt offers. Those three are the base [Node](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/node/Node.kt), a 2D based node [Node2D](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/node/node2d/Node2D.kt), and the user interface module of nodes. We will be reviewing `Node` and `Node2D` here. Check out [The User Interface](/docs/ui/the-user-interface) if you want to learn more on the UI.
+There are three main implemenations of nodes in the scene graph that LittleKt offers. Those three are the base [Node](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/Node.kt), a 2D based node [Node2D](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/node2d/Node2D.kt), and the user interface module of nodes. We will be reviewing `Node` and `Node2D` here. Check out [The User Interface](/docs/ui/the-user-interface) if you want to learn more on the UI.
 
 ## Node
 
 The `Node` contains the base implementation that is used by all nodes in a scene graph. This contains lifecycle methods, render methods, adding/removing children, and any hiearchy changes.
 
-A `Node` can contain one or more [Signal](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/util/signals.kt) types which can be used to subscribe to certain events that the node can emit.
+A `Node` can contain one or more [Signal](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/util/signals.kt) types which can be used to subscribe to certain events that the node can emit.
 
 For example, the `Node` class contains the following signals:
 
@@ -164,7 +164,7 @@ node2d {
 
 ### Material
 
-A `CanvasItem` contains [Material](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/node/render/Material.kt) instance that can be used to set shaders, blend modes, and depth/stencil modes. The `SceneGraph` handles any changes of the material of a `CanvasItem` which will flush the current batch thus increasing by a draw call.
+A `CanvasItem` contains [Material](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/render/Material.kt) instance that can be used to set shaders, blend modes, and depth/stencil modes. The `SceneGraph` handles any changes of the material of a `CanvasItem` which will flush the current batch thus increasing by a draw call.
 
 ```kotlin
 node2d {
@@ -177,7 +177,7 @@ node2d {
 
 #### Blend Mode Types
 
-All the blend modes that can be used in a material are all under the [BlendMode](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/node/render/BlendMode.kt) class. Each type is a singleton object that can be accessed directly as so: `BlendMode.Alpha`.
+All the blend modes that can be used in a material are all under the [BlendMode](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/render/BlendMode.kt) class. Each type is a singleton object that can be accessed directly as so: `BlendMode.Alpha`.
 
 -   `Alpha`
 -   `Opaque`
@@ -194,7 +194,7 @@ All the blend modes that can be used in a material are all under the [BlendMode]
 
 #### Depth/Stencil Mode Types
 
-All the blend modes that can be used in a material are all under the [DepthStencilMode](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/node/render/DepthStencilMode.kt) class. Each type is a singleton object that can be accessed directly as so: `DepthStencilMode.None`.
+All the blend modes that can be used in a material are all under the [DepthStencilMode](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/render/DepthStencilMode.kt) class. Each type is a singleton object that can be accessed directly as so: `DepthStencilMode.None`.
 
 -   `Default`
 -   `DepthRead`

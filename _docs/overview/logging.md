@@ -5,7 +5,7 @@ permalink: /docs/overview/logging
 
 ## Logger
 
-**LittleKt** offers its own lightweight logging class that can print messages in as a formatted string called [Logger](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/log/Logger.kt).
+**LittleKt** offers its own lightweight logging class that can print messages in as a formatted string called [Logger](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/log/Logger.kt).
 
 We can create our own `Logger` instance either at app level and pass it down to the required classes or its own `Logger` instance in the specified class.
 

@@ -3,11 +3,11 @@ title: Context and ContextListener
 permalink: /docs/overview/context-and-contextlistener
 ---
 
-LittleKt makes use of everything stemming from the [Context](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/Context.kt). The `Context` contains everything we need to actually create a game. It contains the instances of the `Graphics`, `Input`, `GL`, `Stats`, `Vfs`, and others. From just the context we can access all of these instances.
+LittleKt makes use of everything stemming from the [Context](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/Context.kt). The `Context` contains everything we need to actually create a game. It contains the instances of the `Graphics`, `Input`, `GL`, `Stats`, `Vfs`, and others. From just the context we can access all of these instances.
 
 The context itself is also a `CoroutineScope`. We can launch coroutines directly from the context which will run on the main thread. If we want to run something in a separate thread, then we can create our own CoroutineContext and launch a coroutine using it instead. The `Vfs` instance also a `CoroutineScope` which can be used to read and write files on separate threads.
 
-To get access to a `Context` instance we can create a [ContextListener](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/ContextListener.kt) which requires `Context` when constructing. To see how we can do the check out the [creating your first application](/docs/starting/first-application) page.
+To get access to a `Context` instance we can create a [ContextListener](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/ContextListener.kt) which requires `Context` when constructing. To see how we can do the check out the [creating your first application](/docs/starting/first-application) page.
 
 ## Context
 

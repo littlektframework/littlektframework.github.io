@@ -3,7 +3,7 @@ title: Bitmap Fonts
 permalink: /docs/2d/fonts/bitmap-fonts
 ---
 
-Bitmap fonts are supported in the [BMFont](https://www.angelcode.com/products/bmfont/) format. A [BitmapFont](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graphics/font/BitmapFont.kt) can draw strings of text using its own internal cache or we can create our own cache using the specified font.
+Bitmap fonts are supported in the [BMFont](https://www.angelcode.com/products/bmfont/) format. A [BitmapFont](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/font/BitmapFont.kt) can draw strings of text using its own internal cache or we can create our own cache using the specified font.
 
 ## Bitmap Font
 
@@ -17,7 +17,7 @@ val font: BitmapFont = resourcesVfs["arial_32.fnt"].readBitmapFont()
 
 ### Drawing Text
 
-Each `BitmapFont` object contains its own internal [BitmapFontCache](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graphics/font/BitmapFontCache.kt) which is an extension of a [FontCache](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graphics/font/FontCache.kt). When we draw directly with the font, it will store the geometry of the glyphs drawn internally. This will clear any existing text. If we want to draw strings of text at different positions and colors we will need to create our own `BitmapFontCache`.
+Each `BitmapFont` object contains its own internal [BitmapFontCache](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/font/BitmapFontCache.kt) which is an extension of a [FontCache](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/font/FontCache.kt). When we draw directly with the font, it will store the geometry of the glyphs drawn internally. This will clear any existing text. If we want to draw strings of text at different positions and colors we will need to create our own `BitmapFontCache`.
 
 Multi-line texts, wrapping, and horizontally aligning text are all supported. Wrapping works by specifying the max width that the area of a font should take up. If it exceeds it, the internal glyph layout will wrap the text.
 
