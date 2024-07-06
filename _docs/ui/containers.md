@@ -72,7 +72,7 @@ hBoxContainer {
 }
 ```
 
-We can also use `row` isntead which is the same as `hBoxContainer`.
+We can also use `row` instead which is the same as `hBoxContainer`.
 
 ```kotlin
 row {
