@@ -22,8 +22,8 @@ A [SpriteBatch](https://github.com/littlektframework/littlekt/blob/master/core/s
 val batch = SpriteBatch(context)
 
 onUpdate {
-    gl.clear(ClearBufferMask.COLOR_BUFFER_BIT)
-    batch.use {
+    val renderPass = ... // render pass setup
+    batch.use(renderPass) {
        // drawing logic goes here
     }
 
@@ -31,15 +31,9 @@ onUpdate {
 
     batch.begin()
     // do drawing logic here
+    batch.flush(renderPass)
     batch.end()
 }
-```
-
-`SpriteBatch` assumes the active texture unit is **0**. When using a custom shader or binding a texture ourself, we must ensure we reset the active texture unit by calling:
-
-```kotlin
-val gl: GL = context.gl
-gl.activeTexture(GL.TEXTURE0)
 ```
 
 ### Projection Matrix
@@ -47,7 +41,7 @@ gl.activeTexture(GL.TEXTURE0)
 We can also set the projection matrix of the _SpriteBatch_ that will be used in the shader to render the items. This is mainly used with a [camera](/docs/2d/cameras-and-viewports) but can be any matrix:
 
 ```kotlin
-batch.use(camera.viewProjection) {
+batch.use(renderPass, camera.viewProjection) {
     // we are using the cameras view projection matrix to render
 }
 
@@ -64,12 +58,15 @@ val slices = texture.slice(16, 16)
 val person = slices[0][0]
 
 onUpdate {
-    gl.clear(ClearBufferMask.COLOR_BUFFER_BIT)
-    batch.use {
+    val renderPass = ... // render pass setup
+    batch.use(renderPass) {
        // the draw method also contains a few more parameters such as origin, scale, rotation, colors, and flipping.
        // they all have a default value so we don't have to specify them.
        it.draw(texture, x = 50f, y = 25f)
        it.draw(person, x = 5f, y = 50f)
     }
+    renderPass.end()
+    
+    // release render pass & surface textures
 }
 ```

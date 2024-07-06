@@ -61,7 +61,6 @@ val batch = SpriteBatch(context)
 val font: BitmapFont = resourcesVfs["arial_32.fnt"].readBitmapFont()
 val cache = BitmapFontCache(font)
 
-
 cache.addText("This is my first line", x = 50f, y = 5f)
 
 cache.setText("This is my test", x = 5f, y = 5f) // this will clear the data from the 'addText' method.
@@ -89,6 +88,6 @@ Once we are done we can call the `dispose()` method on the `BitmapFont` object.
 val font: BitmapFont = resourcesVfs["arial_32.fnt"].readBitmapFont()
 
 onRelease {
-    font.dispose() // font is no longer usable
+    font.release() // font is no longer usable
 }
 ```

@@ -41,24 +41,6 @@ override suspend fun Context.start() {
 
 By design, LittleKt uses [dependency injection](https://en.wikipedia.org/docs/Dependency_injection) pattern for everything we can make use of. LittleKt avoids singletons and global states. If we want to access the context in a class then we would need to ensure we pass down the reference of the said context to the required class. This may seem awkward if you never have used it but this makes sure the follows the separation of concern, decoupling classes, code reuse, and readability. LittleKt does not make use of any dependency injection framework.
 
-### GL
-
-We can access the **OpenGL** context directly by using `Context.gl`. The [GL](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graphics/GL.kt) interface contains all the OpenGL calls implementation for the target platform and can and should make use of it.
-
-The _GL_ interface also contains all the constant flag values that we have at our disposable as well, as one would assume. We can access them statically with _GL_: `GL.COLOR_BUFFER_BIT`
-
-On top of using the integer flags directly, we can also use the typed inline classes that LittleKt offers. This can help with preventing obscure bugs and using the wrong flags for a certain OpenGL call. We can view all of these value classes here under [enums.kt](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graphics/gl/enums.kt).
-
-For example:
-
-```kotlin
-// use the int flag directly
-gl.drawArrays(GL.TRIANGLES, 0, count)
-
-// or we can use the DrawMode value class to set it
-gl.drawArrays(DrawMode.TRIANGLES, 0, count)
-```
-
 ## Context Listener
 
 When a context is built is expects a context listener in order to initialize and begin rendering. By creating a `ContextListener` and passing it into the `LittleKtApp` a new context will be intialized with the specified listener. This allows the listener to gain access to the context instance as well as the context managing the specified listener by calling its lifecycle methods.

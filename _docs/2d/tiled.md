@@ -108,5 +108,5 @@ val health: Int = healthProp?.int ?: 100 // converts the prop to an Int
 Once we are finished with the `TiledMap` we can call the `dispose()` method on the loaded map. This will dispose any of the textures it owns. If a `TextureAtlas` was passed in then the loader won't own any of the textures and therefor won't dispose of any.
 
 ```kotlin
-tiledMap.dispose()
+tiledMap.release()
 ```

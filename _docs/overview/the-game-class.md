@@ -40,13 +40,13 @@ abstract class Scene(val context: Context) : Disposable {
     open suspend fun Context.hide() = Unit
 
     final override fun dispose() {
-        context.dispose()
+        context.release()
     }
 
     /**
      * Dispose of any assets here.
      */
-    open fun Context.dispose() = Unit
+    open fun Context.release() = Unit
 }
 ```
 
@@ -65,8 +65,8 @@ class MyGameScene(context: Context, private val font: BitmapFont) : Scene(contex
         }
     }
 
-    override fun Context.dispose() {
-        batch.dispose()
+    override fun Context.release() {
+        batch.release()
     }
 }
 

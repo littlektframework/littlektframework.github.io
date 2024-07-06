@@ -160,5 +160,5 @@ val backpack = hero.fieldArray<LDtkEnumValue>("backpack").values
 To dispose of the textures that the LDtk world / levels own, we must called the `dispose()` method on the `LDtkMapLoader`. This is due to the `LDtkMapLoader` caching the textures when loading multiple LDtk levels. This will dispose any of the owned textures it loaded itself. If a `TextureAtlas` was passed in then the loader won't own any of the textures and therefor won't dispose of any.
 
 ```kotlin
-mapLoader.dispose()
+mapLoader.release()
 ```

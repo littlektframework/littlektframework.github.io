@@ -58,41 +58,38 @@ The order of operations here when creating a new node is, from top-to-bottom ord
 
 This allows for the children to be added to the parent Node from bottom-to-top order before they are added to the scene.
 
-For example, the scene graph above would like this:
+For example, the scene graph above would be like this:
 
 1. Node **1** is created: `Node()`.
 2. The `action` callback inside Node **1** is then invoked. This will set the name of the node to "I am a parent!" and then it will create node **2**: `Node()`.
-3. Node **2** `action` callback is then invoked and sets it's name to "I am a child!".
-4. Node **2** will then add its self to the parent context, which would be Node **1**: `Node.addTo(node)`.
-5. Node **1** will then add its self to the parent context, which would be the root Node: `Node.addTo(root)`.
+3. Node **2** `action` callback is then invoked and sets its name to "I am a child!".
+4. Node **2** will then add itself to the parent context, which would be Node **1**: `Node.addTo(node)`.
+5. Node **1** will then add itself to the parent context, which would be the root Node: `Node.addTo(root)`.
 6. Node **3** is created: `Node()`.
 7. Node **3** `action` callback is then invoked and sets its name to "I am a sibling!".
 8. Node **3** then adds itself to the parent context, which would be the root Node: `Node.addTo(root)`.
 
 ## Using a SceneGraph
 
-Once a `SceneGraph` is created, we need to call the `update()` and `render()` methods in `Context.onRender` in order for the nodes to do any updates and rendering. We will also want to make sure is receives `resize` events as well.
+Once a `SceneGraph` is created, we need to call the `update()` and `render()` methods in `Context.onUpdate` in order for the nodes to do any updates and rendering. We will also want to make sure is receives `resize` events as well.
 
 ```kotlin
 onUpdate { dt ->
-    gl.clear(ClearBufferMask.COLOR_BUFFER_BIT)
-
     scene.update(dt)
-    scene.render() // this will call GL.viewport()
+    scene.render()
 
     // we will need to make if we do other rendering with another camera / viewport
-    // that we call GL.viewport using viewport.apply(context)
     viewport.apply(context)
-    camera.update()
+    // create render pass & draw soemthing else
 }
 
 onResize { width, height ->
-    viewport.update(width, height, context)
+    viewport.update(width, height)
     scene.resize(width, height)
 }
 
 onRelease {
-    scene.dispose() // disposes managed SpriteBatch, if it exists, and removes itself as an input processor
+    scene.release() // disposes managed SpriteBatch, if it exists, and removes itself as an input processor
 }
 ```
 

@@ -58,14 +58,44 @@ val anim = AnimaationPlayer<TextureSlice>()
 anim.playLooped(heroRun)
 
 onUpdate { dt ->
-    gl.clear(ClearBufferMask.COLOR_BUFFER_BIT)
-    anim.update(dt) // handles requesting the next frames in the current animation
-    camera.update()
-    batch.use(camera.viewProjection) { batch ->
+    val surfaceTexture = graphics.surface.getCurrentTexture()
+    val swapChainTexture = checkNotNull(surfaceTexture.texture)
+    val frame = swapChainTexture.createView()
+
+    val commandEncoder = device.createCommandEncoder()
+    val renderPassEncoder =
+        commandEncoder.beginRenderPass(
+            desc =
+                RenderPassDescriptor(
+                    listOf(
+                        RenderPassColorAttachmentDescriptor(
+                            view = frame,
+                            loadOp = LoadOp.CLEAR,
+                            storeOp = StoreOp.STORE,
+                            clearColor =
+                                if (preferredFormat.srgb) Color.DARK_GRAY.toLinear()
+                                else Color.DARK_GRAY
+                        )
+                    )
+                )
+        )
+    batch.use(renderPassEncoder, camera.viewProjection) { batch ->
         anim.currentKeyFrame?.let { // use the current key frame of the animation to render
             batch.draw(it, 50f, 50f, scaleX = 5f, scaleY = 5f)
         }
     }
+    
+    renderPassEncoder.end()
+    val commandBuffer = commandEncoder.finish()
+
+    device.queue.submit(commandBuffer)
+    graphics.surface.present()
+
+    commandBuffer.release()
+    renderPassEncoder.release()
+    commandEncoder.release()
+    frame.release()
+    swapChainTexture.release()
 }
 ```
 
@@ -85,14 +115,46 @@ anim.playOnce(heroIdle) // stops after one play through
 anim.play(heroIdle, times = 5) // stops after 5 play throughs
 
 onUpdate { dt ->
-    gl.clear(ClearBufferMask.COLOR_BUFFER_BIT)
     anim.update(dt)
     camera.update()
-    batch.use(camera.viewProjection) { batch ->
+    
+    val surfaceTexture = graphics.surface.getCurrentTexture()
+    val swapChainTexture = checkNotNull(surfaceTexture.texture)
+    val frame = swapChainTexture.createView()
+
+    val commandEncoder = device.createCommandEncoder()
+    val renderPassEncoder =
+        commandEncoder.beginRenderPass(
+            desc =
+                RenderPassDescriptor(
+                    listOf(
+                        RenderPassColorAttachmentDescriptor(
+                            view = frame,
+                            loadOp = LoadOp.CLEAR,
+                            storeOp = StoreOp.STORE,
+                            clearColor =
+                                if (preferredFormat.srgb) Color.DARK_GRAY.toLinear()
+                                else Color.DARK_GRAY
+                        )
+                    )
+                )
+        )
+    batch.use(renderPassEncoder, camera.viewProjection) { batch ->
         anim.currentKeyFrame?.let {
             batch.draw(it, 50f, 50f, scaleX = 5f, scaleY = 5f)
         }
     }
+    renderPassEncoder.end()
+    val commandBuffer = commandEncoder.finish()
+
+    device.queue.submit(commandBuffer)
+    graphics.surface.present()
+
+    commandBuffer.release()
+    renderPassEncoder.release()
+    commandEncoder.release()
+    frame.release()
+    swapChainTexture.release()
 }
 ```
 
@@ -158,11 +220,7 @@ anim.apply {
     registerState(heroIdle, 0) // returns true by default.
 }
 
-
 onUpdate { dt ->
-    gl.clearColor(Color.CLEAR)
-    gl.clear(ClearBufferMask.COLOR_BUFFER_BIT)
-
     if (input.isKeyJustPressed(Key.NUM1)) {
         shouldSleep = !shouldSleep
     }
@@ -189,13 +247,46 @@ onUpdate { dt ->
         anim.play(heroRoll, 2.seconds)
     }
 
-
     anim.update(dt)
     camera.update()
     batch.use(camera.viewProjection) { batch ->
+
+    val surfaceTexture = graphics.surface.getCurrentTexture()
+    val swapChainTexture = checkNotNull(surfaceTexture.texture)
+    val frame = swapChainTexture.createView()
+
+    val commandEncoder = device.createCommandEncoder()
+    val renderPassEncoder =
+        commandEncoder.beginRenderPass(
+            desc =
+                RenderPassDescriptor(
+                    listOf(
+                        RenderPassColorAttachmentDescriptor(
+                            view = frame,
+                            loadOp = LoadOp.CLEAR,
+                            storeOp = StoreOp.STORE,
+                            clearColor =
+                                if (preferredFormat.srgb) Color.DARK_GRAY.toLinear()
+                                else Color.DARK_GRAY
+                        )
+                    )
+                )
+        )
+    batch.use(renderPassEncoder, camera.viewProjection) { batch ->
         anim.currentKeyFrame?.let {
             batch.draw(it, 50f, 50f, scaleX = 5f, scaleY = 5f)
         }
     }
+    renderPassEncoder.end()
+    val commandBuffer = commandEncoder.finish()
+
+    device.queue.submit(commandBuffer)
+    graphics.surface.present()
+
+    commandBuffer.release()
+    renderPassEncoder.release()
+    commandEncoder.release()
+    frame.release()
+    swapChainTexture.release()
 }
 ```

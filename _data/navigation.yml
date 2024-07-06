@@ -139,5 +139,5 @@ docs:
             url: /docs/tools/texture-packer
     - title: "Debugging"
       children:
-          - title: "OpenGL Profiling"
-            url: /docs/debugging/opengl-profiling
+          - title: "WebGPU Profiling"
+            url: /docs/debugging/webgpu-profiling

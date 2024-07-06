@@ -49,7 +49,7 @@ class MyGame(context: Context) : ContextListener(context) {
                 return
             }
             // We are loading now! Do whatever logic we need to do here.
-            gl.clear(ClearBufferMask.COLOR_BUFFER_BIT)
+            // e.g. render pass setup and such
         }
     }
 }

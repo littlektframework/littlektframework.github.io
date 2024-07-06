@@ -30,10 +30,9 @@ When using a camera we want to make sure we call the `update()` method on it bef
 val camera = OrthographicCamera(graphics.width, graphics.height)
 
 onUpdate {
-    gl.clear(ClearBufferMask.COLOR_BUFFER_BIT)
-
+    val renderPass = ... // render pass releated setup
     camera.update()
-    batch.use(camera.viewProjection) {
+    batch.use(renderPass, camera.viewProjection) {
         // we are using the cameras view projection matrix to render
     }
 }
@@ -61,19 +60,8 @@ A viewport can be resized by using the `update()` method which will also update 
 
 ```kotlin
 onResize { width, height ->
-    viewport.update(width, height, context)
+    viewport.update(width, height)
 }
-```
-
-### Multiple Viewports
-
-When we have multiple viewports, we must make sure we to apply the _Viewport_ before rendering so that the `glViewport` is set.
-
-```kotlin
-viewport.apply(context)
-// draw using first viewport
-viewport2.apply(context)
-// draw using the second viewport
 ```
 
 ## Types of Viewports
