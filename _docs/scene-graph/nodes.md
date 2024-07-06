@@ -3,11 +3,11 @@ title: Nodes
 permalink: /docs/scene-graph/nodes
 ---
 
-There are three main implemenations of nodes in the scene graph that LittleKt offers. Those three are the base [Node](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/Node.kt), a 2D based node [Node2D](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/node2d/Node2D.kt), and the user interface module of nodes. We will be reviewing `Node` and `Node2D` here. Check out [The User Interface](/docs/ui/the-user-interface) if you want to learn more on the UI.
+There are three main implementations of nodes in the scene graph that LittleKt offers. Those three are the base [Node](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/Node.kt), a 2D-based node [Node2D](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/node2d/Node2D.kt), and the user interface module of nodes. We will be reviewing `Node` and `Node2D` here. Check out [The User Interface](/docs/ui/the-user-interface) if you want to learn more on the UI.
 
 ## Node
 
-The `Node` contains the base implementation that is used by all nodes in a scene graph. This contains lifecycle methods, render methods, adding/removing children, and any hiearchy changes.
+The `Node` contains the base implementation that is used by all nodes in a scene graph. This contains lifecycle methods, render methods, adding/removing children, and any hierarchy changes.
 
 A `Node` can contain one or more [Signal](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/util/signals.kt) types which can be used to subscribe to certain events that the node can emit.
 
@@ -204,11 +204,14 @@ All the blend modes that can be used in a material are all under the [DepthStenc
 
 ## CanvasLayer
 
-A `CanvasLayer` node is the node that contains an `OrthographicCamera` that is used for rendering any children nodes as well as a `Viewport`. This node can be used to render nodes using different viewport and camera dimensions and positions. For example, this can be useful when we want to separate rendering a high resolution UI with a low resolution game. Do note that the based `CanvasLayer` node does **NOT** apply the _Viewport_ before rendering. Setting any viewport properties will have no affect. We can either extend and override the render method of the `CanvasLayer` or use the _ViewportCanvasLayer_ node below to use the viewport.
+A `CanvasLayer` node is the node that contains an `OrthographicCamera` that is used for rendering any children nodes as well as a `Viewport`. This node can be used to render nodes using different viewport and camera dimensions and positions. For example, this can be useful when we want to separate rendering a high resolution UI with a low resolution game. A CanvasLayer can be thought as a render target.
 
 ```kotlin
 val scene = sceneGraph(context) {
     canvasLayer {
+        viewport = ExtendViewport(480, 270)
+        // any children now will be rendered using the viewport above!
+
         node2d {
            // render my game nodes based on the canvasLayer camera!
         }
@@ -216,64 +219,6 @@ val scene = sceneGraph(context) {
     control {
         name = "UI
         // render my UI based on the scene graph viewport!
-    }
-}
-```
-
-### ViewportCanvasLayer
-
-A `ViewportCanvasLayer` is a `CanvasLayer` node that handles updating the viewport and uses it to render its children. Do note, that the DSL method to create a _ViewportCanvasLayer_ is called `viewport`!
-
-```kotlin
-val scene = sceneGraph(context) {
-    viewport {
-        viewport = ExtendViewport(480, 270)
-        // any children now will be rendered using the viewport above!
-
-        node2d {
-           // render my game nodes based on the viewport.
-        }
-    }
-    control {
-        name = "UI
-        // render my UI based on the scene graph viewport!
-    }
-}
-```
-
-### FrameBufferNode
-
-A `FrameBufferNode` is another `CanvasLayer` node that renders any of its children to a frame buffer of a specified size.
-
-```kotlin
-val scene = sceneGraph(context) {
-    val fbo = frameBuffer {
-        width = 480
-        height = 270
-
-        node2d {
-            // render in frame buffer
-        }
-    }
-
-    // we still need to render the FBO. To do so we can subscribe to the FBO onFboChanged signal.
-    node2d {
-        var slice: TextureSlice? = null
-        // subscribe to the FBO node whenever the FBO is changed
-        fbo.onFboChanged.connect(this) { fboTexture ->
-            slice = fboTexture.slice() // create new slice from the FBO texture
-        }
-
-        onRender += { batch, camera, shapeRenderer ->
-            slice?.let {
-                batch.draw(
-                    it,
-                    x = 0,
-                    y = 0,
-                    flipY = true
-                )
-            }
-        }
     }
 }
 ```
