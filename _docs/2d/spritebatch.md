@@ -15,8 +15,15 @@ A `SpriteBatch` is given a texture and coordinates of each portion of that textu
 
 ## SpriteBatch
 
-A [SpriteBatch](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/SpriteBatch.kt) batches the geometry for drawing a single texture into a single draw call. A `SpriteBatch` uses a [Mesh](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/Mesh.kt) internally to render the geometry. A `Spritebatch` must either called `begin` and `end` methods or the `use` method to do any drawing. The drawing must be done between the calls of these methods.
-``
+A [SpriteBatch](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/SpriteBatch.kt) batches the geometry for drawing a single texture into a single draw call. A `SpriteBatch` uses an [IndexedMesh](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/IndexedMesh.kt) internally to render the geometry. A `Spritebatch` must either called `begin` and `end` methods or the `use` method to do any drawing. The drawing must be done between the calls of these methods. A `SpriteBatch`, internally, uses the `SpriteBatchShader` which is a `SpriteShader`. This allows the batcher to send camera uniform updates to the shader. The camera uniform is a dynamic uniform shader, meaning if a different camera `viewProjection` is used, it will use the same shader module to render but with the updated uniform value. The size of the uniform buffer is dependent on the device's `minUniformBufferOffsetAlignment` limit and must be aligned to it. By default, the uniform buffer size will be calculated with the following formula, using a default camera dynamic size of 50, which can be changed.
+
+```kotlin
+(Float.SIZE_BYTES * 16)
+    .align(device.limits.minUniformBufferOffsetAlignment)
+    .toLong() * cameraDynamicSize
+```
+
+### Usage
 
 ```kotlin
 val batch = SpriteBatch(context)

@@ -49,7 +49,7 @@ onResize { width, height ->
 
 ## Using a Viewport
 
-Instead of managing the size of the camera ourselves, we can use a _Viewport_ instead to handle the sizing. When creating a new _Viewport_ we can either pass in our own _Camera_ instance or let the viewport create its own which we then can reference.
+Instead of managing the size of the camera ourselves, we can use a _Viewport_ instead to handle the sizing. When creating a new _Viewport_ we can either pass in our own _Camera_ instance or let the viewport create its own which we then can reference. WebGPU has certain limitations on viewports, when coming from OpenGL, may seem restrictive. For instance, viewports may not extend the size of the frame buffer it is drawing to. This makes things like a "FitViewport", where certain sides are extended outward, a bit harder to calculate as WebGPU will throw a fatal error when it detects it.
 
 ```kotlin
 val viewport = ExtendViewport(480, 270)

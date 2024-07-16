@@ -169,15 +169,14 @@ A `CanvasItem` contains [Material](https://github.com/littlektframework/littlekt
 ```kotlin
 node2d {
     material.blendMode = BlendMode.Add
-    material.depthStencilMode = DepthStencilMode.StencilWrite
 
     // or we can set shader
-    material = Material(ShaderProgram(MyFragmentShader(), MyVertexShader()))
+    material = Material(MyShader())
 ```
 
 #### Blend Mode Types
 
-All the blend modes that can be used in a material are all under the [BlendMode](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/render/BlendMode.kt) class. Each type is a singleton object that can be accessed directly as so: `BlendMode.Alpha`.
+All the blend modes that can be used in a material are all under the [BlendState](https://github.com/littlektframework/littlekt/blob/6f2e61d251d3d9d4c9731c2f3879e4ad6ea76b9a/core/src/commonMain/kotlin/com/littlekt/graphics/webgpu/command.kt#L335) class. Each type is a singleton object that can be accessed directly as so: `BlendState.Alpha`.
 
 -   `Alpha`
 -   `Opaque`
@@ -191,16 +190,6 @@ All the blend modes that can be used in a material are all under the [BlendMode]
 -   `Screen`
 -   `LinearDodge`
 -   `LinearBurn`
-
-#### Depth/Stencil Mode Types
-
-All the blend modes that can be used in a material are all under the [DepthStencilMode](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/render/DepthStencilMode.kt) class. Each type is a singleton object that can be accessed directly as so: `DepthStencilMode.None`.
-
--   `Default`
--   `DepthRead`
--   `None`
--   `StencilWrite`
--   `StencilRead`
 
 ## CanvasLayer
 
