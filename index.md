@@ -18,7 +18,7 @@ article_header:
         src: /assets/images/index.png
 title: A Kotlin Multiplatform 2D Game Framework
 excerpt: >
-    A multiplatform OpenGL 2D game framework that works on Desktop (JVM), Mobile, and Browser. It works on Windows, MacOS, Linux, Android, and Web.
+    A multiplatform WebGPU 2D game framework that works on Desktop (JVM) and Browser. It works on Windows, MacOS, Linux, and Web.
 data:
     sections:
         - title: What is it?
@@ -31,7 +31,7 @@ data:
               - title: Multiplatform
                 excerpt: Deploy your game on desktop, mobile, and web using a single code base.
               - title: Open Source
-                excerpt: Licensed under a very the very permissive Apache 2.0 and open to contributions.
+                excerpt: Licensed under the very permissive Apache 2.0 and open to contributions.
               - title: Lightweight
                 excerpt: Extremely lightweight framework to allow building custom engines and frameworks ontop of.
               - title: Tools and Utilities
