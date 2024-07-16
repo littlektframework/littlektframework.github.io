@@ -5,7 +5,7 @@ permalink: /docs/2d/shape-renderer
 
 ## Overview
 
-A [ShapeRenderer](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graphics/shape/ShapeRenderer.kt) performs drawing of shapes, lines, and paths using a [Batch](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graphics/Batch.kt) instance for more optimal and performant drawing. Ported from the awesome library [ShapeDrawer](https://github.com/earlygrey/shapedrawer) by [earlygrey](https://github.com/earlygrey).
+A [ShapeRenderer](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/shape/ShapeRenderer.kt) performs drawing of shapes, lines, and paths using a [Batch](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/Batch.kt) instance for more optimal and performant drawing. Ported from the awesome library [ShapeDrawer](https://github.com/earlygrey/shapedrawer) by [earlygrey](https://github.com/earlygrey).
 
 ## ShapeRenderer
 
@@ -26,7 +26,7 @@ If a `TextureSlice` is not provided then the `ShapeRenderer` will default to `Te
 Simplying call any of the draw methods between `Batch.begin()` and `Batch.end()` or in `Batch.use()`.
 
 ```kotlin
-batch.use {
+batch.use(renderPass)
     shapeRenderer.line(0f, 0f, 10f, 10f)
 }
 ```

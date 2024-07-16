@@ -40,7 +40,7 @@ If the map needs to be rendered entirely at one time, the `LDtkWorld` class offe
 ```kotlin
 val batch = SpriteBatch(context)
 val camera = OrthographicCamera(context.graphics.width, context.graphics.height)
-batch.use(camere.viewProjection) {
+batch.use(renderPass, camere.viewProjection) {
     map.render(it, camera)
 }
 ```
@@ -58,7 +58,7 @@ To render it one can simply call the `render` method on the level object.
 ```kotlin
 val batch = SpriteBatch(context)
 val camera = OrthographicCamera(context.graphics.width, context.graphics.height)
-batch.use(camere.viewProjection) {
+batch.use(renderPass, camere.viewProjection) {
     level.render(it, camera)
 }
 ```
@@ -76,7 +76,7 @@ As with the LDtk world and level objects, rendering the layer is done the same:
 ```kotlin
 val batch = SpriteBatch(context)
 val camera = OrthographicCamera(context.graphics.width, context.graphics.height)
-batch.use(camere.viewProjection) {
+batch.use(renderPass, camere.viewProjection) {
     layer.render(it, camera)
 }
 ```
@@ -86,7 +86,7 @@ Rendering each layer separately can be advantageous due to being able to render 
 ```kotlin
 val bgLayer = level["background"]
 val foregroundLayer = level["foreground"]
-batch.use(camere.viewProjection) {
+batch.use(renderPass, camere.viewProjection) {
     bgLayer.render(it, camera)
     player.render(it)
     foregroundLayer.render(it, camera)
@@ -160,5 +160,5 @@ val backpack = hero.fieldArray<LDtkEnumValue>("backpack").values
 To dispose of the textures that the LDtk world / levels own, we must called the `dispose()` method on the `LDtkMapLoader`. This is due to the `LDtkMapLoader` caching the textures when loading multiple LDtk levels. This will dispose any of the owned textures it loaded itself. If a `TextureAtlas` was passed in then the loader won't own any of the textures and therefor won't dispose of any.
 
 ```kotlin
-mapLoader.dispose()
+mapLoader.release()
 ```

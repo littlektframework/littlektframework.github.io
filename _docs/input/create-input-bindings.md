@@ -9,7 +9,7 @@ But what if we wanted to define our own input types that can have keys, gamepad 
 
 ## InputMapController
 
-The [InputMapController](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/input/InputMapController.kt) is a class that handles key, game buttons, and game axis inputs and converts them into a single custom input signal type. The controller is also an [InputProcessor](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/input/InputProcessor.kt).
+The [InputMapController](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/input/InputMapController.kt) is a class that handles key, game buttons, and game axis inputs and converts them into a single custom input signal type. The controller is also an [InputProcessor](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/input/InputProcessor.kt).
 
 Using the controller is easy and a one time setup. All we have to do is define our own `InputType` that we want to use as the signal and then add use it to add bindings to the controller.
 
@@ -163,7 +163,7 @@ init {
 }
 
 override suspend fun Context.start() {
-    onRender { dt ->
+    onUpdate { dt ->
         val dir = controller.vector(GameInput.MOVEMENT)
         // ...
     }

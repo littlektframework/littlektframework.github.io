@@ -3,144 +3,143 @@ title: Shaders
 permalink: /docs/shading/shaders
 ---
 
-LittleKt offers utility classes for writing GLSL code, called shaders, in order to render items onto the screen. By default, the `SpriteBatch` class uses its own default shader to handle rendering. If we create our own `Mesh` class, we would have to pass in our own shader in our to see something on the screen.
+LittleKt offers utility classes for writing GLSL code, called shaders, in order to render items onto the screen. By default, the `SpriteBatch` class uses its own default shader to handle rendering. If we forgo using a `SpriteBatch`, we would have to setup the render pipeline ourselves. But in this article, we will show how to build upon the LittleKt `Shader` API.
 
 ## What are Shaders
 
-Shaders are small programs written in GLSL, which is a C-like language, that is then loaded onto the GPU and processes data in order to render things onto the screen. For more info on what shaders are and how to actually use a shader check out the shader article on [LearnOpengl](https://learnopengl.com/Getting-started/Shaders).
+Shaders are small programs written in WGSL, which is a C-like language, that is then loaded onto the GPU and processes data in order to render things onto the screen. For more info on what shaders are and how to use a shader check out the shader article on [w3](https://www.w3.org/TR/WGSL/).
 
 
 ## Creating Shaders
 
-To use shaders in LittleKt, we have two classes available to us that we can extend, [FragmentShaderModel](https://github.com/littlektframework/littlekt/blob/72361217dbd8527cc8713d89d86837f0dc66c853/core/src/commonMain/kotlin/com/lehaine/littlekt/graphics/shader/Shader.kt#L23) and [VertexShaderModel](https://github.com/littlektframework/littlekt/blob/72361217dbd8527cc8713d89d86837f0dc66c853/core/src/commonMain/kotlin/com/lehaine/littlekt/graphics/shader/Shader.kt#L61). These classes, themselves, are a [GlslGenerator](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graphics/shader/generator/GlslGenerator.kt) object. We can write the GLSL that targets OpenGL ES 2.0 and it will automatically handle any changes needed to make the shader work for WebGL and desktop. It will also handle updating the shader to the OpenGL 3.0 syntax if the system supports it.
+Using the open class, `Shader` we create custom shaders that handle most of the pipeline and bindings creation for us. All we need to do is pass along the shader source, a `Device` and the "layout" descriptors.
 
-### GLSL Generator
+### Shader
 
-The [GLSL generator](/docs/shading/glsl-generator) is a way to write shaders in Kotlin which will then be converted in GLSL code at runtime. It is very simple to get started with. Do note that there may be some features or syntax missing. If you run into such an issue feel free to open an issue on the GitHub repo and we can see on how we can get it added in. With that said, it might not be worth writing shaders directly in Kotlin if you are fighting the framework. We can write pure GLSL code instead and it will still work.
-
-#### A simple shader in Kotlin
-
-We can define our variables for the shader at top level by using the delegate property. We then can pass in the variable type, such as **Mat4**, **Vec2**, **Vec3**, etc, that is going to be used. All of these variables can be **private** since they are of no use to anyone outside the shader. We will get into how to pass in data to a uniform later in just a bit. The names of the variable we use are the actual names that will be generated in GLSL code.
-
-Once we have our variables defined, we can write the actual shader inside the `init { }` block of our class.
-
-For a `VertxShader` we have access to the `gl_Position` variable that is inherited from `VertexShaderModel`. For a `FragmentShader` we have access to the `gl_FragColor` variable that is inherited from `FragmentShaderModel`.
-
+This is a simplified example that skips showing all the setup. But if we know WebGPU, we can create our custom pipeline to handle it all.
 
 ```kotlin
-class SimpleColorVertexShader : VertexShaderModel() {
-    private val u_projTrans by uniform(::Mat4)
-    private val a_position by attribute(::Vec4)
-    private val a_color by attribute(::Vec4)
-    private var v_color by varying(::Vec4)
-
-    init {
-        v_color = a_color
-        gl_Position = u_projTrans * a_position
-    }
-}
-
-class SimpleColorFragmentShader : FragmentShaderModel() {
-    private val v_color by varying(::Vec4, Precision.LOW)
-
-    init {
-        gl_FragColor = v_color
-    }
-}
+val shader = Shader(device, MY_SHADER_SRC, bindingGroupLayoutDescritors)
+val renderPipeline = device.createRenderPipeline(...) // pipeline setup
 ```
 
-We also have the luxury of being able to dynamically generate shaders based on the parameters we pass into the constructor.
+#### Buffer Updates
+
+A Shader has an open function, that expects a map of data, to allow updating specific buffers used in the shader.
 
 ```kotlin
-class MyVertexShader(color: Color) : VertexShaderModel() {
-    private val u_projTrans by uniform(::Mat4)
-    private val a_position by attribute(::Vec4)
-    private var v_color by varying(::Vec4)
-
-    init {
-        if (color == Color.RED) { // this if statement will not be in the actual GLSL code
-            v_color = vec4Lit(1f.lit, 0f.lit, 0f.lit, 1f.lit)
-        } else {
-            v_color = vec4Lit(1f.lit, 1f.lit, 1f.lit, 1f.lit)
-        }
-        gl_Position = u_projTrans * a_position
-    }
-}
+    /**
+     * Do any buffer updates here.
+     *
+     * @param data a data map that can include any data that is needed in order to update bindings ,
+     *   using a string as a key.
+     */
+    open fun update(data: Map<String, Any>) = Unit
 ```
 
-### Shader parameters
+### SpriteShader
 
-By default, when creating a top level variable such a uniform, the GLSL generator will automatically generate a `ShaderParameter` for it and populate the `parameters` list. The parameters are added in the order they are defined in the shader. If we to expose one these parameters, we can by doing something like this:
-
-```kotlin
-class SimpleColorVertexShader : VertexShaderModel() {
-    val uProjTrans get() = parameters[0] as ShaderParameter.UniformMat4 // we can now pass in a matrix!
-
-    private val u_projTrans by uniform(::Mat4)
-    private val a_position by attribute(::Vec4)
-    private val a_color by attribute(::Vec4)
-    private var v_color by varying(::Vec4)
-
-    init {
-        v_color = a_color
-        gl_Position = u_projTrans * a_position
-    }
-}
-```
-
-We can access the shader parameters and update the values in the shader by using the variable directly.
+A `SpriteShader` is an abstract `Shader` that expects a camera uniform and a texture to be passed in. This type of shader is used internally by `SpriteBatch` but may extended to create custom SpriteShaders. It contains functions to handle updating the internal camera uniform buffer via `SpriteShader.updateCameraUniform(viewProjection: Mat4)`. But this `SpriteShader` overrides the `Shader.update(data: Map<String, Any>)` function and calls `updateCameraUniform()` automatically.
 
 ```kotlin
-val vert = SimpleColorVertexShader()
-vert.uProjTrans.apply(myShaderProgram, myMatrix)
-```
-
-### Using Pure GLSL Code
-
-If we did not want to use the Kotlin GLSL code generator, we still have the option of using GLSL code directly, with the goodies of defining the list of `ShaderParameter`. Most of the steps are the same, except instead of writing the code in the `init { }` block, we can override the `source` variable and write the GLSL code directly. We then have to create the `ShaderParameter` types ourselves and populate the `parameters` list. By doing so, we allow the shader models to still be validated and changed if needed by the `GlslGenerator` to support other platforms and OpenGL versions.
-
-```kotlin
-class SimpleColorVertexShader : VertexShaderModel() {
-    val uProjTrans = ShaderParameter.UniformMat4("u_projTrans")
-    val aPosition = ShaderParameter.Attribute("a_position")
-    val aColor = ShaderParameter.Attribute("a_color")
-
-    override val parameters: MutableList<ShaderParameter> =
-        mutableListOf(
-            uProjTrans, aPosition, aColor
-        )
-
-    // language=GLSL
-    override var source: String = """
-        uniform mat4 u_projTrans;
+    class ColorShader(device: Device) :
+        SpriteShader(
+            device,
+            src =
+                """
+        struct CameraUniform {
+            view_proj: mat4x4<f32>
+        };
+        @group(0) @binding(0)
+        var<uniform> camera: CameraUniform; // SpriteShader expects a uniform for camera
         
-        attribute vec2 a_position;
-        attribute vec4 a_color;
-        
-        varying vec4 v_color;
-
-        void main() {
-            v_color = a_color;
-            gl_Position = u_projTrans * a_position;
+        struct VertexOutput {
+            @location(0) color: vec4<f32>,
+            @location(1) uv: vec2<f32>,
+            @builtin(position) position: vec4<f32>,
+        };
+                   
+        @vertex
+        fn vs_main(
+            @location(0) pos: vec3<f32>,
+            @location(1) color: vec4<f32>,
+            @location(2) uvs: vec2<f32>) -> VertexOutput {
+            
+            var output: VertexOutput;
+            output.position = camera.view_proj * vec4<f32>(pos.x, pos.y, 0, 1);
+            output.color = color;
+            output.uv = uvs;
+            
+            return output;
         }
-    """
-}
+        
+        @group(1) @binding(0) // expects a texture
+        var my_texture: texture_2d<f32>;
+        @group(1) @binding(1) // expects a sampler
+        var my_sampler: sampler;
+        
+        @fragment
+        fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
+            return textureSample(my_texture, my_sampler, in.uv) * vec4<f32>(1, 0, 0, 1);
+        }
+        """,
+            layout =
+                listOf(
+                    BindGroupLayoutDescriptor(
+                        listOf(BindGroupLayoutEntry(0, ShaderStage.VERTEX, BufferBindingLayout())) // camera binding
+                    ),
+                    BindGroupLayoutDescriptor(
+                        listOf(
+                            BindGroupLayoutEntry(0, ShaderStage.FRAGMENT, TextureBindingLayout()), // texture binding
+                            BindGroupLayoutEntry(1, ShaderStage.FRAGMENT, SamplerBindingLayout()) // sampler binding
+                        )
+                    )
+                )
+        ) {
+            // we must create new bind groups with the given texture based on the spriete layout
+        override fun MutableList<BindGroup>.createBindGroupsWithTexture(
+            texture: Texture,
+            data: Map<String, Any>
+        ) {
+            add(
+                device.createBindGroup(
+                    BindGroupDescriptor(
+                        layouts[0],
+                        listOf(BindGroupEntry(0, cameraUniformBufferBinding)) // we set the camera unfirom based on group & binding we set in the WGSL source
+                    )
+                )
+            )
+            add(
+                device.createBindGroup(
+                    BindGroupDescriptor(
+                        layouts[1],
+                        listOf(BindGroupEntry(0, texture.view), BindGroupEntry(1, texture.sampler)) // we set the texture & sampler required in the WGSL source
+                    )
+                )
+            )
+        }
+
+        // when this is called we must set our bind groups, in the correct order on the given render pass
+        override fun setBindGroups(encoder: RenderPassEncoder, bindGroups: List<BindGroup>) {
+            encoder.setBindGroup(0, bindGroups[0])
+            encoder.setBindGroup(1, bindGroups[1])
+        }
+    }
 ```
 
-
-## Creating a Shader Program
-
-A [ShaderProgram](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graphics/shader/ShaderProgram.kt) is made up of a `VertexShader` and `FragmentShader`. Using the simple shaders from the above section, we can create a new `ShaderProgram` by passing them into the constructor. We also have to ensure we `prepare` the program as well. Doing so will generate the GLSL code, if applicable, and compile the shaders.
+And we can use the new shader in a `SpriteBatch` quite easily:
 
 ```kotlin
-val vert = SimpleColorVertexShader()
-val frag = SimpleColorFragmentShader()
-val shader = ShaderProgram<SimpleColorVertexShader, SimpleColorFragmentShader>(vert, frag).also { it.prepare(context) }
+val coloredShader = ColoredShader(device)
 
-val batch = SpriteBatch(context)
-batch.shader = shader
-
-onRender {
-    // use batch to draw with the new shader!
-}
+// onUpdate:
+val renderPassEncoder = ... 
+batch.shader = coloredShader
+batch.begin()
+batch.draw(myTexture, 0f, 0f)
+batch.useDefaultShader()
+batch.draw(anotherTexture, 50f, 50f)
+batch.flush(renderPassEncoder)
+batch.end()
+renderPassEncoder.end()
 ```

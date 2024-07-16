@@ -4,7 +4,7 @@ title: "Features"
 layout: article
 ---
 
-LittleKt is a Kotlin multiplatform 2D game development framework based on OpenGL that is inspired by libGDX and KorGE. The goal of this project is to allow the freedom and flexibility that libGDX offers with enjoyable idiomatic features coded in Kotlin that KorGE has to offer.
+LittleKt is a Kotlin multiplatform 2D game development framework based on WebGPU that is inspired by libGDX and KorGE. The goal of this project is to allow the freedom and flexibility that libGDX offers with enjoyable idiomatic features coded in Kotlin that KorGE has to offer.
 
 **Some of the features LittleKt currently has to offer**:
 
@@ -18,7 +18,7 @@ Various useful tools and abstractions but still allow access to the underlying c
 
 #### Cross-platform
 
-Thanks to Kotlin - building for multiple platforms is easy. Currently supports **desktop via JVM**, **web**, and **Android** targets, as well as **iOS** and **desktop via native** planned in the future.
+Thanks to Kotlin - building for multiple platforms is easy. Currently supports **desktop via JVM** and **web** targets, as well as **Android**, **iOS**, and **desktop via native** planned in the future.
 
 #### Fonts
 
@@ -32,12 +32,11 @@ Loaders and renders to make font's easy to use.
 #### Higher-level 2D APIs
 
 -   Orthographic camera and viewports
--   Batching
+-   Batching and caching
 -   Animations
 -   Particles
 -   Audio and audio streaming
 -   Texture atlases, slicing, and pixmap editing
--   Shader GLSL generation DSL
 
 #### Tilemaps
 
@@ -47,17 +46,16 @@ Includes first class support for [LDtk](https://ldtk.io) and [Tiled](https://www
 
 A light weight scene graph that is easily extensible that can be used to create your own engine. Includes a UI implementation with a fancy DSL that can be used along side.
 
-#### Low-level OpenGL utilies and access
+#### Low-level WebGPU utilies and access
 
-Directly access and use the **OpenGL** instance to do exactly what you need to do.
+Directly access and use the **WebGPU** instance to do exactly what you need to do.
 
-Includes utilites classes built on top of **OpenGL** such as:
+Includes utility classes built on top of **WebGPU** such as:
 
 -   Shaders
 -   Meshes
 -   Textures
--   Framebuffer objects
--   Vertex arrays and vertex buffer objects
+-   Cameras
 
 #### Virtual File System
 

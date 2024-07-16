@@ -38,7 +38,7 @@ If the map needs to be rendered entirely at one time, the `TiledMap` class offer
 val batch = SpriteBatch(context)
 val camera = OrthographicCamera(context.graphics.width, context.graphics.height)
 
-batch.use(camere.viewProjection) {
+batch.use(renderPass, camere.viewProjection) {
     map.render(it, camera)
 }
 ```
@@ -56,7 +56,7 @@ As with the LDtk map object, rendering the layer is done the same:
 ```kotlin
 val batch = SpriteBatch(context)
 val camera = OrthographicCamera(context.graphics.width, context.graphics.height)
-batch.use(camere.viewProjection) {
+batch.use(renderPass, camere.viewProjection) {
     layer.render(it, camera)
 }
 ```
@@ -66,7 +66,7 @@ Rendering each layer separately can be advantageous due to being able to render 
 ```kotlin
 val bgLayer = map["background"]
 val foregroundLayer = map["foreground"]
-batch.use(camere.viewProjection) {
+batch.use(renderPass, camere.viewProjection) {
     bgLayer.render(it, camera)
     player.render(it)
     foregroundLayer.render(it, camera)
@@ -108,5 +108,5 @@ val health: Int = healthProp?.int ?: 100 // converts the prop to an Int
 Once we are finished with the `TiledMap` we can call the `dispose()` method on the loaded map. This will dispose any of the textures it owns. If a `TextureAtlas` was passed in then the loader won't own any of the textures and therefor won't dispose of any.
 
 ```kotlin
-tiledMap.dispose()
+tiledMap.release()
 ```

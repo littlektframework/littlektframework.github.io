@@ -5,11 +5,11 @@ permalink: /docs/ui/containers
 
 Using [anchors](/docs/ui/size-and-anchors) can be efficient enough to handle multiple resolutions. But as the UI gets more complex, they become difficult to use.
 
-A way we can handle more complex and advanced layouts is by making use of [Containers](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/node/node2d/ui/Container.kt).
+A way we can handle more complex and advanced layouts is by making use of [Containers](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/node2d/ui/Container.kt).
 
 ## Container Layout
 
-When a [Container](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/node/node2d/ui/Container.kt) node is used, any [Control](<[Containers](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/node/node2d/ui/Control.kt)>) nodes that are a child give up their ability to position themselves. The parent container will handle all of these nodes position and sizes. Manually changing the child nodes position or size will either be ignored or invalidated the next time the parent is resized.
+When a [Container](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/node2d/ui/Container.kt) node is used, any [Control](<[Containers](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/node2d/ui/Control.kt)>) nodes that are a child give up their ability to position themselves. The parent container will handle all of these nodes position and sizes. Manually changing the child nodes position or size will either be ignored or invalidated the next time the parent is resized.
 
 When a container is resizes, all of its children are reositioned and resized as well:
 
@@ -51,7 +51,7 @@ There are several out of the box container types:
 
 #### HBox
 
-Arranges child controls horizontally while expanding vertically (via [HBoxContainer](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/node/node2d/ui/HBoxContainer.kt)).
+Arranges child controls horizontally while expanding vertically (via [HBoxContainer](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/node2d/ui/HBoxContainer.kt)).
 
 ![hBox container example](/assets/images/ui/hbox-example.png)
 
@@ -72,7 +72,7 @@ hBoxContainer {
 }
 ```
 
-We can also use `row` isntead which is the same as `hBoxContainer`.
+We can also use `row` instead which is the same as `hBoxContainer`.
 
 ```kotlin
 row {
@@ -93,7 +93,7 @@ row {
 
 #### VBox
 
-Arranges child controls vertically while expanding horizontally (via [VBoxContainer](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/node/node2d/ui/VBoxContainer.kt))
+Arranges child controls vertically while expanding horizontally (via [VBoxContainer](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/node2d/ui/VBoxContainer.kt))
 
 ![vBox container example](/assets/images/ui/vbox-example.png)
 
@@ -134,7 +134,7 @@ column {
 
 ### Center Container
 
-Arranges child controls directly in the center (via [CenterContainer](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/node/node2d/ui/CenterContainer.kt)).
+Arranges child controls directly in the center (via [CenterContainer](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/node2d/ui/CenterContainer.kt)).
 
 ![center container example](/assets/images/ui/center-container-example.png)
 
@@ -151,7 +151,7 @@ centerContainer {
 
 ### Padded Container
 
-Arranges child controls that are expanded toward the bounds (via [PaddedContainer](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/node/node2d/ui/PaddedContainer.kt)) with an additional padding that will be added to the margins which can be configured by the theme.
+Arranges child controls that are expanded toward the bounds (via [PaddedContainer](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/node2d/ui/PaddedContainer.kt)) with an additional padding that will be added to the margins which can be configured by the theme.
 
 ![padded container example](/assets/images/ui/padded-container-example.png)
 
@@ -167,7 +167,7 @@ paddedContainer {
 
 ### Panel Container
 
-A container that renders a _Drawable_ and expands its children to cover the whole area (via [PanelContainer](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/node/node2d/ui/PanelContainer.kt)).
+A container that renders a _Drawable_ and expands its children to cover the whole area (via [PanelContainer](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/node2d/ui/PanelContainer.kt)).
 
 ![panel container example](/assets/images/ui/panel-container-example.png)
 
@@ -186,7 +186,7 @@ panelContainer {
 
 ### Scroll Container
 
-A container that will automatically create a [ScrollBar](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/node/ui/ScrollBar.kt) child (`HScrollBar` or `VScrollBar` or both) when needed. (via [ScrollContainer](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graph/node/ui/ScrollContainer.kt)).
+A container that will automatically create a [ScrollBar](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/ui/ScrollBar.kt) child (`HScrollBar` or `VScrollBar` or both) when needed. (via [ScrollContainer](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/ui/ScrollContainer.kt)).
 
 ![scroll container example](/assets/images/ui/scroll-container-example.png)
 

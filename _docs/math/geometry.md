@@ -5,7 +5,7 @@ permalink: /docs/math/geometry
 
 ## Points
 
-Similarly to how vectors work, points follow the immutability concept. By default a [Point](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/math/geom/Point.kt) is immutable unless converted to a mutable version.
+Similarly to how vectors work, points follow the immutability concept. By default a [Point](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/math/geom/Point.kt) is immutable unless converted to a mutable version.
 
 **Immutable point:**
 
@@ -22,7 +22,7 @@ point.x = 3f
 
 ## Angles
 
-Instead of having to remember when to convert to and from degrees and radians, we can use the [Angle](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/math/geom/Angle.kt) `value` class. The `Angle` class offers converting to and from degrees and radians, the `cos`, `sin`, and `tan` values very easily as well as other mathmatical functions to make dealing with angles and rotations very easily.
+Instead of having to remember when to convert to and from degrees and radians, we can use the [Angle](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/math/geom/Angle.kt) `value` class. The `Angle` class offers converting to and from degrees and radians, the `cos`, `sin`, and `tan` values very easily as well as other mathmatical functions to make dealing with angles and rotations very easily.
 
 By default, wherever **LittleKt** expects some sort of rotation or angle, it will expect an `Angle` type.
 
@@ -53,7 +53,7 @@ val radians: Float = rotation.radians // converts from an Angle to radians
 
 ## Bresenham
 
-There are two implementations of a the [Bresenham's line algorithm](https://en.wikipedia.org/docs/Bresenham%27s_line_algorithm) that casts out rays with a custom collider method that can be passed in. This can be found in the [bresenham](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/math/bresenham.kt) class.
+There are two implementations of a the [Bresenham's line algorithm](https://en.wikipedia.org/docs/Bresenham%27s_line_algorithm) that casts out rays with a custom collider method that can be passed in. This can be found in the [bresenham](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/math/bresenham.kt) class.
 
 We can cast a ray from one point to another with our own `pass` logic. **Note**: This implementation will be able to pass through _diagonal_ points.
 

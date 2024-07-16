@@ -5,7 +5,7 @@ permalink: /docs/starting/template-project
 
 To get started on a clean slate, we can use the readily available [template starter project](https://github.com/littlektframework/littlekt-game-template). This is a base project that contains the bare necessities to get started with creating a game with LittleKt.
 
-The template project is set up to use all the available platforms that LittleKt currently supports: **JVM**, **Web**, and **Android**.
+The template project is set up to use all the available platforms that LittleKt currently supports: **JVM** and **Web**.
 If a certain platform isn't needed, simply deleting the source directory and the source sets in
 the `build.gradle.kts` file will get rid of it.
 
@@ -38,15 +38,3 @@ Run the `other/jsRun` gradle task like any other **Kotlin/JS** project to run in
 
 Run the `kotlin browser/jsBrowserDistribution` gradle task to create a distribution build. This build will require a
 webserver in order to run.
-
-### Android
-
-**Running:**
-
-Run `AndroidApp` class under `src/androidMain/`.
-
-**Deploying:**
-
-To create a release build of the Android application, use the `Build/Generate Signed Bundle / APK...` menu option. This
-will require knowledge on creating keys for signing the Android app. Going over how to do that is out of scope for this
-repository.

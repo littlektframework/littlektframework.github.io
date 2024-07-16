@@ -5,11 +5,11 @@ permalink: /docs/2d/animations
 
 ## Animation
 
-The [Animation](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graphics/Animation.kt) class contains the info on the key frames of the what is to be animated. All this class holds are the list of key frames, the list of indices associated to each key frame in the order to be palyed back in, as well as a list of `Duration` frame times for the amount of time spent displaying each frame.
+The [Animation](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/Animation.kt) class contains the info on the key frames of the what is to be animated. All this class holds are the list of key frames, the list of indices associated to each key frame in the order to be palyed back in, as well as a list of `Duration` frame times for the amount of time spent displaying each frame.
 
 The `Animation<T>` class also expects a type parameter. This would usually be a [TextureSlice](/docs/2d/textures-and-textureslices) but we can pass in any type we want to animate. For the following examples, we will be using a `TextureSlice`.
 
-The `Animation` class itself doesn't handle any of the playback or playback times. We have to pass in the time expired to the class for it to determine which key frame is to be played. We can use an [AnimationPlayer](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graphics/AnimationPlayer.kt) to enable playback of an animation but it is not required.
+The `Animation` class itself doesn't handle any of the playback or playback times. We have to pass in the time expired to the class for it to determine which key frame is to be played. We can use an [AnimationPlayer](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/AnimationPlayer.kt) to enable playback of an animation but it is not required.
 
 And of course we can create our own instance of an animation by simply just passing in the list of frames, indices, and times without needing an atlas.
 
@@ -57,15 +57,45 @@ val heroRun: Animation<TextureSlice> = atlas.getAnimation("heroRun")
 val anim = AnimaationPlayer<TextureSlice>()
 anim.playLooped(heroRun)
 
-onRender { dt ->
-    gl.clear(ClearBufferMask.COLOR_BUFFER_BIT)
-    anim.update(dt) // handles requesting the next frames in the current animation
-    camera.update()
-    batch.use(camera.viewProjection) { batch ->
+onUpdate { dt ->
+    val surfaceTexture = graphics.surface.getCurrentTexture()
+    val swapChainTexture = checkNotNull(surfaceTexture.texture)
+    val frame = swapChainTexture.createView()
+
+    val commandEncoder = device.createCommandEncoder()
+    val renderPassEncoder =
+        commandEncoder.beginRenderPass(
+            desc =
+                RenderPassDescriptor(
+                    listOf(
+                        RenderPassColorAttachmentDescriptor(
+                            view = frame,
+                            loadOp = LoadOp.CLEAR,
+                            storeOp = StoreOp.STORE,
+                            clearColor =
+                                if (preferredFormat.srgb) Color.DARK_GRAY.toLinear()
+                                else Color.DARK_GRAY
+                        )
+                    )
+                )
+        )
+    batch.use(renderPassEncoder, camera.viewProjection) { batch ->
         anim.currentKeyFrame?.let { // use the current key frame of the animation to render
             batch.draw(it, 50f, 50f, scaleX = 5f, scaleY = 5f)
         }
     }
+    
+    renderPassEncoder.end()
+    val commandBuffer = commandEncoder.finish()
+
+    device.queue.submit(commandBuffer)
+    graphics.surface.present()
+
+    commandBuffer.release()
+    renderPassEncoder.release()
+    commandEncoder.release()
+    frame.release()
+    swapChainTexture.release()
 }
 ```
 
@@ -84,15 +114,47 @@ val anim = AnimaationPlayer<TextureSlice>()
 anim.playOnce(heroIdle) // stops after one play through
 anim.play(heroIdle, times = 5) // stops after 5 play throughs
 
-onRender { dt ->
-    gl.clear(ClearBufferMask.COLOR_BUFFER_BIT)
+onUpdate { dt ->
     anim.update(dt)
     camera.update()
-    batch.use(camera.viewProjection) { batch ->
+    
+    val surfaceTexture = graphics.surface.getCurrentTexture()
+    val swapChainTexture = checkNotNull(surfaceTexture.texture)
+    val frame = swapChainTexture.createView()
+
+    val commandEncoder = device.createCommandEncoder()
+    val renderPassEncoder =
+        commandEncoder.beginRenderPass(
+            desc =
+                RenderPassDescriptor(
+                    listOf(
+                        RenderPassColorAttachmentDescriptor(
+                            view = frame,
+                            loadOp = LoadOp.CLEAR,
+                            storeOp = StoreOp.STORE,
+                            clearColor =
+                                if (preferredFormat.srgb) Color.DARK_GRAY.toLinear()
+                                else Color.DARK_GRAY
+                        )
+                    )
+                )
+        )
+    batch.use(renderPassEncoder, camera.viewProjection) { batch ->
         anim.currentKeyFrame?.let {
             batch.draw(it, 50f, 50f, scaleX = 5f, scaleY = 5f)
         }
     }
+    renderPassEncoder.end()
+    val commandBuffer = commandEncoder.finish()
+
+    device.queue.submit(commandBuffer)
+    graphics.surface.present()
+
+    commandBuffer.release()
+    renderPassEncoder.release()
+    commandEncoder.release()
+    frame.release()
+    swapChainTexture.release()
 }
 ```
 
@@ -158,11 +220,7 @@ anim.apply {
     registerState(heroIdle, 0) // returns true by default.
 }
 
-
-onRender { dt ->
-    gl.clearColor(Color.CLEAR)
-    gl.clear(ClearBufferMask.COLOR_BUFFER_BIT)
-
+onUpdate { dt ->
     if (input.isKeyJustPressed(Key.NUM1)) {
         shouldSleep = !shouldSleep
     }
@@ -189,13 +247,45 @@ onRender { dt ->
         anim.play(heroRoll, 2.seconds)
     }
 
-
     anim.update(dt)
     camera.update()
-    batch.use(camera.viewProjection) { batch ->
+
+    val surfaceTexture = graphics.surface.getCurrentTexture()
+    val swapChainTexture = checkNotNull(surfaceTexture.texture)
+    val frame = swapChainTexture.createView()
+
+    val commandEncoder = device.createCommandEncoder()
+    val renderPassEncoder =
+        commandEncoder.beginRenderPass(
+            desc =
+                RenderPassDescriptor(
+                    listOf(
+                        RenderPassColorAttachmentDescriptor(
+                            view = frame,
+                            loadOp = LoadOp.CLEAR,
+                            storeOp = StoreOp.STORE,
+                            clearColor =
+                                if (preferredFormat.srgb) Color.DARK_GRAY.toLinear()
+                                else Color.DARK_GRAY
+                        )
+                    )
+                )
+        )
+    batch.use(renderPassEncoder, camera.viewProjection) { batch ->
         anim.currentKeyFrame?.let {
             batch.draw(it, 50f, 50f, scaleX = 5f, scaleY = 5f)
         }
     }
+    renderPassEncoder.end()
+    val commandBuffer = commandEncoder.finish()
+
+    device.queue.submit(commandBuffer)
+    graphics.surface.present()
+
+    commandBuffer.release()
+    renderPassEncoder.release()
+    commandEncoder.release()
+    frame.release()
+    swapChainTexture.release()
 }
 ```

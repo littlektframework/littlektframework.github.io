@@ -15,4 +15,4 @@ Mouse inputs can be [polled](/docs/input/types/polling) or processed via [events
 
 ## Keyboard
 
-LittleKt comes with its own key-code table ([source](https://github.com/littlektframework/littlekt/blob/a97f8a04857006d2b74216c138c4b31156ea8433/core/src/commonMain/kotlin/com/lehaine/littlekt/input/Input.kt#L14)) which handles handling all the different key-codes on each platform. Key-code presses and releases can be queried via [polling](/docs/input/types/polling) as able to be processed via generated [events](/docs/input/types/event-based).
+LittleKt comes with its own key-code table ([source](https://github.com/littlektframework/littlekt/blob/a97f8a04857006d2b74216c138c4b31156ea8433/core/src/commonMain/kotlin/com/littlekt/input/Input.kt#L14)) which handles handling all the different key-codes on each platform. Key-code presses and releases can be queried via [polling](/docs/input/types/polling) as able to be processed via generated [events](/docs/input/types/event-based).

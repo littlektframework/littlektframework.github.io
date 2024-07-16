@@ -5,7 +5,7 @@ permalink: /docs/2d/fonts/glyph-layouts
 
 ## Glyph Layout
 
-Internally, a `FontCache` uses a [GlyphLayout](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/graphics/font/GlyphLayout.kt). The `GlyphLayout` handles are the measuring of the text as well as wrapping the text. We can create our own `GlyphLayout` to measure text if needed. The lines of text are then stored in a `GlyphRun` which holds the glyphs of the specified font for that line of text. This does not handle any sort of drawing or caching of data.
+Internally, a `FontCache` uses a [GlyphLayout](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/font/GlyphLayout.kt). The `GlyphLayout` handles are the measuring of the text as well as wrapping the text. We can create our own `GlyphLayout` to measure text if needed. The lines of text are then stored in a `GlyphRun` which holds the glyphs of the specified font for that line of text. This does not handle any sort of drawing or caching of data.
 
 ```kotlin
 val font: BitmapFont = resourcesVfs["arial_32.fnt"].readBitmapFont()

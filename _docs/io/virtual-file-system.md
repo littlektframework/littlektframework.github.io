@@ -3,7 +3,7 @@ title: Virtual File System
 permalink: /docs/io/virtual-file-system
 ---
 
-**LittleKt** comes with an abstraction over reading and writing to filesystems. The class that handles this is the [Vfs](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/file/Vfs.kt) class. This handles reading files into bytes. The [VfsFile](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/file/vfs/VfsFile.kt) class compliments the `Vfs` by allowing to create correct paths easily to files/assets and also able to read those files into certain formats / objects.
+**LittleKt** comes with an abstraction over reading and writing to filesystems. The class that handles this is the [Vfs](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/file/Vfs.kt) class. This handles reading files into bytes. The [VfsFile](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/file/vfs/VfsFile.kt) class compliments the `Vfs` by allowing to create correct paths easily to files/assets and also able to read those files into certain formats / objects.
 
 ## Data buffers
 
@@ -89,7 +89,7 @@ context.storageVfs["myUniqueKey"].readKeystore()
 
 ## Vfs loaders
 
-**LittleKt** provides a bunch of extension utility methods to for reading `VfsFile` paths into different types of formats and objects. The are located in the [VfsLoaders](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/lehaine/littlekt/file/vfs/VfsLoaders.kt) file.
+**LittleKt** provides a bunch of extension utility methods to for reading `VfsFile` paths into different types of formats and objects. The are located in the [VfsLoaders](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/file/vfs/VfsLoaders.kt) file.
 
 #### Reading a texture
 

@@ -75,7 +75,7 @@ class MyGame(context: Context) : ContextListener(context) {
             onKeyDown { key -> logger.info { "Key $:key is down!" } }
         }
 
-        onDispose {
+        onRelease {
             removeInputProcessor(processor) // we don't have to do this if we are closing the application
         }
     }
@@ -94,7 +94,7 @@ class MyGame(context: Context) : ContextListener(context), InputProcessor {
 
     // override any of the methods in InputProcessor that we want to actually make use of.
     override suspend fun Context.start() {
-        onDispose {
+        onRelease {
             removeInputProcessor(this) // we don't have to do this if we are closing the application
         }
     }

@@ -43,13 +43,13 @@ class MyGame(context: Context) : ContextListener(context) {
         // access any of the variables from above
         // do any of the rendering and update logic here
 
-        onRender {
+        onUpdate {
             if(!provider.isFullyLoaded) {
                 provider.update()
                 return
             }
             // We are loading now! Do whatever logic we need to do here.
-            gl.clear(ClearBufferMask.COLOR_BUFFER_BIT)
+            // e.g. render pass setup and such
         }
     }
 }
