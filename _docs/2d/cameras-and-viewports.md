@@ -68,7 +68,7 @@ onResize { width, height ->
 
 ### Stretch Viewport
 
-A viewport that supports using a virtual size (via [StretchViewport](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/util/viewport/ScalingViewports.kt#L34)). The virtual viewport is strechted to fit the screen. There are no black bars and the aspect ratio can change after scaling.
+A viewport that supports using a virtual size (via [StretchViewport](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/util/viewport/ScalingViewport.kt)). The virtual viewport is strechted to fit the screen. There are no black bars and the aspect ratio can change after scaling.
 
 ### Extend Viewport
 
