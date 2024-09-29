@@ -10,6 +10,15 @@ This tutorial assumes the [First Application](/docs/starting/first-application) 
 The initial setup of render seems a bit daunting in WebGPU, especially if we are coming from an OpenGL background. In reality, it isn't as bad as it seems. LittleKt takes care of a lot of the work for us but also keeps things low-level enough that we can build on top of it. Let's render something!
 
 ```kotlin
+import com.littlekt.Context
+import com.littlekt.ContextListener
+import com.littlekt.file.vfs.readTexture
+import com.littlekt.graphics.Color
+import com.littlekt.graphics.webgpu.*
+import com.littlekt.graphics.g2d.*
+import com.littlekt.resources.Textures
+import com.littlekt.util.viewport.ExtendViewport
+
 class MyGame(context: Context) : ContextListener(context) {
 
     override suspend fun Context.start() {
@@ -19,7 +28,7 @@ class MyGame(context: Context) : ContextListener(context) {
 
         val device = graphics.device // LittleKt creates a WebGPU adapter & a device from it. It's as simple as referencing it.
         val surfaceCapability = graphics.surfaceCapabilities // we grab the current graphics surface capabilities
-        val preferredFromat = graphics.preferredFormat // what TextureFormat the surface prefers
+        val preferredFormat = graphics.preferredFormat // what TextureFormat the surface prefers
 
         // then we configure the surface
         graphics.configureSurface(
@@ -54,7 +63,7 @@ class MyGame(context: Context) : ContextListener(context) {
             val swapChainTexture: WebGPUTexture = checkNotNull(surfaceTexture.texture) // we need the underlying WebGPU texture, which may be null
             val frame: TextureView = swapChainTexture.createView() // we create the view of the texture! We can now use it as a color attachment in a render pass!
 
-            val commandEncoder: CommandEncoder = device.createCommandEncoder // handles creating commands to present to the surface
+            val commandEncoder: CommandEncoder = device.createCommandEncoder() // handles creating commands to present to the surface
             val renderPassEncoder =
                 commandEncoder.beginRenderPass(
                     desc =
