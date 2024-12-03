@@ -14,15 +14,35 @@ By default, Kotlin multiplatform projects don't offer any data buffer type objec
 -   `IntBuffer`: a buffer object for reading and writing only integers.
 -   `FloatBuffer`: a buffer object for reading and writing only floats.
 
+## Key-Value Storage
+A simple key-value storage `KeyvalueStorage` interface is available that stores simple key-value in plain text in the application working directly `./storage`. 
+
+### Storing & loading Key-Values
+
+### Store/Load ByteArray
+
+```kotlin
+val myData: ByteArray = "testValue".decodeToByteArray()
+kv.store("myKey", myData)
+// ...
+val buffer:ByteBuffer? = kv.load("myKey")
+```
+
+### Store/Load String
+
+```kotlin
+val myData: String = "testValue"
+kv.store("myKey", myData)
+// ...
+val loadData: String? = kv.load("myKey")
+```
+
 ## Vfs
 
 The `Vfs` offers a few methods for both reading files and key-value storage.
 
 -   `readBytes()`: reads a file with the given paths and returns it as a `ByteBuffer`
 -   `readStream()`: opens a stream to a file and which allows buffered reading of data from the stream
--   `store()`: store data as with the specified key.
--   `load()`: reads from the key-store storage as a `ByteBuffer`.
--   `loadString()`: read from the key-store storage as a `String`.
 
 `Vfs` also supports coroutines for reading data. The `Vfs` itself is a `CoroutineScope` which can be used to launch coroutines when reading files.
 
@@ -64,6 +84,14 @@ val myJsonFile: VfsFile = root["/path/to/json/file"]
 myJsonFile.decodeFromString<MyJsonDataObject>()
 ```
 
+#### Reading data from URL
+We can also read data hosted elsewhere as long as the URL points to that data. We also have to make sure we use a specialized `Vfs` for
+loading data over http: `Context.urlVfs`.
+
+```kotlin
+val myTexture: VfsFile = urlVfs["https://mysite.com/myimage.png"].readTexture()
+```
+
 #### Writing to key-value storage:
 
 ```kotlin
@@ -79,12 +107,13 @@ println(result)
 
 A `Vfs` instance contains a property called `root` which is a `VfsFile`. A `Vfs` requires a the path to the base directory when constructing. The root `VfsFile` is constructed based off that path.
 
-A `Context` creates two `VfsFile` instances. One is a `resourcesVfs` which points to the projects **resources** directory. The second is the `storageVfs` which points to the **storage** directory for storing key-value data.
+A `Context` creates two `VfsFile` instances. One is a `resourcesVfs` which points to the projects **resources** directory. The second is the `applicationVfs` which points to the applications working directory. The third is a `urlVfs` which allows http requests with plain old URLs.
 
 ```kotlin
 val context: Context
 context.resourcesVfs["path/to/file/in/resources"].readBytes()
-context.storageVfs["myUniqueKey"].readKeystore()
+context.applicationVfs["path/to/file/in/app/dir"].readBytes()
+context.urlVfs["https://mysite.com/myimage.png"].readTexture()
 ```
 
 ## Vfs loaders
