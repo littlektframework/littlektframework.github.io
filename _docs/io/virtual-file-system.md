@@ -152,14 +152,6 @@ val atlas: TextureAtlas = resourcesVfs["tiles.atlas.json"].readAtlas()
 val font: BitmapFont = resourcesVfs["arial_32.fnt"].readBitmapFont()
 ```
 
-#### Reading a TTfFont
-
-`readTtfFont()`: reads file as a `TtfFont`. Accepts a string for loading the specified glyphs in the string.
-
-```kotlin
-val font: TtfFont = resourcesVfs["arial.ttf"].readTtfFont() // defaults to base latin characters
-```
-
 #### Reading an LDtk Map
 
 `readLDtkMapLoader()`: reads file as an `LDtkMapLoader`. Accepts parameters for an optional `TextureAtlas` and a `tilesetBorder` thickness when slicing any corresponding tile textures to prevent atlas bleeding. Loading a `LDtk` file will have the loaders created to read and parse the data to prevent loading and rebinding textures that are shared across levels.

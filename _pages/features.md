@@ -24,8 +24,6 @@ Thanks to Kotlin - building for multiple platforms is easy. Currently supports *
 
 Loaders and renders to make font's easy to use.
 
--   TTF file parser and loader
--   GPU vector font rendering of TTF files on the fly based off of [Will Dobbie's article](https://wdobbie.com/post/gpu-text-rendering-with-vector-textures/)
 -   Bitmap fonts
 -   Utilities for measuring text
 

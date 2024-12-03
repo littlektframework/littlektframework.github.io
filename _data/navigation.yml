@@ -47,8 +47,6 @@ docs:
             url: /docs/2d/ninepatch
           - title: Bitmap Fonts
             url: /docs/2d/fonts/bitmap-fonts
-          - title: "TTF Files and Rendering"
-            url: /docs/2d/fonts/ttf
           - title: "Glyph Layout"
             url: /docs/2d/fonts/glyph-layouts
           - title: "Cameras and Viewports"
