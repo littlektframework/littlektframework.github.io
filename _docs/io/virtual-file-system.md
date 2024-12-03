@@ -19,7 +19,7 @@ A simple key-value storage `KeyvalueStorage` interface is available that stores 
 
 ### Storing & loading Key-Values
 
-### Store/Load ByteArray
+#### Store/Load ByteArray
 
 ```kotlin
 val myData: ByteArray = "testValue".decodeToByteArray()
@@ -28,7 +28,7 @@ kv.store("myKey", myData)
 val buffer:ByteBuffer? = kv.load("myKey")
 ```
 
-### Store/Load String
+#### Store/Load String
 
 ```kotlin
 val myData: String = "testValue"
