@@ -5,7 +5,7 @@ permalink: /docs/2d/shape-renderer
 
 ## Overview
 
-A [ShapeRenderer](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/shape/ShapeRenderer.kt) performs drawing of shapes, lines, and paths using a [Batch](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/Batch.kt) instance for more optimal and performant drawing. Ported from the awesome library [ShapeDrawer](https://github.com/earlygrey/shapedrawer) by [earlygrey](https://github.com/earlygrey).
+A [ShapeRenderer](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/g2d/shape/ShapeRenderer.kt) performs drawing of shapes, lines, and paths using a [Batch](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/g2d/Batch.kt) instance for more optimal and performant drawing. Ported from the awesome library [ShapeDrawer](https://github.com/earlygrey/shapedrawer) by [earlygrey](https://github.com/earlygrey).
 
 ## ShapeRenderer
 

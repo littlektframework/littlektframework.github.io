@@ -16,7 +16,7 @@ val texture: Texture = resourcesVfs["texture.png"].readTexture()
 
 # TextureSlice
 
-A [TextureSlice](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/TextureSlice.kt) describes a rectangular portion inside a texture. This is useful for only drawing a portion of the texture.
+A [TextureSlice](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/g2d/TextureSlice.kt) describes a rectangular portion inside a texture. This is useful for only drawing a portion of the texture.
 
 ```kotlin
 val texture: Texture = resourcesVfs["texture.png"].readTexture()

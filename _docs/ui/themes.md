@@ -184,7 +184,7 @@ Theme(
 
 ### Theme Map Types
 
-Each theme expects a map of [Drawables](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/component/Drawable.kt), [Bitmap Fonts](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/font/BitmapFont.kt), [Colors](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/Color.kt), and _Constants_.
+Each theme expects a map of [Drawables](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/component/Drawable.kt), [Bitmap Fonts](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/g2d/font/BitmapFont.kt), [Colors](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/Color.kt), and _Constants_.
 
 Each of these maps are mapped to a _String_ to another map of the specified types. For example, the _drawables_ map expects a _String_ that maps to another map of _String_ that maps to a _Drawable_.
 

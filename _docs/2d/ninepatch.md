@@ -3,7 +3,7 @@ title: NinePatch
 permalink: /docs/2d/ninepatch
 ---
 
-A [NinePatch](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/NinePatch.kt) is an image that is sliced up into 9 patches in order to produce a clean panel of any size based on a small texture by splitting it into a 3x3 grid. The slices of the texture are then drawn and the sides are scaled horizontally or vertically and the center on both axes but doesn't scale or tile the corners.
+A [NinePatch](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/g2d/NinePatch.kt) is an image that is sliced up into 9 patches in order to produce a clean panel of any size based on a small texture by splitting it into a 3x3 grid. The slices of the texture are then drawn and the sides are scaled horizontally or vertically and the center on both axes but doesn't scale or tile the corners.
 
 ## Creating a NinePatch
 

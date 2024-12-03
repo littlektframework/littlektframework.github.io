@@ -5,7 +5,7 @@ permalink: /docs/2d/texture-atlas
 
 The **JSON Array** based atlases are supported by **LittleKt**. Whether it is published by [Code & Web's](https://www.codeandweb.com/texturepacker) texture packer or LittleKt's own [texture packer](/docs/tools/texture-packer) implementation, or whatever else that supports the format.
 
-LittleKt can read and load multi-packed atlases just as easily as a single based atlas using a [TextureAtlas](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/TextureAtlas.kt).
+LittleKt can read and load multi-packed atlases just as easily as a single based atlas using a [TextureAtlas](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/g2d/TextureAtlas.kt).
 
 ## TextureAtlas
 
@@ -15,7 +15,7 @@ We can load a `TextureAtlas` from a `VfsFile`:
 val atlas: TextureAtlas = resourcesVfs["tiles.atlas.json"].readAtlas()
 ```
 
-We can access specific a specfic [TextureAtlas.Entry](https://github.com/littlektframework/littlekt/blob/1c8a9456ae18736a70ae24f69fcf0c51013fe6f3/core/src/commonMain/kotlin/com/littlekt/graphics/TextureAtlas.kt#L41) within the atlas by either using the `get operator` for an exact match or `getByPrefix` to grab the first entry that matches the specified prefix. This is great for grabbing the first frame of an animation. An `entry` contains references to the the `Texture` and `TextureSlice` which can be for rendering.
+We can access specific a specfic [TextureAtlas.Entry](https://github.com/littlektframework/littlekt/blob/1c8a9456ae18736a70ae24f69fcf0c51013fe6f3/core/src/commonMain/kotlin/com/littlekt/graphics/g2d/TextureAtlas.kt#L41) within the atlas by either using the `get operator` for an exact match or `getByPrefix` to grab the first entry that matches the specified prefix. This is great for grabbing the first frame of an animation. An `entry` contains references to the the `Texture` and `TextureSlice` which can be for rendering.
 
 ```kotlin
 val atlas: TextureAtlas = resourcesVfs["tiles.atlas.json"].readAtlas()
