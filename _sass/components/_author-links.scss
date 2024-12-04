@@ -35,6 +35,9 @@
       .github-button {
         @include clickable($text-color-1, $github-color);
       }
+      .discord-button {
+        @include clickable($text-color-1, $discord-color);
+      }
       .npm-button {
         @include clickable($text-color-1, $npm-color);
       }
