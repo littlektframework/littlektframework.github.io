@@ -11,6 +11,9 @@ article_header:
         - text: GitHub
           type: outline-secondary
           url: https://github.com/littlektframework/littlekt
+        - text: Discord
+          type: outline-secondary
+          url: https://discord.gg/8VCZEQVBvt
     height: 25vh
     theme: dark
     background_image:
@@ -45,4 +48,7 @@ data:
               - text: GitHub
                 type: outline-secondary
                 url: https://github.com/littlektframework/littlekt
+              - text: Discord
+                type: outline-secondary
+                url: https://discord.gg/8VCZEQVBvt
 ---
