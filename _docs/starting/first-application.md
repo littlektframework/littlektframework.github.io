@@ -16,7 +16,6 @@ fun main(args: Array<String>) {
     val app = createLittleKtApp {
         width = 960
         height = 540
-        vSync = true
         title = "My First LittleKt App"
     }
 }
@@ -31,7 +30,7 @@ class MyGame(context: Context) : ContextListener(context) {
 
     override suspend fun Context.start() {
         // this is where we can use the context to add render calls, dispose, calls, etc. All the logic should go here.
-        val texture = resourceVfs["texture.png"].readTexture() // reads a texture on the main thread from the resources
+        val texture = resourcesVfs["texture.png"].readTexture() // reads a texture on the main thread from the resources
         onUpdate { dt -> // this adds an updater that is called on every frame
             // render logic can go here
         }
