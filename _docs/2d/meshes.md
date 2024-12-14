@@ -115,6 +115,7 @@ val mesh = textureMesh {
     addVertex {
         position.x = 50f
         position.y = 50f
+        color = Color.WHITE
         colorPacked.value = colorBits
         texCoords.u = 0f
         texCoords.v = 0f
@@ -123,7 +124,7 @@ val mesh = textureMesh {
     addVertex {
         position.x = 66f
         position.y = 50f
-        colorPacked.value = colorBits
+        color = Color.WHITE
         texCoords.u = 1f
         texCoords.v = 0f
     }
@@ -131,7 +132,7 @@ val mesh = textureMesh {
     addVertex {
         position.x = 66f
         position.y = 66f
-        colorPacked.value = colorBits
+        color = Color.WHITE
         texCoords.u = 1f
         texCoords.v = 1f
     }
@@ -139,7 +140,7 @@ val mesh = textureMesh {
     addVertex {
         position.x = 50f
         position.y = 66f
-        colorPacked.value = colorBits
+        color = Color.WHITE
         texCoords.u = 0f
         texCoords.v = 1f
     }
