@@ -116,7 +116,6 @@ val mesh = textureMesh {
         position.x = 50f
         position.y = 50f
         color = Color.WHITE
-        colorPacked.value = colorBits
         texCoords.u = 0f
         texCoords.v = 0f
     }
