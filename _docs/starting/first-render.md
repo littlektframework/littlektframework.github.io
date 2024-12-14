@@ -89,6 +89,7 @@ class MyGame(context: Context) : ContextListener(context) {
             batch.flush(renderPassEncoder)
             batch.end() // ensure we end the batch drawing
             renderPassEncoder.end() // render pass is done so we end it
+            renderPassEncoder.release()
 
             // we aren't creating anymore render passes, so we can finish the command encoder
             val commandBuffer = commandEncoder.finish() // this returns a list of commands we need to submit
@@ -98,7 +99,6 @@ class MyGame(context: Context) : ContextListener(context) {
 
             // we must release all the resources we just created this frame. This must be done each frame.
             commandBuffer.release()
-            renderPassEncoder.release()
             commandEncoder.release()
             frame.release()
             swapChainTexture.release()

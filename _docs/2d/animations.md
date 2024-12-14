@@ -86,13 +86,14 @@ onUpdate { dt ->
     }
     
     renderPassEncoder.end()
+    renderPassEncoder.release()
+
     val commandBuffer = commandEncoder.finish()
 
     device.queue.submit(commandBuffer)
     graphics.surface.present()
 
     commandBuffer.release()
-    renderPassEncoder.release()
     commandEncoder.release()
     frame.release()
     swapChainTexture.release()
@@ -145,13 +146,13 @@ onUpdate { dt ->
         }
     }
     renderPassEncoder.end()
+    renderPassEncoder.release()
     val commandBuffer = commandEncoder.finish()
 
     device.queue.submit(commandBuffer)
     graphics.surface.present()
 
     commandBuffer.release()
-    renderPassEncoder.release()
     commandEncoder.release()
     frame.release()
     swapChainTexture.release()
@@ -277,13 +278,13 @@ onUpdate { dt ->
         }
     }
     renderPassEncoder.end()
+    renderPassEncoder.release()
     val commandBuffer = commandEncoder.finish()
 
     device.queue.submit(commandBuffer)
     graphics.surface.present()
 
     commandBuffer.release()
-    renderPassEncoder.release()
     commandEncoder.release()
     frame.release()
     swapChainTexture.release()
