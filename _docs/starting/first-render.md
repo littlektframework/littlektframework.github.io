@@ -27,7 +27,7 @@ class MyGame(context: Context) : ContextListener(context) {
         val texture = resourceVfs["texture.png"].readTexture()
 
         val device = graphics.device // LittleKt creates a WebGPU adapter & a device from it. It's as simple as referencing it.
-        val surfaceCapability = graphics.surfaceCapabilities // we grab the current graphics surface capabilities
+        val surfaceCapabilities = graphics.surfaceCapabilities // we grab the current graphics surface capabilities
         val preferredFormat = graphics.preferredFormat // what TextureFormat the surface prefers
 
         // then we configure the surface
