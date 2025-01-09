@@ -3,7 +3,7 @@ title: Controls
 permalink: /docs/ui/controls
 ---
 
-A [Control](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/node2d/ui/Control.kt) is the base node that all UI related nodes are inherited from. The `Control` node handles all the functionality for updating anchors, margins, and sizes based on its parent control or the viewport. For more information on how anchors and sizes work check out the [Size and Anchors](/docs/ui/size-and-anchors) page.
+A [Control](https://github.com/littlektframework/littlekt/blob/master/scene-graph/src/commonMain/kotlin/com/littlekt/graph/node/ui/Control.kt) is the base node that all UI related nodes are inherited from. The `Control` node handles all the functionality for updating anchors, margins, and sizes based on its parent control or the viewport. For more information on how anchors and sizes work check out the [Size and Anchors](/docs/ui/size-and-anchors) page.
 
 ## Using a Control
 
@@ -31,7 +31,7 @@ The following list will only include non-container controls. For a list of conta
 
 ### Base Control
 
-The base control (via [Control](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/node2d/ui/Control.kt)). Contains no renderable components.
+The base control (via [Control](https://github.com/littlektframework/littlekt/blob/master/scene-graph/src/commonMain/kotlin/com/littlekt/graph/node/ui/Control.kt)). Contains no renderable components.
 
 ```kotlin
 control {
@@ -41,7 +41,7 @@ control {
 
 ### Button
 
-A standard themed button (via [Button](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/node2d/ui/Button.kt)) that can contain text and is displayed according to the `Theme`.
+A standard themed button (via [Button](https://github.com/littlektframework/littlekt/blob/master/scene-graph/src/commonMain/kotlin/com/littlekt/graph/node/ui/Button.kt)) that can contain text and is displayed according to the `Theme`.
 
 ```kotlin
 button {
@@ -55,7 +55,7 @@ button {
 
 ### Label
 
-Displays plain text (via [Label](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/node2d/ui/Label.kt)). Allows control of the horizontal and vertical alignments.
+Displays plain text (via [Label](https://github.com/littlektframework/littlekt/blob/master/scene-graph/src/commonMain/kotlin/com/littlekt/graph/node/ui/Label.kt)). Allows control of the horizontal and vertical alignments.
 
 ```kotlin
 label {
@@ -67,7 +67,7 @@ label {
 
 ### LineEdit
 
-Renders and a single line of editable text (via [LineEdit](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/node2d/ui/LineEdit.kt)).
+Renders and a single line of editable text (via [LineEdit](https://github.com/littlektframework/littlekt/blob/master/scene-graph/src/commonMain/kotlin/com/littlekt/graph/node/ui/LineEdit.kt)).
 
 Contains commonly built in shortcuts:
 
@@ -92,7 +92,7 @@ lineEdit {
 
 ### NinePatchRect
 
-Creates a ninepatch by slicing up the texture into nine patches (via [NinePatchRect](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/node2d/ui/NinePatchRect.kt)) which produces clean panels of any size, based on a small texture by splitting it into a 3x3 grid. The drawn, the texture tiles the textures sides horizontally or vertically and the center on both axes but doesn't scale or tile the corners.
+Creates a ninepatch by slicing up the texture into nine patches (via [NinePatchRect](https://github.com/littlektframework/littlekt/blob/master/scene-graph/src/commonMain/kotlin/com/littlekt/graph/node/ui/NinePatchRect.kt)) which produces clean panels of any size, based on a small texture by splitting it into a 3x3 grid. The drawn, the texture tiles the textures sides horizontally or vertically and the center on both axes but doesn't scale or tile the corners.
 
 ```kotlin
 ninePatchRect {
@@ -106,7 +106,7 @@ ninePatchRect {
 
 ### Panel
 
-Displays an opaque background (via [Panel](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/node2d/ui/Panel.kt)). Commonly used as a parent.
+Displays an opaque background (via [Panel](https://github.com/littlektframework/littlekt/blob/master/scene-graph/src/commonMain/kotlin/com/littlekt/graph/node/ui/Panel.kt)). Commonly used as a parent.
 
 ```kotlin
 panel {
@@ -118,7 +118,7 @@ panel {
 
 ### ProgressBar
 
-Generic progress bar / slider (via [ProgressBar](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/node2d/ui/ProgressBar.kt)) that shows the fill percentage from left to right.
+Generic progress bar / slider (via [ProgressBar](https://github.com/littlektframework/littlekt/blob/master/scene-graph/src/commonMain/kotlin/com/littlekt/graph/node/ui/ProgressBar.kt)) that shows the fill percentage from left to right.
 
 ```kotlin
 progressBar {
@@ -128,7 +128,7 @@ progressBar {
 
 ### TextureProgress
 
-A textured-based progress bar (via [TextureProgress](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/node2d/ui/TextureProgress.kt)). Useful for loading screens and health bars.
+A textured-based progress bar (via [TextureProgress](https://github.com/littlektframework/littlekt/blob/master/scene-graph/src/commonMain/kotlin/com/littlekt/graph/node/ui/TextureProgress.kt)). Useful for loading screens and health bars.
 
 ```kotlin
 textureProgress {
@@ -142,14 +142,14 @@ textureProgress {
 
 ### TextureRect
 
-Draws a texture slice (via [TextureRect](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/node2d/ui/TextureRect.kt)). It can scale, tile, and keep centered inside its bounding box.
+Draws a texture slice (via [TextureRect](https://github.com/littlektframework/littlekt/blob/master/scene-graph/src/commonMain/kotlin/com/littlekt/graph/node/ui/TextureRect.kt)). It can scale, tile, and keep centered inside its bounding box.
 
 ```kotlin
 textureRect {
     slice = myTextureSlice
     stretchMode = TextureRect.StretchMode.TILE
 
-    // this is false by default. Useful for positiong the TextureSlice based off the oringal size before packing and trimming.
+    // this is false by default. Useful for positioning the TextureSlice based off the original size before packing and trimming.
     useOriginalSize = true
 }
 ```
@@ -181,7 +181,7 @@ We need to ensure we set the `_internalMinWidth` and `_internalMinHeight` proper
 
 ```kotlin
 override fun calculateMinSize() {
-    // we should ensure we check minSizeInvalid is false then we don't want to recaculate
+    // we should ensure we check minSizeInvalid is false then we don't want to recalculate
     // doing so will just waste resources
     if (!minSizeInvalid) return
 
