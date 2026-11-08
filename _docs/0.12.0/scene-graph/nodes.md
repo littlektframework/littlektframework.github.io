@@ -23,6 +23,14 @@ For example, the `Node` class contains the following signals:
 
 These signals can allow us to subscribe to these node lifecycle events without having to create a new class that inherits `Node`. This is useful if we want to do something simple with a node without having to go through all the trouble of creating a specific node to do so.
 
+We can connect to a signal with `+=` or by invoking it directly:
+
+```kotlin
+label {
+    onUpdate { text = "FPS: ${stats.fps.toInt()}" }
+}
+```
+
 A `Node` can also add and remove children directly:
 
 -   `addChild(node)`: will set the parent of the specified node to this node
