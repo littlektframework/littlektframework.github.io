@@ -7,11 +7,12 @@ A `DirectionalShadowMap` lets the directional light of a [PBREnvironment](/docs/
 
 ## Shadow Map
 
-Creates a [DirectionalShadowMap](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/g3d/shadow/DirectionalShadowMap.kt) and passes it to the environment. More cascades keep shadows sharp over a longer `shadowDistance`.
+Creates a [DirectionalShadowMap](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/g3d/shadow/DirectionalShadowMap.kt) and passes it to the environment. More cascades keep shadows sharp over a longer `shadowDistance`. `cascadeBlend` blends the far end of each cascade into the next to hide the seam, `0` disables it.
 
 ```kotlin
 val shadowMap = DirectionalShadowMap(device, cascadeCount = 3)
 shadowMap.shadowDistance = 40f
+shadowMap.cascadeBlend = 0.1f
 
 val lightDirection = MutableVec3f(0.5f, 0.8f, 0.3f).norm()
 val environment =
