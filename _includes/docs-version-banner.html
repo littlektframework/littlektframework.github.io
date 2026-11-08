@@ -3,8 +3,8 @@
     These docs are for <strong>{{ page.docs_version }}-SNAPSHOT</strong>, an unreleased SNAPSHOT. See the <a href="{{ page.docs_latest_url | relative_url }}">latest release</a>.
   </p>
 {%- elsif page.docs_banner == "latest" -%}
-  <p class="docs-version-banner d-print-none">
-    These docs are for <strong>{{ page.docs_version }}</strong>.
+  <p class="docs-version-banner docs-version-banner--latest d-print-none">
+    These docs are for the latest version, <strong>{{ page.docs_version }}</strong>.
   </p>
 {%- elsif page.docs_banner == "old" -%}
   <p class="docs-version-banner d-print-none">
