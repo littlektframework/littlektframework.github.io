@@ -50,6 +50,8 @@ module DocsVersions
         doc.data["docs_latest_url"] = find(urls, base(latest, latest, upcoming), path)
         if version == upcoming
           doc.data["docs_banner"] = "next"
+        elsif version == latest
+          doc.data["docs_banner"] = "latest"
         elsif !latest.empty? && Gem::Version.new(version) < Gem::Version.new(latest)
           doc.data["docs_banner"] = "old"
         end
