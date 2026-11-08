@@ -21,6 +21,14 @@ highlight_theme: tomorrow-night-bright # "default" (default), "tomorrow", "tomor
 
 # Build settings
 markdown: kramdown
+kramdown:
+    input: GFM
+    hard_wrap: false
+    gfm_quirks: paragraph_end
+    syntax_highlighter_opts:
+        default_lang: plaintext
+sass:
+    style: compressed
 
 ## => Author and Social
 ##############################
@@ -178,6 +186,7 @@ exclude:
     # - /screenshots
     # - /test
     - /vendor
+    - /scripts
     - /_posts
     - /index.html
 

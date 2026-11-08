@@ -1,0 +1,9 @@
+{%- if page.docs_versions -%}
+  <div class="docs-version d-print-none">
+    <select aria-label="Docs version" onchange="window.location.href = this.value">
+      {%- for _version in page.docs_versions -%}
+        <option value="{{ _version.url | relative_url }}"{% if _version.selected %} selected{% endif %}>{{ _version.label }}</option>
+      {%- endfor -%}
+    </select>
+  </div>
+{%- endif -%}

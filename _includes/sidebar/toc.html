@@ -1,5 +1,6 @@
 {%- if page.sidebar.nav -%}
   <div class="sidebar-toc">
+    {%- include docs-version-switcher.html -%}
     {%- assign _sidebar_nav = site.data.navigation[page.sidebar.nav] -%}
     {%- if _sidebar_nav -%}
     <ul class="toc toc--navigator">

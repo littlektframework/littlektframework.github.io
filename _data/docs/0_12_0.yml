@@ -1,0 +1,141 @@
+- title: "Docs"
+  children:
+      - title: "Overview"
+        url: /docs/0.12.0/
+- title: "Getting Started"
+  children:
+      - title: "First application"
+        url: /docs/0.12.0/starting/first-application
+      - title: "First render"
+        url: /docs/0.12.0/starting/first-render
+      - title: "Template project"
+        url: /docs/0.12.0/starting/template-project
+      - title: "Example game"
+        url: /docs/0.12.0/starting/example-game
+- title: "Overview"
+  children:
+      - title: "Context and ContextListener"
+        url: /docs/0.12.0/overview/context-and-contextlistener
+      - title: "Logging"
+        url: /docs/0.12.0/overview/logging
+- title: "2D Graphics"
+  children:
+      - title: "SpriteBatch"
+        url: /docs/0.12.0/2d/spritebatch
+      - title: "Textures and TextureSlices"
+        url: /docs/0.12.0/2d/textures-and-texture-slices
+      - title: "Texture Atlas"
+        url: /docs/0.12.0/2d/texture-atlas
+      - title: "Shapes, Lines, and Paths"
+        url: "/docs/0.12.0/2d/shape-renderer"
+      - title: "NinePatch"
+        url: /docs/0.12.0/2d/ninepatch
+      - title: Bitmap Fonts
+        url: /docs/0.12.0/2d/fonts/bitmap-fonts
+      - title: "Glyph Layout"
+        url: /docs/0.12.0/2d/fonts/glyph-layouts
+      - title: "Cameras and Viewports"
+        url: /docs/0.12.0/2d/cameras-and-viewports
+      - title: "Animations"
+        url: /docs/0.12.0/2d/animations
+      - title: "Particles"
+        url: /docs/0.12.0/2d/particles
+      - title: "2D Meshes"
+        url: /docs/0.12.0/2d/meshes
+      - title: "Render Targets"
+        url: /docs/0.12.0/2d/render-targets
+      - title: "LDtk"
+        url: /docs/0.12.0/2d/tilemaps/ldtk
+      - title: "Tiled"
+        url: /docs/0.12.0/2d/tilemaps/tiled
+- title: "3D Graphics"
+  children:
+      - title: "3D Basics"
+        url: /docs/0.12.0/3d/basics
+      - title: "Shadows"
+        url: /docs/0.12.0/3d/shadows
+      - title: "Transparency"
+        url: /docs/0.12.0/3d/transparency
+      - title: "HDR and Tonemapping"
+        url: /docs/0.12.0/3d/hdr-and-tonemapping
+      - title: "MSAA"
+        url: /docs/0.12.0/3d/msaa
+      - title: "Multiple Cameras and Passes"
+        url: /docs/0.12.0/3d/multiple-cameras-and-passes
+- title: "Audio"
+  children:
+      - title: "Audio Clips"
+        url: /docs/0.12.0/audio/audio-clips
+      - title: "Audio Streaming"
+        url: /docs/0.12.0/audio/audio-streaming
+- title: "Math"
+  children:
+      - title: "Vectors"
+        url: /docs/0.12.0/math/vectors
+      - title: "Matrices"
+        url: /docs/0.12.0/math/matrices
+      - title: "Math Extensions"
+        url: /docs/0.12.0/math/math-extensions
+      - title: "Geometry"
+        url: /docs/0.12.0/math/geometry
+- title: "Inputs"
+  children:
+      - title: "Mouse and Keyboard"
+        url: /docs/0.12.0/input/mouse-and-keyboard
+      - title: "Gamepads"
+        url: /docs/0.12.0/input/gamepads
+      - title: "Polling"
+        url: /docs/0.12.0/input/types/polling
+      - title: "Event-based"
+        url: /docs/0.12.0/input/types/event-based
+      - title: "Cursor"
+        url: /docs/0.12.0/input/cursor
+      - title: "Create Input Bindings"
+        url: /docs/0.12.0/input/create-input-bindings
+      - title: "Gesture Controller"
+        url: /docs/0.12.0/input/gesture-controller
+- title: "I/O"
+  children:
+      - title: "Virtual File System"
+        url: /docs/0.12.0/io/virtual-file-system
+      - title: "Assets"
+        url: /docs/0.12.0/io/assets
+- title: "Scene Graph"
+  children:
+      - title: "The Scene Graph"
+        url: /docs/0.12.0/scene-graph/the-scene-graph
+      - title: "Creating a Scene"
+        url: /docs/0.12.0/scene-graph/creating-a-scene
+      - title: "Nodes"
+        url: /docs/0.12.0/scene-graph/nodes
+- title: "User Interface (UI)"
+  children:
+      - title: "The User Interface"
+        url: /docs/0.12.0/ui/the-user-interface
+      - title: "Size and Anchors"
+        url: /docs/0.12.0/ui/size-and-anchors
+      - title: "Controls"
+        url: /docs/0.12.0/ui/controls
+      - title: "Containers"
+        url: /docs/0.12.0/ui/containers
+      - title: "Themes"
+        url: /docs/0.12.0/ui/themes
+      - title: "Drawables"
+        url: /docs/0.12.0/ui/drawables
+- title: "Shading"
+  children:
+      - title: "Shaders"
+        url: /docs/0.12.0/shading/shaders
+- title: "Multi-threading / Coroutines"
+  children:
+      - title: "Coroutines and Threads"
+        url: /docs/0.12.0/threading/coroutines-and-threads
+- title: "Tools"
+  children:
+      - title: "Texture Packer"
+        url: /docs/0.12.0/tools/texture-packer
+- title: "Debugging"
+  children:
+      - title: "WebGPU Profiling"
+        url: /docs/0.12.0/debugging/webgpu-profiling
+
