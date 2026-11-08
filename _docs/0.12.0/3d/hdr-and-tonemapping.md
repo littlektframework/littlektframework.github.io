@@ -7,27 +7,21 @@ Rendering into a float texture keeps colors brighter than `1.0`. A `Tonemapper` 
 
 ## HDR Texture
 
-Creates an `RGBA16_FLOAT` texture to render the scene into. The `ModelBatch` color format must match it.
+Creates a window sized `RGBA16_FLOAT` [render target](/docs/0.12.0/2d/render-targets) to render the scene into, plus a depth target. The `ModelBatch` color format must match it.
 
 ```kotlin
-val hdrFormat = TextureFormat.RGBA16_FLOAT
-val hdrTexture =
-    device.createTexture(
-        TextureDescriptor(
-            Extent3D(graphics.width, graphics.height, 1),
-            1,
-            1,
-            TextureDimension.D2,
-            hdrFormat,
-            TextureUsage.RENDER_ATTACHMENT or TextureUsage.TEXTURE,
-        )
+val hdrTarget =
+    renderTarget(
+        TextureFormat.RGBA16_FLOAT,
+        usage = TextureUsage.RENDER_ATTACHMENT or TextureUsage.TEXTURE,
     )
-val hdrView = hdrTexture.createView()
+val depthTarget = renderTarget(TextureFormat.DEPTH24_PLUS_STENCIL8)
 
 val modelBatch =
     ModelBatch(device).apply {
         addPipelineProvider(PBRMaterialPipelineProvider())
-        colorFormat = hdrFormat
+        colorFormat = hdrTarget.format
+        depthFormat = depthTarget.format
     }
 ```
 
@@ -46,36 +40,20 @@ tonemapper.exposure = 1.5f
 Render the scene into the HDR texture and then tonemap it onto the surface frame.
 
 ```kotlin
-val scenePass =
-    commandEncoder.beginRenderPass(
-        RenderPassDescriptor(
-            listOf(
-                RenderPassColorAttachmentDescriptor(
-                    view = hdrView,
-                    loadOp = LoadOp.CLEAR,
-                    storeOp = StoreOp.STORE,
-                    clearColor = Color.DARK_GRAY.toLinear(),
-                )
-            ),
-            depthStencilAttachment = ... // depth attachment
-        )
-    )
-modelBatch.render(model, camera, environment)
-modelBatch.flush(scenePass, camera, dt)
-scenePass.end()
-
-val surfacePass =
-    commandEncoder.beginRenderPass(
-        RenderPassDescriptor(
-            listOf(
-                RenderPassColorAttachmentDescriptor(
-                    view = frame,
-                    loadOp = LoadOp.CLEAR,
-                    storeOp = StoreOp.STORE,
-                )
+renderFrame { frame, commandEncoder ->
+    val scenePass =
+        commandEncoder.beginRenderPass(
+            RenderPassDescriptor(
+                colorAttachment(hdrTarget.view, Color.DARK_GRAY.toLinear()),
+                depthStencilAttachment = depthTarget.depthAttachment(),
             )
         )
-    )
-tonemapper.render(surfacePass, hdrView)
-surfacePass.end()
+    modelBatch.render(model, camera, environment)
+    modelBatch.flush(scenePass, camera, dt)
+    scenePass.end()
+
+    val surfacePass = commandEncoder.beginRenderPass(RenderPassDescriptor(colorAttachment(frame)))
+    tonemapper.render(surfacePass, hdrTarget.view)
+    surfacePass.end()
+}
 ```

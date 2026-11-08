@@ -12,11 +12,14 @@ The initial setup of render seems a bit daunting in WebGPU, especially if we are
 ```kotlin
 import com.littlekt.Context
 import com.littlekt.ContextListener
+import com.littlekt.configureSurfaceOnResize
 import com.littlekt.file.vfs.readTexture
 import com.littlekt.graphics.Color
 import com.littlekt.graphics.webgpu.*
 import com.littlekt.graphics.g2d.*
+import com.littlekt.renderFrame
 import com.littlekt.resources.Textures
+import com.littlekt.surfaceColor
 import com.littlekt.util.viewport.ExtendViewport
 
 class MyGame(context: Context) : ContextListener(context) {
@@ -27,16 +30,10 @@ class MyGame(context: Context) : ContextListener(context) {
         val texture = resourceVfs["texture.png"].readTexture()
 
         val device = graphics.device // LittleKt creates a WebGPU adapter & a device from it. It's as simple as referencing it.
-        val surfaceCapabilities = graphics.surfaceCapabilities // we grab the current graphics surface capabilities
         val preferredFormat = graphics.preferredFormat // what TextureFormat the surface prefers
 
-        // then we configure the surface
-        graphics.configureSurface(
-            TextureUsage.RENDER_ATTACHMENT,
-            preferredFormat,
-            PresentMode.FIFO,
-            surfaceCapabilities.alphaModes[0]
-        )
+        // configures the surface with the preferred format and configures it again everytime the window is resized
+        configureSurfaceOnResize()
 
         // now we can render. Let's create a SpriteBatch that can render our texture to the surface
         val batch = SpriteBatch(device, graphics, preferredFormat)
@@ -45,64 +42,44 @@ class MyGame(context: Context) : ContextListener(context) {
         val viewport = ExtendViewport(graphics.width, graphics.height)
         val camera = viewport.camera // the viewport uses an orthographic camera internally
 
-        // we can then configure the surface everytime the window is resized, as well as our viewport & camera
+        // we update our viewport & camera everytime the window is resized
         onResize { width, height ->
             viewport.update(width, height, centerCamera = true) // this also updates the camera
-            graphics.configureSurface(
-                TextureUsage.RENDER_ATTACHMENT,
-                preferredFormat,
-                PresentMode.FIFO,
-                surfaceCapabilities.alphaModes[0]
-            )
         }
+
+        // what color to clear the frame with. Note: this handles srgb vs non-srgb surfaces for us
+        val clearColor = graphics.surfaceColor(Color.DARK_GRAY)
 
         // now we render
         onUpdate { dt -> // this adds an updater that is called on every frame
-            // grab the current surface texture
-            val surfaceTexture: SurfaceTexture = graphics.surface.getCurrentTexture()
-            val swapChainTexture: WebGPUTexture = checkNotNull(surfaceTexture.texture) // we need the underlying WebGPU texture, which may be null
-            val frame: TextureView = swapChainTexture.createView() // we create the view of the texture! We can now use it as a color attachment in a render pass!
+            // renderFrame grabs the current surface texture and gives us a view of it (the frame) & a command encoder
+            renderFrame { frame, commandEncoder ->
+                // begin a new render pass, via the command encoder, that clears the frame each time. think of this as glClear()
+                val renderPassEncoder =
+                    commandEncoder.beginRenderPass(RenderPassDescriptor(colorAttachment(frame, clearColor)))
 
-            val commandEncoder: CommandEncoder = device.createCommandEncoder() // handles creating commands to present to the surface
-            val renderPassEncoder =
-                commandEncoder.beginRenderPass(
-                    desc =
-                        RenderPassDescriptor(
-                            listOf(
-                                RenderPassColorAttachmentDescriptor(
-                                    view = frame, // we are using the surface frame here!
-                                    loadOp = LoadOp.CLEAR, // this indicates to clear the view each time. think of this as glClear()
-                                    storeOp = StoreOp.STORE, // this indicates to store the results of the rendre pass to the output attachment, which is the frame
-                                    clearColor = // what color to clear the with. Note: how we handle srgb vs non-srgb colors
-                                        if (preferredFormat.srgb) Color.DARK_GRAY.toLinear()
-                                        else Color.DARK_GRAY
-                                )
-                            )
-                        )
-                ) // begin a new render pass, via the command encoder
-
-            camera.update() // ensure our camera is fully up-to-date
-            // use our batch to begin drawing by passing in our combined view & projection matrix
-            batch.begin(camera.viewProjection)
-            batch.draw(texture, x = 25f, y = 25f, scaleX = 50f, scaleY = 50f)
-            // flush the render pass. This will make all the draw calls to the underlying mesh with the g
-            batch.flush(renderPassEncoder)
-            batch.end() // ensure we end the batch drawing
-            renderPassEncoder.end() // render pass is done so we end it
-            renderPassEncoder.release()
-
-            // we aren't creating anymore render passes, so we can finish the command encoder
-            val commandBuffer = commandEncoder.finish() // this returns a list of commands we need to submit
-
-            device.queue.submit(commandBuffer) // using the device, we submit the commands to the queue
-            graphics.surface.present() // inform the surface to present
-
-            // we must release all the resources we just created this frame. This must be done each frame.
-            commandBuffer.release()
-            commandEncoder.release()
-            frame.release()
-            swapChainTexture.release()
+                camera.update() // ensure our camera is fully up-to-date
+                // use our batch to begin drawing by passing in our combined view & projection matrix
+                batch.begin(camera.viewProjection)
+                batch.draw(texture, x = 25f, y = 25f, scaleX = 50f, scaleY = 50f)
+                // flush the render pass. This will make all the draw calls to the underlying mesh with the g
+                batch.flush(renderPassEncoder)
+                batch.end() // ensure we end the batch drawing
+                renderPassEncoder.end() // render pass is done so we end it
+                renderPassEncoder.release()
+            } // the commands are submitted, the surface is presented & the frame resources are released here
         }
     }
 }
+```
+
+## Under the hood
+
+`renderFrame` handles the raw WebGPU steps for each frame. It gets the current surface texture with `graphics.surface.getCurrentTexture()`, skips the frame if it isn't ready (or configures the surface again if it's outdated or lost), creates the frame view and a `CommandEncoder`, then finishes the encoder, submits the commands to `device.queue`, calls `graphics.surface.present()`, and releases everything.
+
+`colorAttachment(view, clearColor)` creates a `RenderPassColorAttachmentDescriptor` that clears the view to `clearColor` and stores the results. Leaving out the `clearColor` loads the existing contents of the view instead, which is useful for drawing on top of a previous pass.
+
+```kotlin
+colorAttachment(frame, clearColor) // LoadOp.CLEAR & StoreOp.STORE
+colorAttachment(frame) // LoadOp.LOAD & StoreOp.STORE
 ```

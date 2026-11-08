@@ -42,13 +42,14 @@ onUpdate { dt ->
     camera.update()
     shadowMap.update(lightDirection, camera)
 
-    val commandEncoder = device.createCommandEncoder()
-    shadowMap.render(commandEncoder, shadowBatch, models, dt)
+    renderFrame { frame, commandEncoder ->
+        shadowMap.render(commandEncoder, shadowBatch, models, dt)
 
-    val renderPass = ... // main render pass
-    models.forEach { modelBatch.render(it, camera, environment) }
-    modelBatch.flush(renderPass, camera, dt)
-    renderPass.end()
+        val renderPass = ... // main render pass
+        models.forEach { modelBatch.render(it, camera, environment) }
+        modelBatch.flush(renderPass, camera, dt)
+        renderPass.end()
+    }
 }
 
 onRelease {

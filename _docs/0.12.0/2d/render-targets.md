@@ -20,54 +20,54 @@ val target = EmptyTexture(device, preferredFormat, 256, 256)
 Render to a texture.
 
 ```kotlin
-val commandEncoder = device.createCommandEncoder("command encoder")
-val renderTargetRenderPass =
+val targetClearColor = graphics.surfaceColor(Color.YELLOW)
+val clearColor = graphics.surfaceColor(Color.DARK_GRAY)
+
+renderFrame { frame, commandEncoder ->
+    val renderTargetRenderPass =
+        commandEncoder.beginRenderPass(
+            RenderPassDescriptor(
+                colorAttachment(target.view, targetClearColor), // our texture specified here!
+                label = "Render target render pass"
+            )
+        )
+
+    batch.begin()
+    batch.draw(mySprite, 0f, 0f) // we are drawing to the render target
+    batch.flush(renderTargetRenderPass)
+    renderTargetRenderPass.end()
+
+    val surfaceRenderPass =
+        commandEncoder.beginRenderPass(
+            RenderPassDescriptor(colorAttachment(frame, clearColor), label = "Surface render pass")
+        )
+    // now we draw the render target ouput to the surface frame
+    batch.draw(
+        target,
+        0f,
+        0f,
+        originX = target.width * 0.5f,
+        originY = target.height * 0.5f,
+    )
+    batch.flush(surfaceRenderPass)
+    batch.end()
+    surfaceRenderPass.end()
+}
+```
+
+## Window Sized Targets
+
+`renderTarget` creates an `EmptyTexture` the size of the window. It is resized and released automatically, which is handy for depth, multisampled, or HDR targets.
+
+```kotlin
+val colorTarget = renderTarget(graphics.preferredFormat)
+val depthTarget = renderTarget(TextureFormat.DEPTH24_PLUS_STENCIL8)
+
+val renderPass =
     commandEncoder.beginRenderPass(
         RenderPassDescriptor(
-            listOf(
-                RenderPassColorAttachmentDescriptor(
-                    view = target.view, // our texture specified here!
-                    loadOp = LoadOp.CLEAR,
-                    storeOp = StoreOp.STORE,
-                    clearColor =
-                        if (preferredFormat.srgb) Color.YELLOW.toLinear()
-                        else Color.YELLOW
-                )
-            ),
-            label = "Surface render pass"
+            colorAttachment(colorTarget.view, clearColor),
+            depthStencilAttachment = depthTarget.depthAttachment(),
         )
     )
-
-batch.begin()
-batch.draw(mySprite, 0f, 0f) // we are drawing to the render target
-batch.flush(renderTargetRenderPass)
-renderTargetRenderPass.end()
-
-val surfaceRenderPass =
-    commandEncoder.beginRenderPass(
-        RenderPassDescriptor(
-            listOf(
-                RenderPassColorAttachmentDescriptor(
-                    view = frame,
-                    loadOp = LoadOp.CLEAR,
-                    storeOp = StoreOp.STORE,
-                    clearColor =
-                        if (preferredFormat.srgb) Color.DARK_GRAY.toLinear()
-                        else Color.DARK_GRAY
-                )
-            ),
-            label = "Surface render pass"
-        )
-    )
-// now we draw the render target ouput to the surface frame
-batch.draw(
-    target,
-    0f,
-    0f,
-    originX = target.width * 0.5f,
-    originY = target.height * 0.5f,
-)
-batch.flush(surfaceRenderPass)
-batch.end()
-surfaceRenderPass.end()
 ```

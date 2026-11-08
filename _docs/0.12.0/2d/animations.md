@@ -50,6 +50,7 @@ Creating an `AnimationPlayer` expects a type parameter as well. This needs to ma
 val batch = SpriteBatch(this)
 val viewport = ExtendViewport(480, 270)
 val camera = viewport.camera
+val clearColor = graphics.surfaceColor(Color.DARK_GRAY)
 
 val atlas: TextureAtlas = resourcesVfs["tiles.atlas.json"].readAtlas()
 val heroRun: Animation<TextureSlice> = atlas.getAnimation("heroRun")
@@ -58,45 +59,17 @@ val anim = AnimaationPlayer<TextureSlice>()
 anim.playLooped(heroRun)
 
 onUpdate { dt ->
-    val surfaceTexture = graphics.surface.getCurrentTexture()
-    val swapChainTexture = checkNotNull(surfaceTexture.texture)
-    val frame = swapChainTexture.createView()
-
-    val commandEncoder = device.createCommandEncoder()
-    val renderPassEncoder =
-        commandEncoder.beginRenderPass(
-            desc =
-                RenderPassDescriptor(
-                    listOf(
-                        RenderPassColorAttachmentDescriptor(
-                            view = frame,
-                            loadOp = LoadOp.CLEAR,
-                            storeOp = StoreOp.STORE,
-                            clearColor =
-                                if (preferredFormat.srgb) Color.DARK_GRAY.toLinear()
-                                else Color.DARK_GRAY
-                        )
-                    )
-                )
-        )
-    batch.use(renderPassEncoder, camera.viewProjection) { batch ->
-        anim.currentKeyFrame?.let { // use the current key frame of the animation to render
-            batch.draw(it, 50f, 50f, scaleX = 5f, scaleY = 5f)
+    renderFrame { frame, commandEncoder ->
+        val renderPassEncoder =
+            commandEncoder.beginRenderPass(RenderPassDescriptor(colorAttachment(frame, clearColor)))
+        batch.use(renderPassEncoder, camera.viewProjection) { batch ->
+            anim.currentKeyFrame?.let { // use the current key frame of the animation to render
+                batch.draw(it, 50f, 50f, scaleX = 5f, scaleY = 5f)
+            }
         }
+        renderPassEncoder.end()
+        renderPassEncoder.release()
     }
-    
-    renderPassEncoder.end()
-    renderPassEncoder.release()
-
-    val commandBuffer = commandEncoder.finish()
-
-    device.queue.submit(commandBuffer)
-    graphics.surface.present()
-
-    commandBuffer.release()
-    commandEncoder.release()
-    frame.release()
-    swapChainTexture.release()
 }
 ```
 
@@ -106,6 +79,7 @@ onUpdate { dt ->
 val batch = SpriteBatch(this)
 val viewport = ExtendViewport(480, 270)
 val camera = viewport.camera
+val clearColor = graphics.surfaceColor(Color.DARK_GRAY)
 
 val atlas: TextureAtlas = resourcesVfs["tiles.atlas.json"].readAtlas()
 val heroRun: Animation<TextureSlice> = atlas.getAnimation("heroRun")
@@ -119,43 +93,17 @@ onUpdate { dt ->
     anim.update(dt)
     camera.update()
     
-    val surfaceTexture = graphics.surface.getCurrentTexture()
-    val swapChainTexture = checkNotNull(surfaceTexture.texture)
-    val frame = swapChainTexture.createView()
-
-    val commandEncoder = device.createCommandEncoder()
-    val renderPassEncoder =
-        commandEncoder.beginRenderPass(
-            desc =
-                RenderPassDescriptor(
-                    listOf(
-                        RenderPassColorAttachmentDescriptor(
-                            view = frame,
-                            loadOp = LoadOp.CLEAR,
-                            storeOp = StoreOp.STORE,
-                            clearColor =
-                                if (preferredFormat.srgb) Color.DARK_GRAY.toLinear()
-                                else Color.DARK_GRAY
-                        )
-                    )
-                )
-        )
-    batch.use(renderPassEncoder, camera.viewProjection) { batch ->
-        anim.currentKeyFrame?.let {
-            batch.draw(it, 50f, 50f, scaleX = 5f, scaleY = 5f)
+    renderFrame { frame, commandEncoder ->
+        val renderPassEncoder =
+            commandEncoder.beginRenderPass(RenderPassDescriptor(colorAttachment(frame, clearColor)))
+        batch.use(renderPassEncoder, camera.viewProjection) { batch ->
+            anim.currentKeyFrame?.let {
+                batch.draw(it, 50f, 50f, scaleX = 5f, scaleY = 5f)
+            }
         }
+        renderPassEncoder.end()
+        renderPassEncoder.release()
     }
-    renderPassEncoder.end()
-    renderPassEncoder.release()
-    val commandBuffer = commandEncoder.finish()
-
-    device.queue.submit(commandBuffer)
-    graphics.surface.present()
-
-    commandBuffer.release()
-    commandEncoder.release()
-    frame.release()
-    swapChainTexture.release()
 }
 ```
 
@@ -196,6 +144,7 @@ Instead of having to handle playing animations manually we can register a state 
 val batch = SpriteBatch(this)
 val viewport = ExtendViewport(480, 270)
 val camera = viewport.camera
+val clearColor = graphics.surfaceColor(Color.DARK_GRAY)
 
 val atlas: TextureAtlas = resourcesVfs["tiles.atlas.json"].readAtlas()
 val anim = AnimationPlayer<TextureSlice>()
@@ -251,42 +200,16 @@ onUpdate { dt ->
     anim.update(dt)
     camera.update()
 
-    val surfaceTexture = graphics.surface.getCurrentTexture()
-    val swapChainTexture = checkNotNull(surfaceTexture.texture)
-    val frame = swapChainTexture.createView()
-
-    val commandEncoder = device.createCommandEncoder()
-    val renderPassEncoder =
-        commandEncoder.beginRenderPass(
-            desc =
-                RenderPassDescriptor(
-                    listOf(
-                        RenderPassColorAttachmentDescriptor(
-                            view = frame,
-                            loadOp = LoadOp.CLEAR,
-                            storeOp = StoreOp.STORE,
-                            clearColor =
-                                if (preferredFormat.srgb) Color.DARK_GRAY.toLinear()
-                                else Color.DARK_GRAY
-                        )
-                    )
-                )
-        )
-    batch.use(renderPassEncoder, camera.viewProjection) { batch ->
-        anim.currentKeyFrame?.let {
-            batch.draw(it, 50f, 50f, scaleX = 5f, scaleY = 5f)
+    renderFrame { frame, commandEncoder ->
+        val renderPassEncoder =
+            commandEncoder.beginRenderPass(RenderPassDescriptor(colorAttachment(frame, clearColor)))
+        batch.use(renderPassEncoder, camera.viewProjection) { batch ->
+            anim.currentKeyFrame?.let {
+                batch.draw(it, 50f, 50f, scaleX = 5f, scaleY = 5f)
+            }
         }
+        renderPassEncoder.end()
+        renderPassEncoder.release()
     }
-    renderPassEncoder.end()
-    renderPassEncoder.release()
-    val commandBuffer = commandEncoder.finish()
-
-    device.queue.submit(commandBuffer)
-    graphics.surface.present()
-
-    commandBuffer.release()
-    commandEncoder.release()
-    frame.release()
-    swapChainTexture.release()
 }
 ```

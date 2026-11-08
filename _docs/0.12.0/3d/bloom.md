@@ -23,16 +23,18 @@ Render bloom on the HDR texture after the scene pass ends and then tonemap it. T
 
 ```kotlin
 onUpdate { dt ->
-    val scenePass = ... // HDR render pass
-    modelBatch.render(model, camera, environment)
-    modelBatch.flush(scenePass, camera, dt)
-    scenePass.end()
+    renderFrame { frame, commandEncoder ->
+        val scenePass = ... // HDR render pass
+        modelBatch.render(model, camera, environment)
+        modelBatch.flush(scenePass, camera, dt)
+        scenePass.end()
 
-    bloom.render(commandEncoder, hdrView, graphics.width, graphics.height)
+        bloom.render(commandEncoder, hdrTarget.view, hdrTarget.width, hdrTarget.height)
 
-    val surfacePass = ... // surface render pass
-    tonemapper.render(surfacePass, hdrView)
-    surfacePass.end()
+        val surfacePass = ... // surface render pass
+        tonemapper.render(surfacePass, hdrTarget.view)
+        surfacePass.end()
+    }
 }
 
 onRelease {

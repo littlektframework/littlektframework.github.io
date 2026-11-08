@@ -21,26 +21,11 @@ val modelBatch =
 
 ## Multisampled Textures
 
-The color and depth textures must use the same sample count as the `ModelBatch`.
+The color and depth [render targets](/docs/0.12.0/2d/render-targets) must use the same sample count as the `ModelBatch`. They resize with the window.
 
 ```kotlin
-fun createAttachment(width: Int, height: Int, format: TextureFormat) =
-    device.createTexture(
-        TextureDescriptor(
-            Extent3D(width, height, 1),
-            1,
-            4, // sample count
-            TextureDimension.D2,
-            format,
-            TextureUsage.RENDER_ATTACHMENT,
-        )
-    )
-
-val msaaTexture = createAttachment(graphics.width, graphics.height, preferredFormat)
-val msaaView = msaaTexture.createView()
-val depthTexture =
-    createAttachment(graphics.width, graphics.height, TextureFormat.DEPTH24_PLUS_STENCIL8)
-val depthView = depthTexture.createView()
+val msaaTarget = renderTarget(preferredFormat, sampleCount = 4)
+val depthTarget = renderTarget(TextureFormat.DEPTH24_PLUS_STENCIL8, sampleCount = 4)
 ```
 
 ## Resolving
@@ -48,31 +33,16 @@ val depthView = depthTexture.createView()
 Render into the multisampled view and resolve it into the frame with `resolveTarget`.
 
 ```kotlin
-val renderPass =
-    commandEncoder.beginRenderPass(
-        RenderPassDescriptor(
-            listOf(
-                RenderPassColorAttachmentDescriptor(
-                    view = msaaView,
-                    loadOp = LoadOp.CLEAR,
-                    storeOp = StoreOp.DISCARD,
-                    clearColor = clearColor,
-                    resolveTarget = frame, // our surface frame
-                )
-            ),
-            depthStencilAttachment =
-                RenderPassDepthStencilAttachmentDescriptor(
-                    view = depthView,
-                    depthClearValue = 1f,
-                    depthLoadOp = LoadOp.CLEAR,
-                    depthStoreOp = StoreOp.STORE,
-                    stencilClearValue = 0,
-                    stencilLoadOp = LoadOp.CLEAR,
-                    stencilStoreOp = StoreOp.STORE,
-                ),
+renderFrame { frame, commandEncoder ->
+    val renderPass =
+        commandEncoder.beginRenderPass(
+            RenderPassDescriptor(
+                colorAttachment(msaaTarget.view, clearColor, resolveTarget = frame), // our surface frame
+                depthStencilAttachment = depthTarget.depthAttachment(),
+            )
         )
-    )
-modelBatch.render(model, camera, environment)
-modelBatch.flush(renderPass, camera, dt)
-renderPass.end()
+    modelBatch.render(model, camera, environment)
+    modelBatch.flush(renderPass, camera, dt)
+    renderPass.end()
+}
 ```
