@@ -58,6 +58,8 @@
         url: /docs/0.12.0/3d/transparency
       - title: "HDR and Tonemapping"
         url: /docs/0.12.0/3d/hdr-and-tonemapping
+      - title: "Image Based Lighting"
+        url: /docs/0.12.0/3d/image-based-lighting
       - title: "MSAA"
         url: /docs/0.12.0/3d/msaa
       - title: "Multiple Cameras and Passes"
