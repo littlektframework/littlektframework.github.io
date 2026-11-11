@@ -15,6 +15,14 @@ button {
 }
 ```
 
+Common values, such as text, can also be passed straight to the builder:
+
+```kotlin
+button("Hello!")
+```
+
+Every builder also accepts a `modifier`. See [Modifiers](/docs/0.12.0/ui/modifiers).
+
 ### Input
 
 The `SceneGraph` manages the input and passing down input events through scene's root. Input events, such as, hovering with a mouse or focusing with a keyboard, are forwarded through the graph until a `Control` node marks the event as handled in the `uiInput(InputEvent)` method.
@@ -44,9 +52,7 @@ control {
 A standard themed button (via [Button](https://github.com/littlektframework/littlekt/blob/master/scene-graph/src/commonMain/kotlin/com/littlekt/graph/node/ui/Button.kt)) that can contain text and is displayed according to the `Theme`.
 
 ```kotlin
-button {
-    text = "Click me!"
-
+button("Click me!") {
     onPressed += {
         log.info { "I was pressed!" }
     }
@@ -58,8 +64,7 @@ button {
 Displays plain text (via [Label](https://github.com/littlektframework/littlekt/blob/master/scene-graph/src/commonMain/kotlin/com/littlekt/graph/node/ui/Label.kt)). Allows control of the horizontal and vertical alignments.
 
 ```kotlin
-label {
-    text = "My label"
+label("My label") {
     horizontalAlign = HAlign.CENTER
     verticalAlign = VAlign.CENTER
 }
@@ -79,12 +84,9 @@ Contains commonly built in shortcuts:
 -   **Ctrl + A**: Select all
 
 ```kotlin
-lineEdit {
-    placeholderText = "Enter your username"
-}
+lineEdit(placeholder = "Enter your username")
 
-lineEdit {
-    placeholderText = "Enter your password"
+lineEdit(placeholder = "Enter your password") {
     secretCharacter = '-'
     secret = true // will render the text as a '-' instead of the default '*'
 }

@@ -17,22 +17,25 @@ When a container is resizes, all of its children are repositioned and resized as
 
 ## Size Flags
 
-When adding a control node to a container, the way a container treats a child depends mainly on their _size flags_. These can be set on each control node by using the `horizontalFlags` and `verticalFlags` properties.
+When adding a control node to a container, the way a container treats a child depends mainly on their _size flags_. These can be set on each control node by using the `horizontalSizing` and `verticalSizing` properties.
 
 ```kotlin
 hBoxContainer {
-    button {
-        text = "Button"
-        horizontalSizeFlags = SizeFlag.FILL or SizeFlag.EXPAND
+    button("Button") {
+        horizontalSizing = SizeFlag.FILL or SizeFlag.EXPAND
     }
-    button {
-        text = "Button 2"
-        horizontalSizeFlags = SizeFlag.FILL or SizeFlag.EXPAND
+    button("Button 2") {
+        horizontalSizing = SizeFlag.FILL or SizeFlag.EXPAND
     }
-    button {
-        text = "Button 3"
-        horizontalSizeFlags = SizeFlag.FILL or SizeFlag.EXPAND
-    }
+}
+```
+
+Or use the shortcuts from [Size and Anchors](/docs/0.12.0/ui/size-and-anchors#sizing-in-containers):
+
+```kotlin
+hBoxContainer {
+    button("Button") { expandWidth() }
+    button("Button 2") { expandWidth() }
 }
 ```
 
@@ -57,18 +60,9 @@ Arranges child controls horizontally while expanding vertically (via [HBoxContai
 
 ```kotlin
 hBoxContainer {
-    button {
-        text = "Button"
-        horizontalSizeFlags = SizeFlag.FILL or SizeFlag.EXPAND
-    }
-    button {
-        text = "Button 2"
-        horizontalSizeFlags = SizeFlag.FILL or SizeFlag.EXPAND
-    }
-    button {
-        text = "Button 3"
-        horizontalSizeFlags = SizeFlag.FILL or SizeFlag.EXPAND
-    }
+    button("Button") { expandWidth() }
+    button("Button 2") { expandWidth() }
+    button("Button 3") { expandWidth() }
 }
 ```
 
@@ -76,18 +70,9 @@ We can also use `row` instead which is the same as `hBoxContainer`.
 
 ```kotlin
 row {
-    button {
-        text = "Button"
-        horizontalSizeFlags = SizeFlag.FILL or SizeFlag.EXPAND
-    }
-    button {
-        text = "Button 2"
-        horizontalSizeFlags = SizeFlag.FILL or SizeFlag.EXPAND
-    }
-    button {
-        text = "Button 3"
-        horizontalSizeFlags = SizeFlag.FILL or SizeFlag.EXPAND
-    }
+    button("Button") { expandWidth() }
+    button("Button 2") { expandWidth() }
+    button("Button 3") { expandWidth() }
 }
 ```
 
@@ -99,17 +84,9 @@ Arranges child controls vertically while expanding horizontally (via [VBoxContai
 
 ```kotlin
 vBoxContainer {
-        text = "Button"
-        verticalSizeFlags = SizeFlag.FILL or SizeFlag.EXPAND
-    }
-    button {
-        text = "Button 2"
-        verticalSizeFlags = SizeFlag.FILL or SizeFlag.EXPAND
-    }
-    button {
-        text = "Button 3"
-        verticalSizeFlags = SizeFlag.FILL or SizeFlag.EXPAND
-    }
+    button("Button") { expandHeight() }
+    button("Button 2") { expandHeight() }
+    button("Button 3") { expandHeight() }
 }
 ```
 
@@ -117,18 +94,32 @@ We can also use `column` instead which does the same as `vBoxContainer`.
 
 ```kotlin
 column {
-    button {
-        text = "Button"
-        verticalSizeFlags = SizeFlag.FILL or SizeFlag.EXPAND
-    }
-    button {
-        text = "Button 2"
-        verticalSizeFlags = SizeFlag.FILL or SizeFlag.EXPAND
-    }
-    button {
-        text = "Button 3"
-        verticalSizeFlags = SizeFlag.FILL or SizeFlag.EXPAND
-    }
+    button("Button") { expandHeight() }
+    button("Button 2") { expandHeight() }
+    button("Button 3") { expandHeight() }
+}
+```
+
+#### Separation and Alignment
+
+Set the space between children and how they are aligned:
+
+```kotlin
+column(separation = 10, align = AlignMode.CENTER) {
+    button("Play")
+    button("Quit")
+}
+```
+
+#### Spacer
+
+Use `spacer()` to push siblings apart in a `row` or `column`:
+
+```kotlin
+row {
+    label("Score")
+    spacer()
+    button("Pause")
 }
 ```
 
@@ -140,12 +131,9 @@ Arranges child controls directly in the center (via [CenterContainer](https://gi
 
 ```kotlin
 centerContainer {
-    anchorRight = 1f
-    anchorBottom = 1f
+    fillParent()
 
-    button {
-        text = "Button"
-    }
+    button("Button")
 }
 ```
 
@@ -156,12 +144,20 @@ Arranges child controls that are expanded toward the bounds (via [PaddedContaine
 ![padded container example](/assets/images/ui/padded-container-example.png)
 
 ```kotlin
-paddedContainer {
-    padding(10)
+paddedContainer(padding = 10) {
+    button("Button")
+}
+```
 
-    button {
-        text = "Button"
-    }
+Or use the shorter `padded`, with the same padding on every side or separate horizontal and vertical padding:
+
+```kotlin
+padded(8) {
+    button("Button")
+}
+
+padded(horizontal = 16, vertical = 8) {
+    button("Button")
 }
 ```
 
@@ -176,8 +172,7 @@ panelContainer {
     width = 400f
     height = 200f
 
-    label {
-        text = "my label"
+    label("my label") {
         verticalAlign = VAlign.CENTER
         horizontalAlign = HAlign.CENTER
     }

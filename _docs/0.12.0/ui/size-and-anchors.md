@@ -19,8 +19,7 @@ An example of setting a controls `x` and `y` properties and the margin calculati
 ```kotlin
 val scene = sceneGraph(context, batch = batch) {
     control {
-        anchorRight = 1f
-        anchorBottom = 1f
+        fillParent()
 
         button {
             text = "Button"
@@ -50,8 +49,7 @@ If we change the button controls right and left anchors to `1f` we will see the 
 ```kotlin
 val scene = sceneGraph(context, batch = batch) {
     control {
-        anchorRight = 1f
-        anchorBottom = 1f
+        fillParent()
 
         button {
             anchorRight = 1f
@@ -88,14 +86,80 @@ Example of aligning a button to the center of its parent:
 ```kotlin
 val scene = sceneGraph(context, batch = batch) {
     control {
-        anchorRight = 1f
-        anchorBottom = 1f
+        fillParent()
 
-        button {
-            anchor(AnchorLayout.CENTER)
-
-            text = "Button"
+        button("Button") {
+            centerInParent()
         }
     }
+}
+```
+
+`centerInParent()` is the same as `anchor(AnchorLayout.CENTER)`.
+
+### Filling the Parent
+
+Stretch a control over its whole parent, optionally keeping a margin from each edge:
+
+```kotlin
+control {
+    fillParent(margin = 10f)
+}
+```
+
+Any preset can take a margin as well:
+
+```kotlin
+button("Button") {
+    anchor(AnchorLayout.TOP_WIDE, margin = 10f)
+}
+```
+
+### Setting All Anchors
+
+Set all four anchors at once with `anchors()`:
+
+```kotlin
+button("Button") {
+    anchors(left = 1f, top = 0f, right = 1f, bottom = 0f)
+}
+```
+
+## Sizing in Containers
+
+When a control is inside a [container](/docs/0.12.0/ui/containers), its [size flags](/docs/0.12.0/ui/containers#size-flags) decide how much space it takes.
+
+### Expand
+
+Take up the free space of the parent container. The ratio sets the share between expanding siblings:
+
+```kotlin
+row {
+    button("Small") { expandWidth() }
+    button("Big") { expandWidth(ratio = 2f) }
+}
+```
+
+Use `expand()` for both axes or `expandHeight()` for only the vertical axis.
+
+### Shrink
+
+Keep the control at its minimum size and place it at the start, center, or end of its space:
+
+```kotlin
+column {
+    button("Begin") { shrinkBegin(vertical = false) }
+    button("Center") { shrinkCenter(vertical = false) }
+    button("End") { shrinkEnd(vertical = false) }
+}
+```
+
+## Minimum Size
+
+Set the minimum width and height of a control with `minSize()`:
+
+```kotlin
+button("Button") {
+    minSize(120f, 40f)
 }
 ```

@@ -122,6 +122,8 @@
         url: /docs/0.12.0/ui/controls
       - title: "Containers"
         url: /docs/0.12.0/ui/containers
+      - title: "Modifiers"
+        url: /docs/0.12.0/ui/modifiers
       - title: "Themes"
         url: /docs/0.12.0/ui/themes
       - title: "Drawables"
