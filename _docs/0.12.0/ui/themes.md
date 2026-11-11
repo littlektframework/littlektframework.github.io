@@ -5,7 +5,7 @@ permalink: /docs/0.12.0/ui/themes
 
 While we can set certain properties of a [Control](https://github.com/littlektframework/littlekt/blob/master/scene-graph/src/commonMain/kotlin/com/littlekt/graph/node/ui/Control.kt) node to make it look the way we want, and in some cases it is easier, it can get difficult to handle when dealing with more advanced layouts and could be difficult to refactor.
 
-Instead we can use a [Theme](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/component/Theme.kt) that handles rendering the correct drawables, colors, fonts, and even sizes. If you have used a _Control_ nodes that renders something to the screen then you have already used a theme without knowing it.
+Instead we can use a [Theme](https://github.com/littlektframework/littlekt/blob/master/scene-graph/src/commonMain/kotlin/com/littlekt/graph/node/resource/Theme.kt) that handles rendering the correct drawables, colors, fonts, and even sizes. If you have used a _Control_ nodes that renders something to the screen then you have already used a theme without knowing it.
 
 ## Using a Theme
 
@@ -23,7 +23,7 @@ sceneGraph(context) {
             }
 
             label {
-                text = "Nice!
+                text = "Nice!"
             }
         }
     }
@@ -53,7 +53,7 @@ sceneGraph(context) {
             }
 
             label {
-                text = "Nice!
+                text = "Nice!"
             }
         }
     }
@@ -93,115 +93,95 @@ The order that a _Control_ determines a theme value to use is the following:
 
 ## Default Theme
 
-LittleKt has a default theme built in that every _Control_ node will fallback to if it doesn't have a theme set. We can also replace the default theme with our own.
+LittleKt has a flat dark theme built in that every _Control_ node will fallback to if it doesn't have a theme set. We can also replace the default theme with our own.
 
 ```kotlin
 Theme.defaultTheme = myTheme // sets the default theme application wide
 ```
 
-We can also reuse the default theme and add our own overrides to it:
+### Palettes
+
+The default theme is built from a [ThemePalette](https://github.com/littlektframework/littlekt/blob/master/scene-graph/src/commonMain/kotlin/com/littlekt/graph/node/resource/ThemePalette.kt). Use `ThemePalette.DARK` or `ThemePalette.LIGHT` and `copy` to change any color, such as the `accent`.
 
 ```kotlin
-val myTheme = createDefaultTheme( // top-level function we can access just like this
-    extraDrawables = mapOf(
-        // override the "normal" button state drawable with our own ninepatch
-        "Button" to mapOf(
-            Button.themeVars.normal to NinePatchDrawable(myNinePatch)
-        )
-    )
+val lightTheme = createDefaultTheme(palette = ThemePalette.LIGHT)
+val redTheme = createDefaultTheme(
+    palette = ThemePalette.DARK.copy(accent = Color.fromHex("ff6b6b")),
+    cornerRadius = 4
 )
-control.theme = myTheme
+```
+
+### sRGB
+
+Palette colors are in sRGB. When rendering to an sRGB target, set `srgb` to convert them to linear. The `SceneGraph` already does this for the built-in default theme.
+
+```kotlin
+Theme.defaultTheme = createDefaultTheme(
+    palette = ThemePalette.LIGHT,
+    srgb = context.graphics.preferredFormat.srgb
+)
 ```
 
 ## Creating a Custom Theme
 
-Currently, the only way to create a custom theme is to directly create a _Theme_ object and map our values to the resource we would like to use. At some point in the future, there could be a way to define a theme using a structure text file of some sort that can be assmebled at runtime.
-
-Each theme come with a few properties that maps a _Control_ theme variable to the value. We don't have to set each value for each _Control_ theme variable. If a value is missing, it will resort to either the parent _Control_ theme or the _default_ theme.
-
-For example, this is what the default theme looks like:
+Use the `theme { }` builder to set the values of each _Control_ type. If a value is missing, it will resort to either the parent _Control_ theme or the _default_ theme.
 
 ```kotlin
-val greyButtonNinePatch = NinePatch(
-    Textures.atlas.getByPrefix("grey_button").slice,
-    5,
-    5,
-    5,
-    4
-)
-val panelNinePatch = NinePatch(
-    Textures.atlas.getByPrefix("grey_panel").slice,
-    6,
-    6,
-    6,
-    6
-)
-val drawables = mapOf(
-    "Button" to mapOf(
-        Button.themeVars.normal to NinePatchDrawable(greyButtonNinePatch)
-            .apply { modulate = Color.LIGHT_BLUE },
-        Button.themeVars.normal to NinePatchDrawable(greyButtonNinePatch)
-            .apply { modulate = Color.LIGHT_BLUE },
-        Button.themeVars.pressed to NinePatchDrawable(greyButtonNinePatch)
-            .apply { modulate = Color.LIGHT_BLUE.toMutableColor().also { it.scaleRgb(0.6f) } },
-        Button.themeVars.hover to NinePatchDrawable(greyButtonNinePatch)
-            .apply { modulate = Color.LIGHT_BLUE.toMutableColor().also { it.lighten(0.2f) } },
-        Button.themeVars.disabled to NinePatchDrawable(greyButtonNinePatch)
-            .apply { modulate = Color.LIGHT_BLUE.toMutableColor().also { it.lighten(0.5f) } },
-    ),
-    "Panel" to mapOf(
-        Panel.themeVars.panel to NinePatchDrawable(panelNinePatch).apply {
-            modulate = Color.LIGHT_BLUE
-        }
-    ),
-    "ProgressBar" to mapOf(
-        ProgressBar.themeVars.bg to NinePatchDrawable(panelNinePatch).apply {
-            modulate = Color.DARK_BLUE
-        },
-        ProgressBar.themeVars.fg to NinePatchDrawable(panelNinePatch).apply {
-            modulate = Color.LIGHT_BLUE.toMutableColor().also { it.lighten(0.5f) }
-        }
-    )
-)
-
-val fonts = mapOf()
-
-val colors = mapOf(
-    "Button" to mapOf(Button.themeVars.fontColor to Color.WHITE),
-    "Label" to mapOf(Label.themeVars.fontColor to Color.WHITE)
-)
-
-val constants = mapOf()
-
-Theme(
-    drawables = drawables,
-    fonts = fonts,
-    colors = colors,
-    constants = constants,
-    defaultFont = defaultFont
-)
+val myTheme = theme {
+    defaultFont = myFont
+    type<Button> {
+        drawables[Button.themeVars.normal] = FlatDrawable(Color.DARK_GRAY, cornerRadius = 4)
+        colors[Button.themeVars.fontColor] = Color.WHITE
+        colors[Button.themeVars.fontColorDisabled] = Color.LIGHT_GRAY
+    }
+    type<VBoxContainer> {
+        constants[BoxContainer.themeVars.separation] = 8
+    }
+}
 ```
 
-### Theme Map Types
+Each type holds maps of [Drawables](https://github.com/littlektframework/littlekt/blob/master/scene-graph/src/commonMain/kotlin/com/littlekt/graph/node/resource/Drawable.kt), [Bitmap Fonts](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/g2d/font/BitmapFont.kt), [Colors](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/Color.kt), and _Constants_:
 
-Each theme expects a map of [Drawables](https://github.com/littlektframework/littlekt/blob/master/scene-graph/src/commonMain/kotlin/com/littlekt/graph/node/resource/Drawable.kt), [Bitmap Fonts](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/g2d/font/BitmapFont.kt), [Colors](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/Color.kt), and _Constants_.
+-   **drawables**: backgrounds and states, such as a button's `normal` or `pressed`.
+-   **fonts**: fonts used by the control.
+-   **colors**: font colors, drawable colors, etc.
+-   **constants**: padding sizes, boolean values _(0 or 1)_, etc.
 
-Each of these maps are mapped to a _String_ to another map of the specified types. For example, the _drawables_ map expects a _String_ that maps to another map of _String_ that maps to a _Drawable_.
+### Types by Name
 
-The first _String_ value is the name of the _Control_ while the second _String_ value is the named of the _Control's_ theme variable.
+A type can also be set by its class name.
 
 ```kotlin
-val drawables = mapOf(
-    "Button" to mapOf(
-        Button.themeVars.normal to NinePatchDrawable(myNinePatch)
+val myTheme = theme {
+    type("VScrollBar") {
+        drawables[ScrollBar.themeVars.scroll] = FlatDrawable(Color.DARK_GRAY)
+    }
+}
+```
+
+### Extending a Theme
+
+Pass a base theme to start from. Its values are kept unless they are set in the builder.
+
+```kotlin
+val myTheme = theme(Theme.defaultTheme) {
+    type<Button> {
+        drawables[Button.themeVars.normal] = NinePatchDrawable(myNinePatch)
+    }
+}
+```
+
+The `extraDrawables`, `extraFonts`, `extraColors`, and `extraConstants` maps of `createDefaultTheme` still work as well.
+
+```kotlin
+val myTheme = createDefaultTheme(
+    extraDrawables = mapOf(
+        "Button" to mapOf(Button.themeVars.normal to NinePatchDrawable(myNinePatch))
     )
 )
 ```
 
--   **Drawables**: A map of drawables mapped by _Control_ type, mapped by variable name and value.
--   **Fonts**: A map of fonts mapped by _Control_ type, mapped by variable name and value.
--   **Colors**: A map of colors mapped by _Control_ type, mapped by variable name and value. This can include things like font colors, drawable colors, etc.
--   **Constants**: A map of constants mapped by _Control_ type, mapped by variable name and value. This can include things like padding sizes, boolean values _(0 or 1)_, etc.
+### Theme Variables
 
 Each _Control_ has a static variable called `themeVars` which references an object that contains any amount of _String_ variables which are used for grabbing theme resources to render.
 
@@ -211,12 +191,14 @@ Each _Control_ has a static variable called `themeVars` which references an obje
 // ...
 class ThemeVars {
     val fontColor = "fontColor"
+    val fontColorDisabled = "fontColorDisabled"
     val font = "font"
     val normal = "normal"
     val pressed = "pressed"
     val hover = "hover"
     val hoverPressed = "hoverPressed"
     val disabled = "disabled"
+    val focus = "focus"
 }
 
 companion object {
@@ -227,6 +209,8 @@ companion object {
 
 ### Theme Level Font
 
-On top of setting fonts for specific controls, we can also set a default font for the entire theme. We can do that by settings the `defaultFont` property on a _Theme_.
+On top of setting fonts for specific controls, we can also set a default font for the entire theme by setting `defaultFont` in the builder.
+
+The default theme uses `Fonts.defaultNoOutline`. Pass `defaultFont` to `createDefaultTheme` to change it.
 
 What this does is, if a _Control_ requires a _BitmapFont_ and the specific value for that _Control_ is not available, it will resort to using the theme level font. See [control theme value order](#control-theme-value-order) for more info.
