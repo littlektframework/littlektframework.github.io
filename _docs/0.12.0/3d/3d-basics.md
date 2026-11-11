@@ -32,6 +32,8 @@ onRelease {
 }
 ```
 
+Releasing a model also frees anything the `ModelBatch` cached for it. Custom `Material` subclasses that override `release()` must call `super.release()`.
+
 ## Environment and Lights
 
 A [PBREnvironment](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/g3d/PBREnvironment.kt) holds the lights used to shade PBR materials.

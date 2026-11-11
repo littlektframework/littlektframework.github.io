@@ -14,6 +14,13 @@ By default, Kotlin multiplatform projects don't offer any data buffer type objec
 -   `IntBuffer`: a buffer object for reading and writing only integers.
 -   `FloatBuffer`: a buffer object for reading and writing only floats.
 
+A buffer created from an array, or returned by `read()`, has its `position` at the end. Call `flip()` before reading from the start.
+
+```kotlin
+val buffer = ByteBuffer(bytes).also { it.flip() }
+val value = buffer.readInt
+```
+
 ## Key-Value Storage
 A simple key-value storage `KeyvalueStorage` interface is available that stores simple key-value in plain text in the application working directly `./storage`. 
 
