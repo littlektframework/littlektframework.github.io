@@ -34,7 +34,7 @@ button("Quit", modifier = primary)
 
 ## Order
 
-Modifiers apply from the outside in. Anything before a wrapper, such as `padding`, applies to the wrapper and anything after it applies to the control inside:
+Modifiers apply from the outside in. When two modifiers set the same value on one control, the outer (leftmost) one wins. Anything before a wrapper, such as `padding`, applies to the wrapper and anything after it applies to the control inside:
 
 ```kotlin
 // expands the padded wrapper
@@ -64,6 +64,30 @@ column(modifier = Modifier.fillParent(10f)) {
     button("Play", modifier = Modifier.shrinkCenter(vertical = false))
 }
 ```
+
+## Row & Column Scopes
+
+Children of a `row` or `hBoxContainer` get `RowScope` modifiers: `weight` shares the free width, `align(VAlign)` keeps the minimum height and aligns vertically, and `fillHeight` stretches to the full height:
+
+```kotlin
+row {
+    label("Name", modifier = Modifier.align(VAlign.CENTER))
+    lineEdit(modifier = Modifier.weight(2f))
+    button("Save", modifier = Modifier.weight(1f))
+}
+```
+
+Children of a `column` or `vBoxContainer` get `ColumnScope` modifiers: `weight` shares the free height, `align(HAlign)` aligns horizontally, and `fillWidth` stretches to the full width:
+
+```kotlin
+column {
+    label("Title", modifier = Modifier.align(HAlign.CENTER))
+    scrollContainer(modifier = Modifier.weight())
+    button("Close", modifier = Modifier.align(HAlign.RIGHT))
+}
+```
+
+These are only available directly inside that container's block. A nested `column` in a `row` uses its own scope.
 
 ## Theme Overrides
 

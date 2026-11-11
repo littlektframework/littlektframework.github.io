@@ -111,6 +111,8 @@ column(separation = 10, align = AlignMode.CENTER) {
 }
 ```
 
+To size or align a single child, use the [weight and align](/docs/0.12.0/ui/modifiers#row--column-scopes) modifiers.
+
 #### Spacer
 
 Use `spacer()` to push siblings apart in a `row` or `column`:
