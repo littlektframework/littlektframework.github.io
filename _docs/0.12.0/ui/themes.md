@@ -174,7 +174,7 @@ val myTheme = theme {
 }
 ```
 
-Each type holds maps of [Drawables](https://github.com/littlektframework/littlekt/blob/master/scene-graph/src/commonMain/kotlin/com/littlekt/graph/node/resource/Drawable.kt), [Bitmap Fonts](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/g2d/font/BitmapFont.kt), [Colors](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/Color.kt), and _Constants_:
+Each type holds maps of [Drawables](https://github.com/littlektframework/littlekt/blob/master/scene-graph/src/commonMain/kotlin/com/littlekt/graph/node/resource/Drawable.kt), [Texture Fonts](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/g2d/font/TextureFont.kt), [Colors](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/Color.kt), and _Constants_:
 
 -   **drawables**: backgrounds and states, such as a button's `normal` or `pressed`.
 -   **fonts**: fonts used by the control.
@@ -232,6 +232,6 @@ companion object {
 
 On top of setting fonts for specific controls, we can also set a default font for the entire theme by setting `defaultFont` in the builder.
 
-The default theme uses `Fonts.defaultNoOutline`. Pass `defaultFont` to `createDefaultTheme` to change it.
+The default theme uses `Fonts.defaultRaster`, the bundled Barlow Condensed TTF at 17px. Pass `defaultFont` to `createDefaultTheme` to change it, e.g. `createDefaultTheme(defaultFont = Fonts.defaultNoOutline)` for the old bitmap look. Any `TextureFont` works, such as a `RasterFont` that stays sharp when the UI is scaled. See [TTF Files and Rendering](/docs/0.12.0/2d/fonts/ttf#scene-graph).
 
-What this does is, if a _Control_ requires a _BitmapFont_ and the specific value for that _Control_ is not available, it will resort to using the theme level font. See [control theme value order](#control-theme-value-order) for more info.
+What this does is, if a _Control_ requires a _TextureFont_ and the specific value for that _Control_ is not available, it will resort to using the theme level font. See [control theme value order](#control-theme-value-order) for more info.
