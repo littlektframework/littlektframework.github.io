@@ -57,7 +57,7 @@ renderFrame { frame, commandEncoder ->
 
 ## Window Sized Targets
 
-`renderTarget` creates an `EmptyTexture` the size of the window. It is resized and released automatically, which is handy for depth, multisampled, or HDR targets.
+`renderTarget` creates an `EmptyTexture` the size of the back buffer (`graphics.backBufferWidth`/`backBufferHeight`), matching the surface on [high DPI](/docs/0.12.0/overview/window-and-display#high-dpi) screens. It is resized and released automatically, which is handy for depth, multisampled, or HDR targets.
 
 ```kotlin
 val colorTarget = renderTarget(graphics.preferredFormat)

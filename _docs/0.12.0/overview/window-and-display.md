@@ -103,6 +103,35 @@ onCloseRequested { false } // keeps the window open, desktop only (closeRequests
 
 `onResize` runs once at the start of the next frame, no matter how many resize events happened. On Windows, frames keep drawing while the window is being resized.
 
+## High DPI
+
+The surface is always the back buffer size, so Retina and 150% screens render at full resolution. `HdpiMode` works the same on every platform:
+
+- `LOGICAL` (default): the window is sized by the monitor's content scale, so `width = 960` is the same physical size at 100% and 150%. `graphics.width`/`height`, mouse coordinates, viewports, and `window.setSize` are logical.
+- `PIXELS`: window size, `graphics.width`/`height`, and mouse coordinates are raw pixels.
+
+At 150%, a 960x540 `LOGICAL` window reports `graphics.width = 960` and `graphics.backBufferWidth = 1440`.
+
+`renderTarget` textures match the back buffer. Size your own surface targets with `graphics.backBufferWidth`/`backBufferHeight`, not `graphics.width`/`height`.
+
+```kotlin
+val depth = EmptyTexture(device, TextureFormat.DEPTH24_PLUS_STENCIL8, graphics.backBufferWidth, graphics.backBufferHeight)
+```
+
+Scene graph text includes the screen density in `Control.pixelScale`, so TTF fonts rasterize for the real pixels.
+
+### Desktop
+
+```kotlin
+createLittleKtApp {
+    hdpiMode = HdpiMode.LOGICAL // PIXELS for raw pixel coordinates
+}
+```
+
+### Web
+
+The canvas buffer is its CSS size times `devicePixelRatio`. A canvas without a CSS size has its current size pinned in CSS so it doesn't grow. Mouse coordinates are in CSS pixels.
+
 ## Vsync
 
 Pick a present mode from `graphics.surfaceCapabilities.presentModes`. Later `configureSurface()` calls, such as on resize, keep the chosen mode. `graphics.presentMode` is the current one.
