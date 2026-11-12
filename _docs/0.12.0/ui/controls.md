@@ -59,6 +59,23 @@ button("Click me!") {
 }
 ```
 
+#### Button Groups
+
+Toggle buttons built with `button(...)` in a `buttonGroup { }` join one [ButtonGroup](https://github.com/littlektframework/littlekt/blob/master/scene-graph/src/commonMain/kotlin/com/littlekt/graph/node/ui/ButtonGroup.kt), so only one is pressed at a time, like radio buttons. `onSelected` is connected after the buttons are built, so an initial `pressed = true` doesn't trigger it.
+
+```kotlin
+column {
+    label("Difficulty")
+    buttonGroup(onSelected = { println((it as Button).text) }) {
+        button("Easy") { pressed = true }
+        button("Normal")
+        button("Hard")
+    }
+}
+```
+
+The group has `buttons`, `selected`, and an `onSelected` signal. Only `button(...)` calls directly in the block join the group; other nodes are added to the parent as usual.
+
 ### Label
 
 Displays plain text (via [Label](https://github.com/littlektframework/littlekt/blob/master/scene-graph/src/commonMain/kotlin/com/littlekt/graph/node/ui/Label.kt)). Allows control of the horizontal and vertical alignments.

@@ -129,13 +129,47 @@ Use the `theme { }` builder to set the values of each _Control_ type. If a value
 ```kotlin
 val myTheme = theme {
     defaultFont = myFont
-    type<Button> {
-        drawables[Button.themeVars.normal] = FlatDrawable(Color.DARK_GRAY, cornerRadius = 4)
-        colors[Button.themeVars.fontColor] = Color.WHITE
-        colors[Button.themeVars.fontColorDisabled] = Color.LIGHT_GRAY
+    button {
+        normal = FlatDrawable(Color.DARK_GRAY, cornerRadius = 4)
+        hover = FlatDrawable(Color.GRAY, cornerRadius = 4)
+        fontColor = Color.WHITE
+        fontColorDisabled = Color.LIGHT_GRAY
     }
-    type<VBoxContainer> {
-        constants[BoxContainer.themeVars.separation] = 8
+    label { fontColor = Color.WHITE }
+    lineEdit {
+        bg = FlatDrawable(Color.DARK_GRAY)
+        caret = FlatDrawable(Color.WHITE).apply { minWidth = 1f }
+        fontColorPlaceholder = Color.LIGHT_GRAY
+    }
+    progressBar {
+        bg = FlatDrawable(Color.DARK_GRAY)
+        fg = FlatDrawable(Color.GREEN)
+    }
+    scrollBars { grabber = FlatDrawable(Color.GRAY, cornerRadius = 3) }
+    column { separation = 6 }
+    row { separation = 6 }
+    paddedContainer { padding(8) }
+}
+```
+
+Setting a value to `null` unsets it. The typed scopes are:
+
+-   `button`, `label`, `lineEdit`, `panel`, `panelContainer`, `progressBar`, `scrollContainer`
+-   `vScrollBar`, `hScrollBar`, or `scrollBars` for both
+-   `column` _(VBoxContainer)_ and `row` _(HBoxContainer)_
+-   `paddedContainer`
+
+### Other Types
+
+For custom controls or values not covered by a scope, set the type with `type<T>` or by its class name with `type("Name")`.
+
+```kotlin
+val myTheme = theme {
+    type<MyControl> {
+        colors["outline"] = Color.RED
+    }
+    type("VScrollBar") {
+        drawables[ScrollBar.themeVars.scroll] = FlatDrawable(Color.DARK_GRAY)
     }
 }
 ```
@@ -147,27 +181,14 @@ Each type holds maps of [Drawables](https://github.com/littlektframework/littlek
 -   **colors**: font colors, drawable colors, etc.
 -   **constants**: padding sizes, boolean values _(0 or 1)_, etc.
 
-### Types by Name
-
-A type can also be set by its class name.
-
-```kotlin
-val myTheme = theme {
-    type("VScrollBar") {
-        drawables[ScrollBar.themeVars.scroll] = FlatDrawable(Color.DARK_GRAY)
-    }
-}
-```
-
 ### Extending a Theme
 
 Pass a base theme to start from. Its values are kept unless they are set in the builder.
 
 ```kotlin
 val myTheme = theme(Theme.defaultTheme) {
-    type<Button> {
-        drawables[Button.themeVars.normal] = NinePatchDrawable(myNinePatch)
-    }
+    button { normal = NinePatchDrawable(myNinePatch) }
+    label { fontColor = null } // unset, falls back to the parent theme
 }
 ```
 

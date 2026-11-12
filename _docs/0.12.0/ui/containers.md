@@ -181,6 +181,20 @@ panelContainer {
 }
 ```
 
+### Stack Container
+
+Layers child controls on top of each other without drawing anything itself (via [StackContainer](https://github.com/littlektframework/littlekt/blob/master/scene-graph/src/commonMain/kotlin/com/littlekt/graph/node/ui/StackContainer.kt)), similar to Compose's `Box`. Each child fills the stack by default and later children are drawn on top. Its minimum size is the largest child's minimum size.
+
+```kotlin
+stack(Modifier.minSize(0f, 56f)) {
+    ninePatchRect { texture = slice }
+    label("Top left", modifier = Modifier.align(HAlign.LEFT, VAlign.TOP).padding(4))
+    label("Bottom right", modifier = Modifier.align(HAlign.RIGHT, VAlign.BOTTOM).padding(4))
+}
+```
+
+`stackContainer` is the same as `stack`. To align a single child, use the [stack scope](/docs/0.12.0/ui/modifiers#stack-scope) modifiers.
+
 ### Scroll Container
 
 A container that will automatically create a [ScrollBar](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/ui/ScrollBar.kt) child (`HScrollBar` or `VScrollBar` or both) when needed. (via [ScrollContainer](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/ui/ScrollContainer.kt)).
@@ -198,6 +212,14 @@ scrollContainer {
             }
         }
     }
+}
+```
+
+Children keep their minimum size. To stretch one to the visible width so only its height scrolls, use the [scroll scope](/docs/0.12.0/ui/modifiers#scroll-scope) modifiers:
+
+```kotlin
+scrollContainer {
+    column(modifier = Modifier.fillViewportWidth()) { /* ... */ }
 }
 ```
 

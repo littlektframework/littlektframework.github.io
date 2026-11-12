@@ -89,6 +89,32 @@ column {
 
 These are only available directly inside that container's block. A nested `column` in a `row` uses its own scope.
 
+## Stack Scope
+
+Children of a `stack`, `panelContainer` or `paddedContainer` get `StackScope` modifiers: `align(HAlign, VAlign)`, `align(HAlign)` or `align(VAlign)` keep the minimum size on that axis and align it, while the other axis still fills. `fillWidth` and `fillHeight` are the default:
+
+```kotlin
+stack {
+    textureRect { slice = background }
+    label("Paused", modifier = Modifier.align(HAlign.CENTER, VAlign.CENTER))
+    button("Resume", modifier = Modifier.align(HAlign.RIGHT).padding(4))
+}
+```
+
+Placed before a wrapper, `align` applies to the wrapper, so `Modifier.align(HAlign.RIGHT).padding(4)` aligns the padded box.
+
+## Scroll Scope
+
+Children of a `scrollContainer` keep their minimum size by default. `ScrollScope` modifiers stretch them to at least the visible area, excluding visible scroll bars: `fillViewportWidth` so only the height scrolls, `fillViewportHeight` so only the width scrolls, and `fillViewport` for both:
+
+```kotlin
+scrollContainer {
+    column(modifier = Modifier.fillViewportWidth()) {
+        repeat(20) { label("Item $it") { horizontalAlign = HAlign.CENTER } }
+    }
+}
+```
+
 ## Theme Overrides
 
 Override [theme](/docs/0.12.0/ui/themes) values on a single control:
