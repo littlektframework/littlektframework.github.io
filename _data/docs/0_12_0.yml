@@ -16,6 +16,8 @@
   children:
       - title: "Context and ContextListener"
         url: /docs/0.12.0/overview/context-and-contextlistener
+      - title: "Window and Display"
+        url: /docs/0.12.0/overview/window-and-display
       - title: "Logging"
         url: /docs/0.12.0/overview/logging
 - title: "2D Graphics"

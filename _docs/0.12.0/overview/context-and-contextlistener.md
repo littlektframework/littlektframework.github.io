@@ -39,6 +39,8 @@ override suspend fun Context.start() {
 }
 ```
 
+Window events, such as `onFocusChanged`, `onMinimizedChanged`, `onContentScaleChanged`, `onWindowModeChanged`, `onMonitorsChanged`, and `onCloseRequested`, are covered in [Window and Display](/docs/0.12.0/overview/window-and-display).
+
 By design, LittleKt uses [dependency injection](https://en.wikipedia.org/docs/Dependency_injection) pattern for everything we can make use of. LittleKt avoids singletons and global states. If we want to access the context in a class then we would need to ensure we pass down the reference of the said context to the required class. This may seem awkward if you never have used it but this makes sure the follows the separation of concern, decoupling classes, code reuse, and readability. LittleKt does not make use of any dependency injection framework.
 
 ## Context Listener
