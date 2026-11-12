@@ -41,11 +41,14 @@ Vectors come with your standard vector math functions. Most of these come with `
 -   `rotate`: rotate the vector along an axis
 -   `length`: the length of a vector
 -   `scale`: scale the vector
+-   `angleTo`: the signed angle from this `Vec2f` to another, positive counterclockwise
 
 **Example:**
 
 ```kotlin
 val v = MutableVec3f()
 v.add(1f, 2f, 3f)
-v += Vec2f(1f, 2f, 3f)
+v += Vec3f(1f, 2f, 3f)
+
+Vec2f.X_AXIS.angleTo(Vec2f.Y_AXIS) // 90 degrees
 ```
