@@ -150,6 +150,39 @@ frameRateLimit = 60 // null for no limit
 
 The limit is on top of any limit from the present mode.
 
+## GPU Info
+
+`graphics.adapter.info` is an `AdapterInfo` with `vendor`, `architecture`, `device`, `description`, `backend`, and `type`. On desktop, `device` is the GPU name and `description` has extra details, such as the driver version. Browsers may return empty strings.
+
+```kotlin
+val info = graphics.adapter.info
+println("${info.device} (${info.backend})")
+val integrated = info.type == AdapterType.INTEGRATED_GPU
+```
+
+`AdapterType` is `DISCRETE_GPU`, `INTEGRATED_GPU`, `CPU`, or `UNKNOWN`.
+
+## Audio Output
+
+`context.audio` controls the output of every [AudioClip and AudioStream](/docs/0.12.0/audio/audio-clips).
+
+```kotlin
+audio.masterVolume = 0.5f // 0 to 1, multiplies every clip and stream
+
+if (audio.canSelectOutputDevice) {
+    println(audio.outputDevices)
+    println(audio.outputDevice)
+    audio.setOutputDevice(audio.outputDevices.first()) // keeps playing sounds
+    audio.setOutputDevice(null) // follow the system default device
+}
+
+onAudioDevicesChanged { devices -> }
+```
+
+On desktop, the output follows the default device when none is selected. On the web, only `masterVolume` is supported: no device selection or device events.
+
+`maxAudioSources` (desktop) and `maxAudioClipInstances` (web) limit overlapping sounds. See [Simultaneous Sounds](/docs/0.12.0/audio/audio-clips#simultaneous-sounds).
+
 ## Web Limits
 
 - The canvas follows the page, so `setSize`, `setPosition`, `minimize`, and `maximize` do nothing.

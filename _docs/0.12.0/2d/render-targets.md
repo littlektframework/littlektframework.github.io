@@ -71,3 +71,30 @@ val renderPass =
         )
     )
 ```
+
+## Blitting
+
+`TextureBlitter` draws a texture over the whole render pass. Set a viewport on the pass to draw into part of it.
+
+```kotlin
+val blitter = TextureBlitter(device, graphics.preferredFormat) // format of the pass target
+blitter.blit(renderPass, target.view, filter = FilterMode.NEAREST, blend = false)
+blitter.release()
+```
+
+### Render Scale
+
+Render the scene into a smaller target, then blit it to the surface.
+
+```kotlin
+val width = (graphics.backBufferWidth * 0.5f).toInt()
+val height = (graphics.backBufferHeight * 0.5f).toInt()
+if (target.width != width || target.height != height) target.resize(width, height)
+
+// render the scene into target.view, then:
+val pass = commandEncoder.beginRenderPass(RenderPassDescriptor(colorAttachment(frame, clearColor)))
+blitter.blit(pass, target.view)
+pass.end()
+```
+
+See the [DisplaySettingsExample](https://github.com/littlektframework/littlekt/blob/master/examples/src/commonMain/kotlin/com/littlekt/examples/ui/DisplaySettingsExample.kt).

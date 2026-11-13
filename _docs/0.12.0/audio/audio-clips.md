@@ -34,3 +34,29 @@ clip.pause()
 clip.resume() // resumes from last position
 clip.stop() // resets to beginning of the clip
 ```
+
+## Simultaneous Sounds
+
+### Desktop
+
+`maxAudioSources` (default `32`) is the most sounds that can play at once. Sources are created as needed. When all are in use, a new clip takes the place of the oldest playing clip. Streams keep their source until stopped and are never taken.
+
+```kotlin
+createLittleKtApp {
+    maxAudioSources = 64
+}
+```
+
+### Web
+
+`maxAudioClipInstances` (default `8`) is how many times each clip can overlap itself. Once reached, the oldest play of that clip restarts.
+
+```kotlin
+createLittleKtApp {
+    maxAudioClipInstances = 16
+}
+```
+
+## Master Volume and Output Device
+
+See [Audio Output](/docs/0.12.0/overview/window-and-display#audio-output) for `audio.masterVolume` and output device selection.

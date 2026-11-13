@@ -219,3 +219,5 @@ val scene = sceneGraph(context) {
     }
 }
 ```
+
+`resolutionScale` is the number of target pixels per canvas unit, such as `2` for a high DPI screen. Canvas layers inside a `CanvasLayerContainer` render at the screen pixel scale automatically, unless `shrink` is greater than `1` to keep pixel art downscaling.
