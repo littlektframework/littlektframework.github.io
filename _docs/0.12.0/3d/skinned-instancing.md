@@ -57,11 +57,24 @@ onUpdate { dt ->
 
 Use `stop()`, `time`, `loop`, and `isFinished` to control playback. Call `remove()` to stop drawing an instance for good.
 
+## Crossfading
+
+Pass a `fade` to `play` to blend from the current clip instead of snapping. The old clip keeps playing, scaled by `speed`, while its weight drops linearly to zero.
+
+```kotlin
+enemy.play("Attack", loop = false, fade = 0.2.seconds)
+
+enemy.defaultFade = 0.3.seconds // used when no fade is given, zero by default
+enemy.play("Run")
+```
+
+`fadingClip` is the clip fading out and `isFading` is true until it finishes. Starting a new fade mid-fade fades from the current clip only.
+
 ## Performance
 
-All instances of one `BakedAnimations` are drawn in one instanced draw call per mesh primitive, are frustum culled, and have their frames interpolated on the GPU. 3000 animated foxes run at the 120 FPS vsync cap on the JVM.
+All instances of one `BakedAnimations` are drawn in one instanced draw call per mesh primitive, are frustum culled, and have their frames and crossfades interpolated on the GPU. 3000 animated foxes run at the 120 FPS vsync cap on the JVM.
 
-There is no per-instance blending between clips and no procedural bones. Use a regular `Model` with a live skin for hero characters.
+Blending is limited to crossfading two clips, and there are no procedural bones. Use a regular `Model` with a live skin for hero characters.
 
 ## Skinned Model Copies
 
