@@ -14,7 +14,7 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 title: LittleKt
-description: A Kotlin multiplatform WebGPU 2D game framework that works on Desktop (JVM), Mobile, and Browser. It works on Windows, MacOS, Linux, Android, and Web.
+description: A free, open-source Kotlin multiplatform 2D & 3D game framework built on WebGPU for Windows, macOS, Linux, and the web.
 
 text_skin: default # "default" (default), "dark", "forest", "ocean", "chocolate", "orange"
 highlight_theme: tomorrow-night-bright # "default" (default), "tomorrow", "tomorrow-night", "tomorrow-night-eighties", "tomorrow-night-blue", "tomorrow-night-bright"
@@ -38,7 +38,7 @@ author:
     url:
     avatar:
     bio: >
-        LittleKt is a multiplatform 2D game framework written in Kotlin using WebGPU.
+        LittleKt is a Kotlin multiplatform 2D & 3D game framework built on WebGPU.
     email:
     facebook:
     twitter:
@@ -188,7 +188,6 @@ exclude:
     - /vendor
     - /scripts
     - /_posts
-    - /index.html
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list

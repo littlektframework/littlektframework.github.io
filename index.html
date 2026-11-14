@@ -1,0 +1,265 @@
+---
+layout: product
+title: 2D & 3D game framework for Kotlin
+excerpt: A free, open-source Kotlin multiplatform game framework built on WebGPU for Windows, macOS, Linux and the web.
+---
+{%- assign _version = site.data.versions.latest -%}
+{%- assign _docs = site.data.features.docs_base -%}
+{%- assign _install = 'implementation("com.littlekt:core:' | append: _version | append: '")' -%}
+{%- assign _examples = 'https://github.com/littlektframework/littlekt/tree/master/examples/src/commonMain/kotlin/com/littlekt/examples' -%}
+
+<section class="lk-hero">
+  <div class="lk-container lk-hero__grid">
+    <div class="lk-hero__copy">
+      <a class="lk-pill" href="https://github.com/littlektframework/littlekt/blob/master/CHANGELOG.md">
+        <span class="lk-pill__tag">New</span> 3D rendering, MSDF fonts &amp; more in {{ site.data.versions.next }}
+        <i class="fas fa-arrow-right"></i>
+      </a>
+      <h1>Build 2D &amp; 3D games in&nbsp;<span class="lk-gradient-text">Kotlin</span>.</h1>
+      <p class="lk-hero__lead">
+        LittleKt is a free, open-source game framework built on WebGPU. Write your game once and ship it to Windows,
+        macOS, Linux and the web.
+      </p>
+      <div class="lk-actions">
+        <a class="lk-btn lk-btn--primary" href="{{ '/docs/' | relative_url }}">Get started <i class="fas fa-arrow-right"></i></a>
+        <a class="lk-btn lk-btn--ghost" href="https://github.com/littlektframework/littlekt"><i class="fab fa-github"></i> GitHub</a>
+      </div>
+      <div class="lk-install">
+        <code>{{ _install | xml_escape }}</code>
+        <button class="lk-install__copy" type="button" data-lk-copy="{{ _install | xml_escape }}" aria-label="Copy">
+          <i class="far fa-copy"></i><i class="fas fa-check"></i>
+        </button>
+      </div>
+    </div>
+    <div class="lk-hero__visual">
+      <div class="lk-window">
+        <div class="lk-window__bar"><span></span><span></span><span></span><em>MyGame.kt</em></div>
+{% highlight kotlin %}
+class MyGame(context: Context) : ContextListener(context) {
+    override suspend fun Context.start() {
+        val logo = resourcesVfs["logo.png"].readTexture()
+        val format = graphics.preferredFormat
+        val batch = SpriteBatch(graphics.device, graphics, format)
+        val camera = OrthographicCamera(960, 540)
+        val clear = Color.BLACK
+
+        onUpdate {
+            renderFrame { frame, encoder ->
+                val pass = encoder.beginRenderPass(
+                    RenderPassDescriptor(colorAttachment(frame, clear))
+                )
+                camera.update()
+                batch.begin()
+                batch.draw(logo, 50f, 50f)
+                batch.flush(pass, camera.viewProjection)
+                batch.end()
+                pass.end()
+            }
+        }
+    }
+}
+{% endhighlight %}
+      </div>
+    </div>
+  </div>
+  <div class="lk-container">
+    <ul class="lk-platforms">
+      <li><i class="fab fa-windows"></i> Windows</li>
+      <li><i class="fab fa-apple"></i> macOS</li>
+      <li><i class="fab fa-linux"></i> Linux</li>
+      <li><i class="fas fa-globe"></i> Web</li>
+      <li class="lk-platforms__sep" aria-hidden="true"></li>
+      <li>Kotlin/JVM</li>
+      <li>Kotlin/JS</li>
+      <li>Kotlin/Wasm</li>
+    </ul>
+  </div>
+</section>
+
+<section class="lk-section">
+  <div class="lk-container">
+    <div class="lk-section__head">
+      <span class="lk-eyebrow">Showcase</span>
+      <h2>Made with LittleKt</h2>
+      <p>Rendered in real time in the browser by the examples that ship with the framework.</p>
+    </div>
+    <div class="lk-gallery">
+      <a class="lk-shot lk-shot--wide" href="{{ _examples }}/g3d/PBRExample.kt">
+        <img src="{{ '/assets/images/showcase/pbr-sponza.jpg' | relative_url }}" alt="The Sponza atrium rendered with PBR and shadows" loading="lazy">
+        <span><strong>PBR &amp; shadows</strong> Sponza with cascaded shadows, point lights &amp; ACES tonemapping</span>
+      </a>
+      <a class="lk-shot" href="{{ _examples }}/g3d/IBLExample.kt">
+        <img src="{{ '/assets/images/showcase/ibl.jpg' | relative_url }}" alt="Metallic and rough spheres lit by an HDR environment" loading="lazy">
+        <span><strong>Image based lighting</strong> HDR environment maps &amp; skyboxes</span>
+      </a>
+      <a class="lk-shot" href="{{ _examples }}/g3d/BloomExample.kt">
+        <img src="{{ '/assets/images/showcase/bloom.jpg' | relative_url }}" alt="Glowing emissive spheres with bloom" loading="lazy">
+        <span><strong>HDR bloom</strong> Glowing emissive materials</span>
+      </a>
+      <a class="lk-shot lk-shot--wide" href="{{ _examples }}/g3d/SkinnedInstancingExample.kt">
+        <img src="{{ '/assets/images/showcase/skinned-instancing.jpg' | relative_url }}" alt="Thousands of animated foxes" loading="lazy">
+        <span><strong>Skinned instancing</strong> Thousands of animated models in one draw call</span>
+      </a>
+      <a class="lk-shot lk-shot--wide" href="{{ _examples }}/ui/SceneGraphPlaygroundExample.kt">
+        <img src="{{ '/assets/images/showcase/ui-playground.jpg' | relative_url }}" alt="Scene graph UI controls" loading="lazy">
+        <span><strong>Scene graph UI</strong> Every built-in control with the default theme</span>
+      </a>
+      <a class="lk-shot" href="{{ _examples }}/webgpu/ComputeBoidsExample.kt">
+        <img src="{{ '/assets/images/showcase/compute-boids.jpg' | relative_url }}" alt="Boids simulated with a compute shader" loading="lazy">
+        <span><strong>Compute shaders</strong> Boids simulated on the GPU</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="lk-section lk-section--alt">
+  <div class="lk-container">
+    <div class="lk-section__head">
+      <span class="lk-eyebrow">Features</span>
+      <h2>Everything you need to make a game</h2>
+      <p>High-level tools for the common things, with full access to the GPU for everything else.</p>
+    </div>
+    <div class="lk-cards">
+      {%- for f in site.data.features.groups -%}
+      <a class="lk-card" href="{{ '/features/' | relative_url }}#{{ f.id }}">
+        <span class="lk-card__icon"><i class="{{ f.icon }}"></i></span>
+        <h3>{{ f.title }}</h3>
+        <p>{{ f.summary }}</p>
+      </a>
+      {%- endfor -%}
+    </div>
+    <div class="lk-center">
+      <a class="lk-link" href="{{ '/features/' | relative_url }}">See all features <i class="fas fa-arrow-right"></i></a>
+    </div>
+  </div>
+</section>
+
+<section class="lk-section">
+  <div class="lk-container lk-split">
+    <div class="lk-split__copy">
+      <span class="lk-eyebrow">Idiomatic Kotlin</span>
+      <h2>Simple code, no boilerplate</h2>
+      <p>
+        Coroutines for loading, DSLs for building scenes and extension functions everywhere. LittleKt feels like
+        Kotlin, not a port of something else.
+      </p>
+      <ul class="lk-checks">
+        <li>Load assets with <code>suspend</code> functions</li>
+        <li>Build UIs with a Compose-style DSL</li>
+        <li>Drop down to raw WebGPU any time</li>
+      </ul>
+      <a class="lk-link" href="{{ _docs | append: 'starting/first-application' | relative_url }}">Write your first app <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="lk-tabs" data-lk-tabs>
+      <div class="lk-tabs__list" role="tablist">
+        <button type="button" role="tab" data-lk-tab="2d" aria-selected="true">2D</button>
+        <button type="button" role="tab" data-lk-tab="3d" aria-selected="false">3D</button>
+        <button type="button" role="tab" data-lk-tab="ui" aria-selected="false">UI</button>
+      </div>
+      <div class="lk-window" data-lk-panel="2d">
+{% highlight kotlin %}
+val atlas = resourcesVfs["tiles.atlas.json"].readAtlas()
+val hero = atlas["hero"].slice
+
+onUpdate { dt ->
+    renderFrame { frame, encoder ->
+        val pass = encoder.beginRenderPass(
+            RenderPassDescriptor(colorAttachment(frame, Color.BLACK))
+        )
+        batch.begin()
+        batch.draw(hero, x, y, rotation = angle)
+        batch.flush(pass, camera.viewProjection)
+        batch.end()
+        pass.end()
+    }
+}
+{% endhighlight %}
+      </div>
+      <div class="lk-window" data-lk-panel="3d" hidden>
+{% highlight kotlin %}
+val fox = resourcesVfs["models/Fox.glb"].readGltfModel(
+    config = GltfLoaderPbrConfig(GltfModelConfig(skinned = true))
+)
+fox.enableAnimation(1)
+
+val environment = PBREnvironment(device).apply {
+    val sun = DirectionalLight(direction = Vec3f(0.3f, 0.5f, 0.8f))
+    setDirectionalLight(sun)
+}
+
+onUpdate { dt ->
+    fox.update(dt)
+    renderFrame { frame, encoder ->
+        val pass = encoder.beginRenderPass(
+            RenderPassDescriptor(
+                colorAttachment(frame, Color.DARK_GRAY),
+                depthStencilAttachment = depthTarget.depthAttachment(),
+            )
+        )
+        modelBatch.render(fox, camera, environment)
+        modelBatch.flush(pass, camera, dt)
+        pass.end()
+    }
+}
+{% endhighlight %}
+      </div>
+      <div class="lk-window" data-lk-panel="ui" hidden>
+{% highlight kotlin %}
+val graph = sceneGraph(this, ExtendViewport(960, 540)) {
+    centerContainer(Modifier.fillParent()) {
+        column {
+            separation = 10
+            label("Little Adventure")
+            button("Play") {
+                onPressed += { startGame() }
+            }
+            button("Quit") {
+                onPressed += { context.close() }
+            }
+        }
+    }
+}.also { it.initialize() }
+{% endhighlight %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="lk-section lk-section--alt">
+  <div class="lk-container">
+    <div class="lk-section__head">
+      <span class="lk-eyebrow">Why LittleKt</span>
+      <h2>A framework, not an engine</h2>
+      <p>Inspired by libGDX and KorGE. You stay in control of your game loop, your code and your architecture.</p>
+    </div>
+    <div class="lk-why">
+      <div>
+        <span class="lk-card__icon"><i class="fas fa-unlock"></i></span>
+        <h3>Free forever</h3>
+        <p>Apache 2.0 licensed. No fees, no royalties and no splash screens. What you build is yours.</p>
+      </div>
+      <div>
+        <span class="lk-card__icon"><i class="fas fa-puzzle-piece"></i></span>
+        <h3>Build your own engine</h3>
+        <p>Use only what you need. Every layer is open, from the scene graph down to the GPU device.</p>
+      </div>
+      <div>
+        <span class="lk-card__icon"><i class="fas fa-code-branch"></i></span>
+        <h3>One codebase</h3>
+        <p>Share your game code across desktop and web with Kotlin Multiplatform.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="lk-cta">
+  <div class="lk-container lk-cta__inner">
+    <h2>Start building today</h2>
+    <p>Grab the starter template and have a window on screen in minutes.</p>
+    <div class="lk-actions lk-actions--center">
+      <a class="lk-btn lk-btn--light" href="https://github.com/littlektframework/littlekt-game-template">Use the template</a>
+      <a class="lk-btn lk-btn--ghost" href="{{ '/docs/' | relative_url }}">Read the docs</a>
+      <a class="lk-btn lk-btn--ghost" href="{{ _examples }}">Browse examples</a>
+    </div>
+  </div>
+</section>

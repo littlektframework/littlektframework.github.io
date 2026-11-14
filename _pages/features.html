@@ -1,0 +1,67 @@
+---
+permalink: /features/
+title: Features
+layout: product
+excerpt: Everything LittleKt offers, from 2D sprites and UI to physically based 3D rendering, all built on WebGPU.
+---
+{%- assign _docs = site.data.features.docs_base -%}
+<section class="lk-page-hero">
+  <div class="lk-container">
+    <h1>Features</h1>
+    <p>Everything LittleKt offers, from 2D sprites and UI to physically based 3D rendering, all built on WebGPU.</p>
+    <ul class="lk-jump">
+      {%- for f in site.data.features.groups -%}
+      <li><a href="#{{ f.id }}"><i class="{{ f.icon }}"></i>{{ f.title }}</a></li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+<div class="lk-container">
+  {%- assign _flip = false -%}
+  {%- for f in site.data.features.groups -%}
+  {%- if f.image -%}
+  <section id="{{ f.id }}" class="lk-feature{% if _flip %} lk-feature--flip{% endif %}">
+  {%- if _flip -%}{%- assign _flip = false -%}{%- else -%}{%- assign _flip = true -%}{%- endif -%}
+  {%- else -%}
+  <section id="{{ f.id }}" class="lk-feature lk-feature--text">
+  {%- endif -%}
+    <div>
+      <span class="lk-card__icon"><i class="{{ f.icon }}"></i></span>
+      <h2>{{ f.title }}</h2>
+      <p>{{ f.description }}</p>
+      {%- if f.image -%}
+      <ul class="lk-feature__list">
+        {%- for item in f.items -%}<li>{{ item }}</li>{%- endfor -%}
+      </ul>
+      {%- endif -%}
+      <a class="lk-link" href="{{ _docs | append: f.docs | relative_url }}">Read the docs <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="lk-feature__media">
+      {%- if f.image -%}
+      <figure>
+        <img src="{{ f.image | relative_url }}" alt="{{ f.image_caption }}" loading="lazy">
+        <figcaption>{{ f.image_caption }}</figcaption>
+      </figure>
+      {%- else -%}
+      <div class="lk-feature__panel">
+        <ul class="lk-feature__list">
+          {%- for item in f.items -%}<li>{{ item }}</li>{%- endfor -%}
+        </ul>
+      </div>
+      {%- endif -%}
+    </div>
+  </section>
+  {%- endfor -%}
+</div>
+
+<section class="lk-cta">
+  <div class="lk-container">
+    <h2>Ready to build?</h2>
+    <p>Start from the template, or jump into the docs.</p>
+    <div class="lk-actions lk-actions--center">
+      <a class="lk-btn lk-btn--light" href="https://github.com/littlektframework/littlekt-game-template">Use the template</a>
+      <a class="lk-btn lk-btn--ghost" href="{{ '/docs/' | relative_url }}">Read the docs</a>
+    </div>
+  </div>
+</section>

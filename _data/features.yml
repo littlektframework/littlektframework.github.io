@@ -1,0 +1,175 @@
+docs_base: /docs/next/
+
+groups:
+    - id: webgpu
+      icon: fas fa-microchip
+      title: WebGPU at the core
+      summary: A modern GPU API on desktop and web, with full access when you need it.
+      description: >
+          Every renderer in LittleKt is built on WebGPU. Use the high-level APIs, or drop down to the device and write your own pipelines and WGSL shaders.
+      docs: shading/shaders
+      image: /assets/images/showcase/compute-boids.jpg
+      image_caption: Thousands of boids simulated in a compute shader.
+      items:
+          - Direct access to devices, pipelines, buffers & bind groups
+          - WGSL shaders with a Kotlin shader builder
+          - Compute shaders
+          - Render targets, depth, MSAA & HDR attachments
+          - Texture blitting for render scale
+
+    - id: 2d
+      icon: fas fa-shapes
+      title: 2D toolkit
+      summary: Sprites, atlases, shapes, particles and animations, ready to go.
+      description: >
+          Everything needed to draw a 2D game, from batched sprites to particles, with cameras and viewports that handle any screen size.
+      docs: 2d/spritebatch
+      items:
+          - SpriteBatch & SpriteCache
+          - Textures, texture slices & texture atlases
+          - Nine-patches
+          - Shapes, lines & paths
+          - Frame animations & an animation player
+          - Particles
+          - 2D meshes
+          - Orthographic cameras & viewports
+
+    - id: 3d
+      icon: fas fa-cube
+      title: 3D rendering
+      summary: glTF, PBR, shadows, image based lighting, HDR and bloom.
+      description: >
+          A complete physically based 3D pipeline. Load glTF models and light them with shadows and environment maps, then finish with tonemapping and bloom.
+      docs: 3d/basics
+      image: /assets/images/showcase/pbr-sponza.jpg
+      image_caption: Sponza with PBR, cascaded shadows, point lights & ACES tonemapping.
+      items:
+          - glTF & GLB model loading
+          - PBR & unlit materials
+          - Directional, point & ambient lights
+          - Cascaded directional shadows
+          - Image based lighting & skyboxes
+          - HDR rendering, tonemapping & bloom
+          - MSAA & sorted transparency
+          - Skeletal animation & skinned instancing
+          - Multiple cameras & render passes
+
+    - id: text
+      icon: fas fa-font
+      title: Text and fonts
+      summary: TrueType, MSDF and bitmap fonts that stay sharp at any size.
+      description: >
+          Load TrueType fonts directly. Rasterize them at exact pixel sizes, or use multi-channel signed distance fields for text that scales and rotates cleanly.
+      docs: 2d/fonts/ttf
+      image: /assets/images/showcase/msdf-fonts.jpg
+      image_caption: MSDF text with outlines, glow and weights.
+      items:
+          - TrueType raster fonts at exact pixel sizes
+          - MSDF fonts with weight, outline & glow
+          - Bitmap fonts
+          - Kerning
+          - Glyph layout, wrapping & alignment
+          - A bundled default font
+
+    - id: ui
+      icon: fas fa-layer-group
+      title: Scene graph and UI
+      summary: A node tree with signals, plus a full UI toolkit with modifiers and themes.
+      description: >
+          An optional scene graph module for organizing your game, with a complete set of UI controls. Build scenes with a Kotlin DSL and Compose-style modifiers.
+      docs: scene-graph/the-scene-graph
+      image: /assets/images/showcase/ui-playground.jpg
+      image_caption: Every built-in control, styled with the default dark theme.
+      items:
+          - 2D & 3D nodes with signals
+          - Buttons, labels, text input, scroll bars, progress bars & more
+          - Rows, columns, stacks, scroll & center containers
+          - Compose-style modifiers
+          - Light & dark themes and a theme builder
+          - Canvas layers with their own pixel scale
+
+    - id: tilemaps
+      icon: fas fa-th
+      title: Tilemaps
+      summary: First-class LDtk and Tiled support.
+      description: >
+          Load maps made in LDtk or Tiled and render them with a single call.
+      docs: 2d/tilemaps/ldtk
+      items:
+          - LDtk worlds, levels, layers & entities
+          - Tiled maps, tilesets & objects
+
+    - id: audio
+      icon: fas fa-volume-up
+      title: Audio
+      summary: Clips, streaming and output device control.
+      description: >
+          Play sound effects and stream music, with control over volume and output devices.
+      docs: audio/audio-clips
+      items:
+          - Audio clips & streaming
+          - Master volume
+          - Output device selection & change events
+          - Configurable simultaneous sounds
+
+    - id: input
+      icon: fas fa-gamepad
+      title: Input
+      summary: Keyboard, mouse, gamepads, gestures and bindings.
+      description: >
+          Poll input each frame or listen for events, and map keys, buttons and axes to your own actions.
+      docs: input/mouse-and-keyboard
+      items:
+          - Keyboard & mouse
+          - Gamepads
+          - Touch gestures
+          - Input bindings for actions & axes
+          - Custom cursors
+
+    - id: window
+      icon: fas fa-desktop
+      title: Windows and displays
+      summary: Window modes, monitors and crisp high DPI rendering.
+      description: >
+          Control the window and pick the monitor and video mode, with rendering that stays sharp on high DPI screens.
+      docs: overview/window-and-display
+      items:
+          - Windowed, borderless & fullscreen modes
+          - Monitors & video modes
+          - Present modes & frame rate limits
+          - High DPI support on desktop & web
+
+    - id: assets
+      icon: fas fa-folder-open
+      title: Assets and files
+      summary: A virtual file system with async asset loading.
+      description: >
+          Read and write files the same way on every platform, and load assets in the background with coroutines.
+      docs: io/virtual-file-system
+      items:
+          - Virtual file system
+          - Asset provider for async loading
+          - Coroutines on every platform
+
+    - id: tools
+      icon: fas fa-tools
+      title: Tools
+      summary: Pack textures into atlases at build time with a Gradle plugin.
+      description: >
+          Pack textures into atlases at build time with the Gradle plugin.
+      docs: tools/texture-packer
+      items:
+          - Texture packer Gradle plugin
+          - WebGPU profiling
+
+    - id: math
+      icon: fas fa-square-root-alt
+      title: Math
+      summary: Vectors, matrices, quaternions and geometry.
+      description: >
+          A math library made for games, with mutable and immutable types that avoid allocations.
+      docs: math/vectors
+      items:
+          - Vectors, matrices & quaternions
+          - Angles, rects & geometry
+          - Lerp, clamp & other math extensions

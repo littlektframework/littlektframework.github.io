@@ -70,6 +70,8 @@
         url: /docs/0.12.0/3d/multiple-cameras-and-passes
       - title: "Skinned Instancing"
         url: /docs/0.12.0/3d/skinned-instancing
+      - title: "Picking"
+        url: /docs/0.12.0/3d/picking
 - title: "Audio"
   children:
       - title: "Audio Clips"

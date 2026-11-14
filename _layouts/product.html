@@ -1,0 +1,49 @@
+---
+layout: base
+---
+<div class="layout--page lk-page js-page-root">
+  <div class="page__main js-page-main page__viewport cell cell--auto">
+    <div class="page__main-inner">
+      <div class="page__header lk-header d-print-none">
+        {%- include header.html theme='dark' -%}
+      </div>
+      <main class="lk">
+        {{ content }}
+      </main>
+      {%- include lk-footer.html -%}
+    </div>
+  </div>
+  <script>{%- include scripts/lib/modal.js -%}</script>
+  <div class="modal modal--overflow page__search-modal d-print-none js-page-search-modal">{%- include search.html -%}</div>
+</div>
+<script>
+  {%- include scripts/lib/scroll-to.js -%}
+  {%- include scripts/lib/affix.js -%}
+  {%- include scripts/page.js -%}
+</script>
+<script>
+  (function () {
+    document.querySelectorAll('[data-lk-tabs]').forEach(function (root) {
+      var tabs = root.querySelectorAll('[data-lk-tab]');
+      var panels = root.querySelectorAll('[data-lk-panel]');
+      tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          tabs.forEach(function (t) { t.setAttribute('aria-selected', t === tab ? 'true' : 'false'); });
+          panels.forEach(function (p) { p.hidden = p.getAttribute('data-lk-panel') !== tab.getAttribute('data-lk-tab'); });
+        });
+      });
+    });
+    document.querySelectorAll('[data-lk-copy]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        var text = button.getAttribute('data-lk-copy');
+        var done = function () {
+          button.classList.add('is-copied');
+          setTimeout(function () { button.classList.remove('is-copied'); }, 1500);
+        };
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(text).then(done, function () {});
+        }
+      });
+    });
+  })();
+</script>

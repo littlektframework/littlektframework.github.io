@@ -3,8 +3,6 @@ header:
       url: /features/
     - title: "Docs"
       url: /docs/
-    - title: "Dokka"
-      url: "/dokka/"
 
 dev:
     - title: "Back to Main"

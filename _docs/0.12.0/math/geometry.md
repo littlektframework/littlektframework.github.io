@@ -80,3 +80,84 @@ if (pass) {
     // the ray failed to pass fully!
 }
 ```
+
+## Ray Intersections
+
+A [Ray](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/math/Ray.kt) has an `origin` and a normalized `direction`. Each `intersect` function returns the distance along the ray to the hit, or `Ray.NO_HIT` (`-1`) on a miss.
+
+```kotlin
+val ray = Ray()
+ray.setFromLookAt(origin, target)
+
+ray.intersectBox(box) // 0 if the origin is inside
+ray.intersectSphere(center, radius = 2f)
+ray.intersectPlane(Vec3f.Y_AXIS, 0f) // normal and plane constant
+ray.intersectPlane(normal, pointOnPlane)
+ray.intersectTriangle(a, b, c, cullBackFaces = true) // CCW is front facing
+```
+
+Use `pointAt` to get the hit point.
+
+```kotlin
+val distance = ray.intersectPlane(Vec3f.Y_AXIS, 0f)
+if (distance >= 0f) ray.pointAt(distance, result)
+```
+
+To test local geometry, transform the ray by the inverse of a global transform. The direction isn't normalized, so distances match the original ray.
+
+```kotlin
+localRay.setTransformed(ray, inverseTransform)
+```
+
+See [Picking](/docs/0.12.0/3d/picking) for casting rays from the camera.
+
+## Spatial Hash
+
+A [SpatialHash](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/math/spatial/SpatialHash.kt) is a uniform grid that finds items near a point, inside an area, or along a ray without checking every item. It works in 2D and 3D.
+
+```kotlin
+val hash = SpatialHash<Enemy>(cellSize = 4f)
+
+hash.put(enemy, bounds) // a BoundingBox
+hash.putPoint(bullet, x, y, z)
+hash.putRect(enemy, x, y, width, height) // 2D, at z = 0
+
+hash.remove(enemy)
+enemy in hash
+hash.clear()
+```
+
+`put` adds an item or moves it if it is already stored, so call it each time an item moves. Items are compared by equality, so their `equals` and `hashCode` must not change while stored.
+
+### Queries
+
+Queries fill a list passed in and don't allocate. Clear it before reuse.
+
+```kotlin
+val result = mutableListOf<Enemy>()
+
+hash.query(box, result)
+hash.queryRect(x, y, width, height, result) // 2D
+hash.queryRadius(x, y, z, radius, result)
+hash.queryCircle(x, y, radius, result) // 2D
+hash.queryRay(ray, 50f, result) // within 50 units, unordered
+```
+
+`raycast` returns the nearest item along a ray, or `null`. The distance is stored in `lastHitDistance`. Pass a `RayTest` to return an exact distance per item, or `Ray.NO_HIT` to skip it.
+
+```kotlin
+val sphereTest = SpatialHash.RayTest<Enemy> { enemy, ray, _ ->
+    ray.intersectSphere(enemy.position, enemy.radius)
+}
+val hit = hash.raycast(ray, maxDistance = 100f, test = sphereTest)
+```
+
+### Cell Size
+
+Pick a cell size around the size of the most common item or query. Items much larger than a cell are stored in many cells, and queries much larger than a cell visit many.
+
+For a 3D game on the ground, a large `cellSizeY` keeps every item in one layer.
+
+```kotlin
+val hash = SpatialHash<Enemy>(cellSize = 4f, cellSizeY = 100f)
+```

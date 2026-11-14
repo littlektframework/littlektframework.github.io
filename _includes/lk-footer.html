@@ -1,0 +1,36 @@
+{%- assign _docs = site.data.features.docs_base -%}
+<footer class="lk-footer d-print-none">
+  <div class="lk-container lk-footer__grid">
+    <div class="lk-footer__brand">
+      <a class="lk-footer__logo" href="{{ '/' | relative_url }}">{%- include svg/logo-on-dark.svg -%}</a>
+      <p>A Kotlin multiplatform 2D &amp; 3D game framework built on WebGPU.</p>
+    </div>
+    <div>
+      <h4>Learn</h4>
+      <ul>
+        <li><a href="{{ '/docs/' | relative_url }}">Documentation</a></li>
+        <li><a href="{{ _docs | append: 'starting/first-application' | relative_url }}">First application</a></li>        <li><a href="{{ '/features/' | relative_url }}">Features</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="https://github.com/littlektframework/littlekt-game-template">Starter template</a></li>
+        <li><a href="https://github.com/littlektframework/littlekt/tree/master/examples/src/commonMain/kotlin/com/littlekt/examples">Examples</a></li>
+        <li><a href="https://github.com/littlektframework/littlekt/blob/master/CHANGELOG.md">Changelog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Community</h4>
+      <ul>
+        <li><a href="https://github.com/littlektframework/littlekt">GitHub</a></li>
+        <li><a href="https://github.com/littlektframework/littlekt/issues">Issues</a></li>
+        <li><a href="https://github.com/littlektframework/littlekt/pulls">Pull requests</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="lk-container lk-footer__bottom">
+    <span>&copy; {{ site.time | date: '%Y' }} LittleKt. Released under the Apache 2.0 license.</span>
+    <a href="https://github.com/littlektframework/littlekt" aria-label="GitHub"><i class="fab fa-github"></i></a>
+  </div>
+</footer>

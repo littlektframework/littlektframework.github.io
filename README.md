@@ -23,6 +23,10 @@ next: "0.12.0"
 
 This makes `0.12.0` the latest and starts `0.13.0` as next, copied from `0.12.0`.
 
+## Homepage & features
+
+The homepage (`index.html`) & features page (`_pages/features.html`) read from `_data/features.yml`. Its `docs_base` points the docs links at `/docs/next/` while those features are unreleased. Switch it to `/docs/` once they ship.
+
 ## Deploy
 
 Pushing to `master` builds & deploys the site with the `Deploy site` GitHub Action. The repo's Pages source must be set to **GitHub Actions**.
