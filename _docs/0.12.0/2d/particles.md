@@ -1,33 +1,35 @@
 ---
-title: Particles
+title: CPU Particles
 permalink: /docs/0.12.0/2d/particles
 ---
+
+For 3D, see [GPU Particles](/docs/0.12.0/3d/gpu-particles).
 
 LittleKt offers a more manual way of creating and simulating particles. It is a simple system but can be powerful if used cleverly. 
 
 ## Overview
 
-A [Particle](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/g2d/Particle.kt) itself is just a class that holds the particle data such as position, scale, color, deltas, multipliers, and others. All of this data we can set manually and then is used within a [ParticleSimulator](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/g2d/ParticleSimulator.kt) to simulate it.
+A [CpuParticle](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/g2d/CpuParticle.kt) itself is just a class that holds the particle data such as position, scale, color, deltas, multipliers, and others. All of this data we can set manually and then is used within a [CpuParticleSimulator](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/g2d/CpuParticleSimulator.kt) to simulate it.
 
 
-## Creating a Particle and ParticleSimulator
+## Creating a CpuParticle and CpuParticleSimulator
 
-To create a `Particle` we can create it directly with it's constructor but it won't do us much good as the we would have to track each particle and dispose of it when we are done with it. Instead we can allocate a `Particle` from a `ParticleSimulator` using it's `alloc()` method.
+To create a `CpuParticle` we can create it directly with it's constructor but it won't do us much good as the we would have to track each particle and dispose of it when we are done with it. Instead we can allocate a `CpuParticle` from a `CpuParticleSimulator` using it's `alloc()` method.
 
-### ParticleSimulator
+### CpuParticleSimulator
 
-A `ParticleSimulator` handles creation and disposing of a `Particle` via an internal pool so we don't have to. With that in mind, we can create `ParticleSimulator` by passing a value of the max number of particles that can be alive at one time.
+A `CpuParticleSimulator` handles creation and disposing of a `CpuParticle` via an internal pool so we don't have to. With that in mind, we can create `CpuParticleSimulator` by passing a value of the max number of particles that can be alive at one time.
 
 ```kotlin
-val simulator = ParticleSimulator(2048)
+val simulator = CpuParticleSimulator(2048)
 ```
 
-### Particle
+### CpuParticle
 
-To create a `Particle` we can call the `alloc()` method from a `ParticleSimulator` and passing in a `TextureSlice` and a starting position.
+To create a `CpuParticle` we can call the `alloc()` method from a `CpuParticleSimulator` and passing in a `TextureSlice` and a starting position.
 
 ```kotlin
-val simulator = ParticleSimulator(2048)
+val simulator = CpuParticleSimulator(2048)
 val particle = simulator.alloc(slice, x, y)
 ```
 
@@ -46,10 +48,10 @@ val particle = simulator.alloc(slice, x, y).apply {
 
 ## Simulating and Rendering Particles
 
-The `ParticleSimulator` comes with two methods we must call in order to update and draw the particeles. They are also called `update()` and `draw()`.
+The `CpuParticleSimulator` comes with two methods we must call in order to update and draw the particeles. They are also called `update()` and `draw()`.
 
 ```kotlin
-val simulator = ParticleSimulator(2048)
+val simulator = CpuParticleSimulator(2048)
 val batch = SpriteBatch(context)
 
 onUpdate { dt ->
@@ -100,12 +102,12 @@ We are not limited by creating a static amount of particles with the same textur
 
 ### Reacting to the Environment
 
-A `Particle` contains three lambda properties that we can make use of if we want some particles to react to the environment. For example, debris from a barrel bouncing off the ground.
+A `CpuParticle` contains three lambda properties that we can make use of if we want some particles to react to the environment. For example, debris from a barrel bouncing off the ground.
 
-`Particle` lifecycle callbacks:
+`CpuParticle` lifecycle callbacks:
 
 * `onStart()`: invoked only once when a particle first comes alive.
-* `onUpdate(Particle)`: invoked on every `update()` to the `ParticleSimulator`.
+* `onUpdate(CpuParticle)`: invoked on every `update()` to the `CpuParticleSimulator`.
 * `onKill()`: invoked when the particle is killed and disposed.
 
 ```kotlin
