@@ -3,7 +3,7 @@ title: CPU Particles
 permalink: /docs/0.12.0/2d/particles
 ---
 
-For 3D, see [GPU Particles](/docs/0.12.0/3d/gpu-particles).
+For GPU particles in 2D and 3D, see [GPU Particles](/docs/0.12.0/3d/gpu-particles).
 
 LittleKt offers a more manual way of creating and simulating particles. It is a simple system but can be powerful if used cleverly. 
 

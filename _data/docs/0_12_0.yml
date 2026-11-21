@@ -64,6 +64,8 @@
         url: /docs/0.12.0/3d/image-based-lighting
       - title: "Bloom"
         url: /docs/0.12.0/3d/bloom
+      - title: "Post Processing"
+        url: /docs/0.12.0/3d/post-processing
       - title: "MSAA"
         url: /docs/0.12.0/3d/msaa
       - title: "Multiple Cameras and Passes"
@@ -72,8 +74,14 @@
         url: /docs/0.12.0/3d/skinned-instancing
       - title: "Picking"
         url: /docs/0.12.0/3d/picking
+      - title: "Overlaps and Sweeps"
+        url: /docs/0.12.0/3d/overlaps-and-sweeps
       - title: "GPU Particles"
         url: /docs/0.12.0/3d/gpu-particles
+      - title: "Billboards"
+        url: /docs/0.12.0/3d/billboards
+      - title: "Decals & Depth"
+        url: /docs/0.12.0/3d/decals
 - title: "Audio"
   children:
       - title: "Audio Clips"

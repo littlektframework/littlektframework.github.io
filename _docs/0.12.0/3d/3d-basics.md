@@ -16,10 +16,10 @@ val fox =
         config = GltfLoaderPbrConfig(GltfModelConfig(skinned = true))
     )
 fox.scale(0.03f)
-fox.enableAnimation(1)
+fox.play("Walk")
 
 onUpdate { dt ->
-    fox.update(dt) // updates the animation
+    fox.update(dt)
 }
 ```
 
@@ -33,6 +33,53 @@ onRelease {
 ```
 
 Releasing a model also frees anything the `ModelBatch` cached for it. Custom `Material` subclasses that override `release()` must call `super.release()`.
+
+## Animations
+
+A skinned model's clips are in `Model.animations` and advance in `Model.update(dt)`, or `updateAnimations(dt)` on its own. `play` crossfades every other clip out over `fade`, which defaults to `Model.defaultFade` (200ms). A clip that isn't already playing, or has finished, starts from its beginning. Pass `restart = true` to always start over, or `Duration.ZERO` to switch at once.
+
+```kotlin
+fox.play("Walk")
+
+val run = fox.findAnimation("Run")!!
+fox.play(run, fade = 300.milliseconds)
+
+fox.stop()
+```
+
+`stop` fades every clip out, blending back to the rest pose. `currentAnimation` is the clip last played, or `null` once stopped.
+
+### Play Once
+
+With `loop = false` a clip holds its last pose and sets `isFinished`. Use `onFinished` to go back to another clip.
+
+```kotlin
+val survey = fox.play("Survey", loop = false)
+survey.onFinished = { fox.play("Walk") }
+```
+
+### Events
+
+Events fire in `onEvent` when playback crosses their time in seconds, including when looping or playing in reverse with a negative `speed`. Remove them with `removeEvent` or `clearEvents`.
+
+```kotlin
+run.addEvent(0.2f, "step")
+run.onEvent = { event -> if (event.name == "step") playFootstep() }
+```
+
+Clips fading out fire neither events nor `onFinished`.
+
+### Speed and Weights
+
+Each `Animation` has a `speed`, `progress`, `duration`, and `weight`. The weights of every playing clip are normalized, and a total below 1 blends with the rest pose.
+
+```kotlin
+run.speed = 1.5f
+```
+
+`enableAnimation(index)` still switches to a clip at full weight at once, and `setAnimationWeight(index, weight)` sets a weight by hand. Both cancel any fade.
+
+See the [SkinnedAnimationExample](https://github.com/littlektframework/littlekt/blob/master/examples/src/commonMain/kotlin/com/littlekt/examples/g3d/SkinnedAnimationExample.kt) (`-skinnedAnimation`) for crossfading, a play once clip, and footstep events.
 
 ## Environment and Lights
 

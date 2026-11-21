@@ -60,3 +60,14 @@ fun dist(ax: Int, ay: Int, bx: Int, by: Int) = dist(ax.toDouble(), ay.toDouble()
 fun distRadians(a: Double, b: Double): Double = abs(subtractRadians(a, b))
 fun distRadians(a: Int, b: Int): Double = distRadians(a.toDouble(), b.toDouble())
 ```
+
+### Stepped loops
+
+`for (i in 0 until n step 2)` allocates a progression each time it runs. In code that runs every frame, `forStep` loops the same way without allocating:
+
+```kotlin
+forStep(0, vertices.size, 2) { i ->
+    vertices[i] += offsetX
+    vertices[i + 1] += offsetY
+}
+```

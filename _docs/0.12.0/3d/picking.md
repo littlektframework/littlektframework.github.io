@@ -97,3 +97,5 @@ onUpdate { dt ->
 Leave out `test` to use the stored bounds only.
 
 See the [PickingExample](https://github.com/littlektframework/littlekt/blob/master/examples/src/commonMain/kotlin/com/littlekt/examples/g3d/PickingExample.kt) for hover, click to move, and an area query over 1000 moving units.
+
+See [Overlaps and Sweeps](/docs/0.12.0/3d/overlaps-and-sweeps) for testing and moving spheres and capsules against nodes.

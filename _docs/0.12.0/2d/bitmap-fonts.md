@@ -19,7 +19,7 @@ val font: BitmapFont = resourcesVfs["arial_32.fnt"].readBitmapFont()
 
 Each `BitmapFont` object contains its own internal [BitmapFontCache](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/g2d/font/BitmapFontCache.kt) which is a `TextureFontCache` and an extension of a [FontCache](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/g2d/font/FontCache.kt). When we draw directly with the font, it will store the geometry of the glyphs drawn internally. This will clear any existing text. If we want to draw strings of text at different positions and colors we will need to create our own `BitmapFontCache`.
 
-Multi-line texts, wrapping, and horizontally aligning text are all supported. Wrapping works by specifying the max width that the area of a font should take up. If it exceeds it, the internal glyph layout will wrap the text.
+Multi-line texts, wrapping, and horizontally and vertically aligning text are all supported. Wrapping works by specifying the max width that the area of a font should take up. If it exceeds it, the internal glyph layout will wrap the text.
 
 #### Drawing directly with a `BitmapFont`:
 
@@ -69,6 +69,21 @@ batch.use(renderPass)
     // draws any stored text data
     cache.draw(batch) // will only draw "This is my test"
 }
+```
+
+##### Alignment
+
+`setText` and `addText` take `align` and `verticalAlign`. `targetWidth` is the width `align` aligns within.
+
+-   **VAlign.TOP**: the top of the lines at `y`.
+-   **VAlign.CENTER**: the lines centered on `y`.
+-   **VAlign.BOTTOM**: the bottom of the last line at `y`.
+-   **null** (default): the bottom of the first line at `y`.
+
+Center text in a box:
+
+```kotlin
+cache.setText("Centered", x = boxX, y = boxY + boxHeight / 2f, targetWidth = boxWidth, align = HAlign.CENTER, verticalAlign = VAlign.CENTER)
 ```
 
 ##### Clear text

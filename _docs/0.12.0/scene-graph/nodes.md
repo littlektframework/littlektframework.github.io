@@ -221,3 +221,72 @@ val scene = sceneGraph(context) {
 ```
 
 `resolutionScale` is the number of target pixels per canvas unit, such as `2` for a high DPI screen. Canvas layers inside a `CanvasLayerContainer` render at the screen pixel scale automatically, unless `shrink` is greater than `1` to keep pixel art downscaling.
+
+## GpuParticles2D
+
+A [GpuParticles2D](https://github.com/littlektframework/littlekt/blob/master/scene-graph/src/commonMain/kotlin/com/littlekt/graph/node/node2d/GpuParticles2D.kt) is a `Node2D` that spawns particles from a [ParticleEffect](/docs/0.12.0/3d/gpu-particles) on the GPU. It follows the node's global position, rotation, and scale, and draws in tree order with sprites and UI.
+
+It takes a [ParticleRenderer](/docs/0.12.0/3d/gpu-particles#renderer) you own. Set its formats to match the canvas render pass, share it across nodes, and release it after the graph.
+
+```kotlin
+val particles =
+    ParticleRenderer(device).apply {
+        colorFormat = graphics.preferredFormat
+        depthFormat = null
+    }
+val sparks =
+    ParticleEffect(
+        rate = 600f,
+        direction = Vec3f.X_AXIS,
+        spread = 8.degrees,
+        speed = 250f..400f,
+        gravity = Vec3f(0f, -980f, 0f),
+        alignment = ParticleAlignment.VELOCITY,
+        blend = ParticleBlend.ADDITIVE,
+    )
+
+val scene = sceneGraph(context) {
+    canvasLayer {
+        node2d {
+            onUpdate += { dt -> rotation += (dt.seconds * 2f).radians }
+            gpuParticles2d(particles, sparks) { position(24f, 0f) }
+        }
+    }
+}
+
+onRelease {
+    scene.release()
+    particles.release()
+}
+```
+
+Effects are in canvas units, usually pixels. The node always makes its effect `flat`, so `direction` is in the XY plane, and `HORIZONTAL` alignment doesn't apply.
+
+-   `effect`: how particles spawn, move, and look
+-   `emitting`: spawn at the effect's `rate`. Bursts spawn either way
+-   `timeScale`: simulation speed multiplier
+-   `burst(count)`: spawn `count` particles at the next simulation
+-   `clear()`: remove every particle
+-   `isActive`: `true` while any particle may be alive
+-   `emitter`: the underlying `ParticleEmitter`, created with the node and released when it is destroyed
+-   `renderer`: the `ParticleRenderer` passed in
+
+Bursts made before the node joins a scene spawn once it is added.
+
+```kotlin
+val fireworks = GpuParticles2D(particles, firework).apply { burst(600) }
+scene.root.addChild(fireworks)
+```
+
+Nodes simulate through `SceneGraph.onPreRender`, which is emitted with the `CommandEncoder` before any render pass begins. It can be used for other compute work too.
+
+```kotlin
+scene.onPreRender += { commandEncoder ->
+    val computePass = commandEncoder.beginComputePass()
+    // dispatch work
+    computePass.end()
+    computePass.release()
+}
+```
+
+Without a scene graph, see [GPU Particles in 2D](/docs/0.12.0/3d/gpu-particles#2d).

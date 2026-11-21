@@ -37,6 +37,12 @@ batch.use(renderPass) {
 }
 ```
 
+Center text in a box with `targetWidth`, `align` and `verticalAlign`. See [alignment](/docs/0.12.0/2d/fonts/bitmap-fonts#alignment).
+
+```kotlin
+cache.setText(font, "Centered", x = boxX, y = boxY + boxHeight / 2f, targetWidth = boxWidth, align = HAlign.CENTER, verticalAlign = VAlign.CENTER)
+```
+
 Rasterize glyphs ahead of time instead of on first draw:
 
 ```kotlin

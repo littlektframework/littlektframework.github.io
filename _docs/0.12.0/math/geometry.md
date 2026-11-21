@@ -152,6 +152,8 @@ val sphereTest = SpatialHash.RayTest<Enemy> { enemy, ray, _ ->
 val hit = hash.raycast(ray, maxDistance = 100f, test = sphereTest)
 ```
 
+`sweepcast` returns the first item a moving shape touches. See [Overlaps and Sweeps](/docs/0.12.0/3d/overlaps-and-sweeps#spatial-hash).
+
 ### Cell Size
 
 Pick a cell size around the size of the most common item or query. Items much larger than a cell are stored in many cells, and queries much larger than a cell visit many.

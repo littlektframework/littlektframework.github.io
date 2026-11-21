@@ -4,14 +4,18 @@ permalink: /docs/0.12.0/3d/gpu-particles
 ---
 
 Spawns, moves, and draws particles entirely on the GPU. A
-[ParticleEffect](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/g3d/particle/ParticleEffect.kt)
+[ParticleEffect](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/particle/ParticleEffect.kt)
 describes how particles look and move. A
-[ParticleEmitter](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/g3d/particle/ParticleEmitter.kt)
+[ParticleEmitter](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/particle/ParticleEmitter.kt)
 is a `Node3D` that spawns them, and a
-[ParticleRenderer](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/g3d/particle/ParticleRenderer.kt)
+[ParticleRenderer](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/particle/ParticleRenderer.kt)
 simulates them with a compute pass and draws them.
 
-For the CPU 2D system, see [Particles](/docs/0.12.0/2d/particles).
+Everything is in `com.littlekt.graphics.particle`, shared by [2D](#2d) and 3D. For the CPU 2D system, see [Particles](/docs/0.12.0/2d/particles).
+
+```kotlin
+import com.littlekt.graphics.particle.*
+```
 
 ## Renderer
 
@@ -128,6 +132,8 @@ Where particles spawn, in the emitter's local space.
 - `EmitterShape.Box(halfExtents)` inside a box.
 - `EmitterShape.Circle(radius, edge = false)` on a flat circle on local XZ, or its edge.
 
+With `flat = true`, `Sphere` and `Circle` spawn on a disc on local XY.
+
 Particles move within `spread` of `direction` (`180.degrees` is every direction) at `speed`. `radialSpeed` adds speed away from the center.
 
 ## Over Life
@@ -165,8 +171,35 @@ val fire =
 
 `blend` sets how they mix with what is behind them.
 
-- `ParticleBlend.ALPHA` standard transparency, the default.
+- `ParticleBlend.ALPHA` standard transparency, the default. Overlaps can mix in any order unless [sorted](#sorting).
 - `ParticleBlend.ADDITIVE` adds light. Good for fire, sparks, and magic.
+
+## Sorting
+
+Set `sorted = true` to draw particles back to front, so overlapping `ALPHA` particles mix correctly. Live particles are sorted on the GPU each frame for the camera passed to `simulate`. Without a camera, nothing is sorted.
+
+```kotlin
+val smoke = ParticleEffect(blend = ParticleBlend.ALPHA, sorted = true)
+particles.simulate(commandEncoder, emitters, camera)
+```
+
+Sorting adds compute dispatches. Use it for alpha effects that need it, like smoke, not additive ones.
+
+## Sub-Emitters
+
+A `SubEmitter` spawns particles from another emitter when particles of its parent die or are born, such as sparks where each firework fades out. Events and spawns stay on the GPU.
+
+```kotlin
+val sparks = ParticleEmitter(particles, ParticleEffect(rate = 0f, spread = 180.degrees, inheritVelocity = 0.3f))
+rockets.subEmitter = SubEmitter(sparks, SubEmitterTrigger.DEATH, count = 200, maxEvents = 16)
+val emitters = listOf(rockets, sparks)
+```
+
+- `trigger` is `DEATH` (the default) or `BIRTH`.
+- `count` (`8` by default) child particles spawn per event, in world space at the event's position, with the child's effect. They keep `inheritVelocity` of the triggering particle's velocity.
+- `maxEvents` (`256` by default) caps the events per simulation. Extras are dropped.
+
+The child must use the same renderer. Simulate and draw it like any emitter, and usually set its `rate = 0f`.
 
 ## World vs Local Space
 
@@ -190,11 +223,94 @@ val smoke = ParticleEffect(texture = smokeTexture, drag = 0.3f)
 
 The effect doesn't own the texture. Release it yourself.
 
+## Soft Particles
+
+Set `softness` in world units to fade particles where they meet geometry. Pass the depth texture to `render` in a pass that attaches it read only.
+
+```kotlin
+val smoke = ParticleEffect(softness = 0.6f)
+particles.render(pass, camera, emitters, depthTarget)
+```
+
+See [Decals & Depth](/docs/0.12.0/3d/decals#soft-particles) for the two pass setup.
+
+## 2D
+
+Use the same renderer and emitters with a `SpriteBatch` and a 2D camera. Set `depthFormat` to `null` and `flat = true` on each effect. Flat effects stay on the emitter's XY plane: directions, shapes, and gravity ignore `z`, and `Sphere` and `Circle` spawn on a disc. Without it, particles drift in `z` and get clipped by the orthographic camera.
+
+```kotlin
+val particles =
+    ParticleRenderer(device).apply {
+        colorFormat = graphics.preferredFormat
+        depthFormat = null
+    }
+val fire =
+    ParticleEmitter(
+            particles,
+            ParticleEffect(
+                shape = EmitterShape.Box(Vec3f(30f, 4f, 0f)),
+                speed = 80f..160f,
+                size = 18f..30f,
+                blend = ParticleBlend.ADDITIVE,
+                flat = true,
+            ),
+        )
+        .position(-250f, -150f)
+val sparks =
+    ParticleEmitter(
+        particles,
+        ParticleEffect(
+            direction = Vec3f.X_AXIS,
+            spread = 8.degrees,
+            speed = 250f..400f,
+            gravity = Vec3f(0f, -500f, 0f),
+            alignment = ParticleAlignment.VELOCITY,
+            blend = ParticleBlend.ADDITIVE,
+            flat = true,
+        ),
+    )
+val emitters = listOf(fire, sparks)
+```
+
+`position(x, y)` moves on `z = 0` and `rotation(angle)` rotates around z. Both return the emitter.
+
+```kotlin
+sparks.position(wheelX, wheelY).rotation(wheelAngle.radians)
+```
+
+Simulate before the pass. Particles draw immediately, so flush the batch before `render` when sprites drawn earlier should stay behind, and again before `end`.
+
+```kotlin
+onUpdate { dt ->
+    emitters.forEach { it.update(dt) }
+
+    renderFrame { frame, commandEncoder ->
+        particles.simulate(commandEncoder, emitters)
+        val pass = commandEncoder.beginRenderPass(RenderPassDescriptor(colorAttachment(frame, clearColor)))
+        batch.begin(camera.viewProjection)
+        particles.render(pass, camera, fire) // behind the wheel
+        batch.draw(wheel, wheelX, wheelY)
+        batch.flush(pass)
+        particles.render(pass, camera, sparks) // in front of the wheel
+        batch.flush(pass)
+        batch.end()
+        pass.end()
+        pass.release()
+    }
+}
+```
+
+Units are pixels with the y-up 2D camera. `HORIZONTAL` alignment doesn't apply.
+
+In a scene graph, use a [GpuParticles2D](/docs/0.12.0/scene-graph/nodes#gpuparticles2d) node instead. It takes the renderer, makes its effect flat, and draws in tree order.
+
+See the [GpuParticles2DExample](https://github.com/littlektframework/littlekt/blob/master/examples/src/commonMain/kotlin/com/littlekt/examples/g2d/GpuParticles2DExample.kt) for a campfire, spinning sparks, a comet trail, and fireworks.
+
 ## Limits
 
-- `ALPHA` particles aren't sorted, so overlapping colors can mix in any order. Prefer `ADDITIVE` or soft, low alpha colors.
+- `ALPHA` particles aren't sorted unless `sorted = true`, so overlapping colors can mix in any order.
 - `maxParticles` (`2048` by default) is a ring buffer. Once full, new particles replace the oldest.
-- Call `simulate` once per frame per emitter. `render` can be called with several cameras.
+- Call `simulate` once per frame per emitter. `render` can be called with several cameras, but sorting uses only the camera passed to `simulate`.
 - Release emitters and the renderer when done.
 
 ```kotlin
@@ -204,4 +320,4 @@ onRelease {
 }
 ```
 
-See the [GpuParticlesExample](https://github.com/littlektframework/littlekt/blob/master/examples/src/commonMain/kotlin/com/littlekt/examples/g3d/GpuParticlesExample.kt) for fire, smoke, a fountain, a ground glow and ring, a moving trail, and explosions.
+See the [GpuParticlesExample](https://github.com/littlektframework/littlekt/blob/master/examples/src/commonMain/kotlin/com/littlekt/examples/g3d/GpuParticlesExample.kt) for fire, sorted smoke, a fountain, fireworks with a sub-emitter, a ground glow and ring, a moving trail, and explosions.

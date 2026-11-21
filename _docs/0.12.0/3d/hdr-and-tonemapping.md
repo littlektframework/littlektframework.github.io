@@ -57,3 +57,5 @@ renderFrame { frame, commandEncoder ->
     surfacePass.end()
 }
 ```
+
+A `Tonemapper` is also a `PostEffect`, so it can run first in a [Post Processing](/docs/0.12.0/3d/post-processing) chain.

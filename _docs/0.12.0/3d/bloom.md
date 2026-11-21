@@ -42,6 +42,8 @@ onRelease {
 }
 ```
 
+To chain the tonemapper with other effects, see [Post Processing](/docs/0.12.0/3d/post-processing).
+
 ## Emissive Materials
 
 An emissive `PBRMaterial` glows once its `emissiveFactor` goes over the `threshold`.

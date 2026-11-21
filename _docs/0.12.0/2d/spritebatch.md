@@ -77,3 +77,31 @@ onUpdate {
     // release render pass & surface textures
 }
 ```
+
+### Drawing in 3D
+
+A `SpriteBatch` can draw inside a 3D or MSAA pass. Set the formats to match the pass:
+
+- `depthFormat`: the pass's depth format, or `null` if it has none (the default).
+- `depthTest`: `true` by default.
+- `depthWrite`: `false` by default.
+- `sampleCount`: `1` or `4`.
+
+Begin with a 3D camera's `viewProjection` and set a `transformMatrix` that places the drawing plane in the world. Every `Batch` tool, such as shapes, nine patches, `FontCache`/`TextureFontCache`, and CPU particles, then draws on that plane.
+
+```kotlin
+val depthTarget = renderTarget(TextureFormat.DEPTH24_PLUS_STENCIL8)
+val sprites = SpriteBatch(device, graphics, preferredFormat).apply { depthFormat = depthTarget.format }
+val signText = TextureFontCache(font).apply {
+    setText("A sign in the world", x = -170f, y = 0f, targetWidth = 340f, align = HAlign.CENTER, verticalAlign = VAlign.CENTER)
+}
+
+sprites.transformMatrix = Mat4().translate(-4f, 2.5f, -7f).scale(0.02f, 0.02f, 0.02f)
+sprites.begin(camera.viewProjection)
+sprites.draw(Textures.white, -170f, -40f, width = 340f, height = 80f)
+signText.draw(sprites)
+sprites.flush(renderPass)
+sprites.end()
+```
+
+For many small camera facing quads and text, use [billboards](/docs/0.12.0/3d/billboards) instead.
