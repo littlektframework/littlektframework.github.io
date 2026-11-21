@@ -1,4 +1,4 @@
-docs_base: /docs/next/
+docs_base: /docs/
 
 groups:
     - id: webgpu
