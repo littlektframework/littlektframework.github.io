@@ -23,13 +23,43 @@ onUpdate { dt ->
 }
 ```
 
-A loaded model owns its meshes, materials, skins, and textures. Release it when done. Copies of a model share these, so only release the original.
+A loaded model owns its meshes, materials, skins, and textures. Release it when done.
 
 ```kotlin
 onRelease {
     duck.release()
     fox.release()
 }
+```
+
+Primitives without a glTF material get a white `PBRMaterial` from `PBRMaterialFallbackStrategy`. Pass your own to change it.
+
+```kotlin
+val config =
+    GltfLoaderConfig(
+        GltfModelConfig(),
+        PBRMaterialStrategy(),
+        PBRMaterialFallbackStrategy(baseColorFactor = Color.GRAY, roughnessFactor = 0.8f),
+    )
+```
+
+## Copies
+
+`copy()` shares the meshes, materials, and textures but has its own nodes, skins, and animations, so each copy plays its own clips. Releasing a copy frees only its own skins. Release the original to free the rest.
+
+```kotlin
+val enemy = fox.copy()
+enemy.play("Run")
+```
+
+`Animation.copy(target)` copies a single clip onto other nodes, mapping each animated node with `target`.
+
+## Visibility
+
+Set `visible = false` to stop rendering a node and its children. It stays in the tree and keeps updating.
+
+```kotlin
+fox.visible = false
 ```
 
 Releasing a model also frees anything the `ModelBatch` cached for it. Custom `Material` subclasses that override `release()` must call `super.release()`.

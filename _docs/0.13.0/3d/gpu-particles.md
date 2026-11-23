@@ -67,7 +67,7 @@ emitter.effect = sparks.copy(rate = 50f)
 
 ## Each Frame
 
-Update emitters, simulate before the render pass, then draw particles after opaque geometry. Particles test against depth but don't write it.
+Update emitters, simulate before the render pass, then draw particles after opaque geometry. Particles test against depth but don't write it, except `OPAQUE` ones.
 
 ```kotlin
 val emitters = listOf(fire, smoke, sparks)
@@ -173,6 +173,8 @@ val fire =
 
 - `ParticleBlend.ALPHA` standard transparency, the default. Overlaps can mix in any order unless [sorted](#sorting).
 - `ParticleBlend.ADDITIVE` adds light. Good for fire, sparks, and magic.
+- `ParticleBlend.OPAQUE` solid and writes depth, with texels under half alpha cut out. Good for [mesh particles](#mesh-particles).
+- `ParticleBlend.DISTORT` bends what is behind them. Good for heat haze and shockwaves. See [Distortion](#distortion).
 
 ## Sorting
 
@@ -222,6 +224,76 @@ val smoke = ParticleEffect(texture = smokeTexture, drag = 0.3f)
 ```
 
 The effect doesn't own the texture. Release it yourself.
+
+## Flipbook
+
+A `Flipbook` plays the texture as a grid of frames, left to right and top to bottom. With `fps = 0f`, the default, the frames play once over each particle's life.
+
+```kotlin
+val flames = ParticleEffect(texture = flameSheet, flipbook = Flipbook(columns = 4, rows = 4))
+val smoke = ParticleEffect(texture = smokeSheet, flipbook = Flipbook(columns = 8, rows = 8, fps = 24f, loop = true, randomStart = true))
+```
+
+`frames` limits the frames used. `blend` fades between frames and is `true` by default.
+
+## Mesh Particles
+
+Set `mesh` to draw each particle as a lit 3D `ParticleMesh` instead of a quad. `size` is about its length.
+
+```kotlin
+val shard = ParticleMesh.shard(device)
+val shards =
+    ParticleEffect(
+        rate = 0f,
+        mesh = shard,
+        alignment = ParticleAlignment.VELOCITY,
+        blend = ParticleBlend.OPAQUE,
+        shininess = 64f,
+    )
+```
+
+- `ParticleMesh.shard(device)` a faceted crystal.
+- `ParticleMesh.rock(device, roughness, seed)` a lumpy rock.
+- `ParticleMesh.sphere(device)` a smooth ball, such as for drops.
+- `ParticleMesh.box(device)` a cube.
+
+`BILLBOARD` meshes tumble around a random axis, `VELOCITY` points them along their velocity, and `HORIZONTAL` keeps them upright. `emissive` (`0` to `1`) makes them glow no matter the light, and `shininess` sets the highlight size. Mesh particles can't use `DISTORT`.
+
+They are shaded with the renderer's `light`.
+
+```kotlin
+particles.light.direction.set(-0.4f, -1f, -0.3f)
+particles.light.color.set(1.2f, 1.15f, 1.1f, 1f)
+particles.light.ambient.set(0.25f, 0.28f, 0.35f, 1f)
+```
+
+The effect doesn't own the mesh. Release it yourself.
+
+## Distortion
+
+`DISTORT` particles draw a distortion map into a [DistortionEffect](/docs/0.13.0/3d/post-processing#distortion) pass instead of the scene. Use its `ringTexture` or `hazeTexture`, or your own map: `rg` is the push direction (`0.5` is none) and `a` the strength.
+
+```kotlin
+val shockwave =
+    ParticleEffect(
+        rate = 0f,
+        size = 6f..6f,
+        sizes = listOf(0.1f, 1f),
+        colors = listOf(Color.WHITE, Color(1f, 1f, 1f, 0f)),
+        texture = distortion.ringTexture,
+        blend = ParticleBlend.DISTORT,
+    )
+```
+
+Render them in the distortion pass. Passing the depth texture hides them behind geometry without attaching it.
+
+```kotlin
+val warpPass = distortion.beginPass(commandEncoder, hdrTarget.width, hdrTarget.height)
+particles.render(warpPass, camera, warps, depthTarget)
+warpPass.end()
+```
+
+`particles.distortionFormat` must match `distortion.format`. Both are `RGBA16_FLOAT` by default.
 
 ## Soft Particles
 
@@ -320,4 +392,4 @@ onRelease {
 }
 ```
 
-See the [GpuParticlesExample](https://github.com/littlektframework/littlekt/blob/master/examples/src/commonMain/kotlin/com/littlekt/examples/g3d/GpuParticlesExample.kt) for fire, sorted smoke, a fountain, fireworks with a sub-emitter, a ground glow and ring, a moving trail, and explosions.
+See the [GpuParticlesExample](https://github.com/littlektframework/littlekt/blob/master/examples/src/commonMain/kotlin/com/littlekt/examples/g3d/GpuParticlesExample.kt) for fire, sorted smoke, a fountain, fireworks with a sub-emitter, a ground glow and ring, a moving trail, and explosions. See the [VfxParticlesExample](https://github.com/littlektframework/littlekt/blob/master/examples/src/commonMain/kotlin/com/littlekt/examples/g3d/VfxParticlesExample.kt) (`-vfxParticles`) for flipbook flames, mesh shards, rocks, and molten drops, and distortion shockwaves and heat haze.

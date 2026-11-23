@@ -7,7 +7,7 @@ A `ModelBatch` sorts transparent instances back to front automatically. There is
 
 ## Transparent Materials
 
-Set `transparent = true` on a material. Disabling `depthWrite` lets the surfaces behind it show through.
+Set `transparent = true` on a material. Its alpha is straight, so don't premultiply `baseColorFactor`. Disabling `depthWrite` lets the surfaces behind it show through.
 
 ```kotlin
 val glass =

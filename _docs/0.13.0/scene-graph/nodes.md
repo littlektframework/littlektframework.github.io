@@ -145,6 +145,16 @@ By design, the `position`, `globalPosition`, `scale`, and `globalScale` properti
 -   `globalScaleX`: global scale x
 -   `globalScaleY`: global scale y
 
+### Visibility
+
+Hiding a `CanvasItem` hides its children without changing their own `visible`. `isVisibleInTree` is `true` only when the node and every `CanvasItem` above it are visible.
+
+```kotlin
+panel.visible = false
+child.visible // still true
+child.isVisibleInTree // false
+```
+
 ### Render Sorting
 
 A [Node2D] contains an option to sort it's child nodes by their y-position setting the `ySort` property to `true`. All this simply does is set the `nodes.sort` property to the internal `SORT_BY_Y` comparator.

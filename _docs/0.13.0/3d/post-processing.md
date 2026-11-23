@@ -75,6 +75,31 @@ val chromatic = ChromaticAberrationEffect(device).apply { strength = 0.01f }
 colorAdjust.enabled = false
 ```
 
+## Distortion
+
+A [DistortionEffect](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/postprocess/DistortionEffect.kt) bends the image where distortion was drawn, such as heat haze and shockwaves. Put it before the `Tonemapper`.
+
+```kotlin
+val distortion =
+    DistortionEffect(device).apply {
+        strength = 0.04f // push as a fraction of the screen height
+        chromatic = 0.15f // red and blue split
+    }
+val post = PostProcessor(device).apply { effects += listOf(distortion, tonemapper) }
+```
+
+Each frame, draw [DISTORT particles](/docs/0.13.0/3d/gpu-particles#distortion) into the pass from `beginPass` after the scene pass, and end it before `process`. `ringTexture` and `hazeTexture` are ready made distortion maps.
+
+```kotlin
+val warpPass = distortion.beginPass(commandEncoder, hdrTarget.width, hdrTarget.height)
+particles.render(warpPass, camera, warps, depthTarget)
+warpPass.end()
+
+post.process(commandEncoder, hdrTarget.view, hdrTarget.width, hdrTarget.height)
+```
+
+Releasing the effect releases its target and textures.
+
 ## Custom Effects
 
 A [ShaderPostEffect](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/postprocess/ShaderPostEffect.kt) takes WGSL that defines `fn effect(uv: vec2f) -> vec4f` and returns the linear color at `uv`. It can use:
@@ -121,8 +146,27 @@ class InvertEffect(device: Device) :
 }
 ```
 
+### Extra Textures
+
+`textureCount` adds textures `post_texture_0` to `post_texture_<textureCount - 1>`, sampled with `source_sampler`. Set each with `setTexture` before the effect renders.
+
+```kotlin
+val tint =
+    ShaderPostEffect(
+            device,
+            """
+            fn effect(uv: vec2f) -> vec4f {
+                let color = textureSample(source, source_sampler, uv);
+                return color * textureSample(post_texture_0, source_sampler, uv);
+            }
+            """,
+            textureCount = 1,
+        )
+        .apply { setTexture(0, tintTexture.view) }
+```
+
 Implement [PostEffect](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/postprocess/PostEffect.kt) directly for anything else. Its `render` draws `source` over the whole pass in the given `format`.
 
 ## Example
 
-See the [PostProcessingExample](https://github.com/littlektframework/littlekt/blob/master/examples/src/commonMain/kotlin/com/littlekt/examples/g3d/PostProcessingExample.kt) (`-postProcessing`) for bloom, a tonemapper, FXAA, a vignette, color adjustments, chromatic aberration, and a custom pixelate effect, each toggled by a number key.
+See the [PostProcessingExample](https://github.com/littlektframework/littlekt/blob/master/examples/src/commonMain/kotlin/com/littlekt/examples/g3d/PostProcessingExample.kt) (`-postProcessing`) for bloom, a tonemapper, FXAA, a vignette, color adjustments, chromatic aberration, and a custom pixelate effect, each toggled by a number key. See the [VfxParticlesExample](https://github.com/littlektframework/littlekt/blob/master/examples/src/commonMain/kotlin/com/littlekt/examples/g3d/VfxParticlesExample.kt) (`-vfxParticles`) for distortion.

@@ -195,6 +195,26 @@ stack(Modifier.minSize(0f, 56f)) {
 
 `stackContainer` is the same as `stack`. To align a single child, use the [stack scope](/docs/0.13.0/ui/modifiers#stack-scope) modifiers.
 
+### Tab Container
+
+Shows one child control at a time, with a row of tab buttons above it (via [TabContainer](https://github.com/littlektframework/littlekt/blob/master/scene-graph/src/commonMain/kotlin/com/littlekt/graph/node/ui/TabContainer.kt)). Each tab's title is the child's `name`.
+
+```kotlin
+tabContainer {
+    column {
+        name = "Stats"
+        label("Strength 10")
+    }
+    column {
+        name = "Skills"
+        label("Fireball")
+    }
+    onTabChanged += { println("Showing tab $it") }
+}
+```
+
+Switch tabs with `currentTab`, rename one with `setTabTitle`, and lay out the buttons with `tabBar`. Set `useHiddenTabsForMinSize = true` to keep the size the same between tabs.
+
 ### Scroll Container
 
 A container that will automatically create a [ScrollBar](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/ui/ScrollBar.kt) child (`HScrollBar` or `VScrollBar` or both) when needed. (via [ScrollContainer](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/ui/ScrollContainer.kt)).

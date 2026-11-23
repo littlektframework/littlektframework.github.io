@@ -173,6 +173,18 @@ textureRect {
 }
 ```
 
+Set `expandMode` to `IGNORE_SIZE` to draw a texture smaller than its pixel size. Only `minWidth` and `minHeight` set the minimum size. `TextureProgress` has the same `expandMode`.
+
+```kotlin
+textureRect {
+    slice = largeIcon
+    expandMode = TextureRect.ExpandMode.IGNORE_SIZE
+    stretchMode = TextureRect.StretchMode.KEEP_ASPECT_CENTERED
+    minWidth = 32f
+    minHeight = 32f
+}
+```
+
 ### ScrollBar
 
 An abstract `Range`-based `Control` that displays a draggable area (`page`) (via [ScrollBar](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/ui/ScrollBar.kt)). See [HScrollBar](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/ui/HScrollBar.kt) or [VScrollBar](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graph/node/ui/VScrollBar.kt) in order to use it.

@@ -55,6 +55,13 @@ label("On a panel", modifier = Modifier.panel())
 label("On a background", modifier = Modifier.background(FlatDrawable(Color.DARK_GRAY, cornerRadius = 6)))
 ```
 
+`outermost` is the outermost wrapper of a control, or the control itself. Anchoring a wrapped control anchors its `outermost`.
+
+```kotlin
+val title = label("Title", modifier = Modifier.padding(8))
+title.outermost // the padded wrapper
+```
+
 ## Layout
 
 Every [layout shortcut](/docs/0.13.0/ui/size-and-anchors) is also a modifier:

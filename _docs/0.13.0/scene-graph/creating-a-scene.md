@@ -160,6 +160,25 @@ Once added, they are set and ready to be used internally by `Control` nodes. We 
 controller.addBinding(InputMap.UI_ACCEPT, listOf(Key.SPACE, Key.ENTER), buttons = listOf(GameButton.XBOX_A))
 ```
 
+### UI Signals and Focus Navigation
+
+`sceneGraph` takes `uiInputSignals`, `SceneGraph.UiInputSignals.Default` by default. Set a signal to `null` to unbind it, such as to free up `Key.TAB`.
+
+```kotlin
+val scene =
+    sceneGraph(
+        context,
+        uiInputSignals = SceneGraph.UiInputSignals.Default.copy(uiFocusNext = null, uiFocusPrev = null),
+    )
+```
+
+With `focusNavigation = false`, the focus and direction signals no longer move the focus and are passed on as unhandled input. It can be changed later with `SceneGraph.focusNavigation`.
+
+```kotlin
+val scene = sceneGraph(context, focusNavigation = false) { button("Play") }
+scene.focusNavigation = true
+```
+
 ### Debugging
 
 The scene graph contains a flag `showDebugInfo` that is set to `false` by default. Setting this to `true` will allow the `CanvasLayer` to call the interal debug render method to allow propagation through the tree. This will ultimately invoke the `debugRender` method in a node.

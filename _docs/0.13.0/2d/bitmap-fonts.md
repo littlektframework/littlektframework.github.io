@@ -33,6 +33,14 @@ batch.use(renderPass)
 }
 ```
 
+#### Scaling
+
+`scaleX` and `scaleY` scale the drawn text.
+
+```kotlin
+font.draw(batch, "Big text", x = 5f, y = 5f, scaleX = 2f, scaleY = 2f)
+```
+
 #### Creating our own `BitampFontCache`
 
 We can create our own cache which we can add as much static text as we want without clearing existing data if we don't want to. We can create as many font caches as we want.
