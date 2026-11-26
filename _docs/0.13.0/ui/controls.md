@@ -87,6 +87,17 @@ label("My label") {
 }
 ```
 
+`letterSpacing` and `lineSpacing` add extra pixels between glyphs and lines. `justify` stretches wrapped lines to the width of the label.
+
+```kotlin
+label("My long label") {
+    wrap = true
+    letterSpacing = 1f
+    lineSpacing = 4f
+    justify = true
+}
+```
+
 ### LineEdit
 
 Renders and a single line of editable text (via [LineEdit](https://github.com/littlektframework/littlekt/blob/master/scene-graph/src/commonMain/kotlin/com/littlekt/graph/node/ui/LineEdit.kt)).

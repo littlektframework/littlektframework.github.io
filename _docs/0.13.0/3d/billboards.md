@@ -109,6 +109,12 @@ billboards.drawText(damageFont, amount.toString(), x, y, z, 0.5f, fadingColor)
 
 For floating damage numbers, move each number up and fade its color over its life.
 
+`letterSpacing` and `lineSpacing` add extra space between glyphs and lines, in world units, or pixels with `sizeInPixels`.
+
+```kotlin
+billboards.drawText(namePlate, unit.name, x, y + 2.8f, z, 0.35f, letterSpacing = 0.02f, lineSpacing = 0.05f)
+```
+
 ## Strips
 
 A strip is a ribbon through a list of points that turns to face the camera. Each point has a width and color. The texture stretches along its length, and defaults to `Textures.white`.

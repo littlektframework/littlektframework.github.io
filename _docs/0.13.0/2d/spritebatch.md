@@ -78,6 +78,34 @@ onUpdate {
 }
 ```
 
+### Scissor Rect
+
+`setScissorRect` clips the following draws, in pixels of the render target from its top left. Changing it doesn't flush.
+
+```kotlin
+batch.begin()
+batch.setScissorRect(10, 10, 200, 100)
+batch.draw(texture, x = 0f, y = 0f) // clipped
+batch.setScissorRect(0, 0, graphics.backBufferWidth, graphics.backBufferHeight)
+batch.draw(texture, x = 50f, y = 50f) // unclipped
+batch.flush(renderPass)
+batch.end()
+```
+
+`clearScissorRect` stops setting a rect, but it doesn't restore the pass's previous scissor. Set the full rect to un-clip within the same pass.
+
+```kotlin
+batch.clearScissorRect()
+```
+
+### Bind Group Cache
+
+`bindGroupCacheSize` (default `256`) is the max number of texture bind groups kept. The least recently used ones are released once there are more.
+
+```kotlin
+batch.bindGroupCacheSize = 512
+```
+
 ### Drawing in 3D
 
 A `SpriteBatch` can draw inside a 3D or MSAA pass. Set the formats to match the pass:

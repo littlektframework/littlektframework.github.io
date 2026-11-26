@@ -14,6 +14,35 @@ A [Texture](https://github.com/littlektframework/littlekt/blob/master/core/src/c
 val texture: Texture = resourcesVfs["texture.png"].readTexture()
 ```
 
+### Reading from Bytes
+
+`readPixmap` and `readTexture` also decode PNG or JPEG bytes, such as an image sent over the network.
+
+```kotlin
+val pixmap: Pixmap = bytes.readPixmap()
+val texture: Texture = bytes.readTexture(device, graphics.preferredFormat)
+val noMips: Texture = bytes.readTexture(device, TextureOptions(graphics.preferredFormat, generateMipMaps = false))
+```
+
+### Custom Textures
+
+`SpriteBatch` caches bind groups by texture id. A custom `Texture` type calls `notifyInvalidated` when it is released or recreates its view, so those caches are evicted.
+
+```kotlin
+override fun release() {
+    Texture.notifyInvalidated(id)
+    // release the view, sampler, & texture
+}
+```
+
+Anything else cached by texture id can listen too:
+
+```kotlin
+val listener = TextureInvalidationListener { id -> myCache.remove(id) }
+Texture.addInvalidationListener(listener)
+Texture.removeInvalidationListener(listener)
+```
+
 # TextureSlice
 
 A [TextureSlice](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/g2d/TextureSlice.kt) describes a rectangular portion inside a texture. This is useful for only drawing a portion of the texture.

@@ -83,3 +83,18 @@ class MyGame(context: Context) : ContextListener(context) {
 colorAttachment(frame, clearColor) // LoadOp.CLEAR & StoreOp.STORE
 colorAttachment(frame) // LoadOp.LOAD & StoreOp.STORE
 ```
+
+## Reusing a Render Pass Descriptor
+
+A color attachment's `view` and `resolveTarget` can be changed, so we can keep one surface descriptor and set the new frame each frame.
+
+```kotlin
+var surfacePass: RenderPassDescriptor? = null
+
+renderFrame { frame, commandEncoder ->
+    val descriptor = surfacePass ?: RenderPassDescriptor(colorAttachment(frame, clearColor)).also { surfacePass = it }
+    descriptor.colorAttachments[0].view = frame
+    val renderPassEncoder = commandEncoder.beginRenderPass(descriptor)
+    // ...
+}
+```

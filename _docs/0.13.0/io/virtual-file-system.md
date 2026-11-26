@@ -198,3 +198,11 @@ val audioClip: AudioClip = resourcesVfs["my_audio.wav"].readAudioClip()
 ```kotlin
 val audioStream: AudioStream = resourcesVfs["my_music.mp3"].readAudioStream()
 ```
+
+#### Reading AudioSamples
+
+`readAudioSamples()`: decodes a WAV, OGG, or MP3 file into `AudioSamples`. See [Audio Samples](/docs/0.13.0/audio/audio-streaming#audio-samples).
+
+```kotlin
+val samples: AudioSamples = resourcesVfs["my_audio.ogg"].readAudioSamples()
+```

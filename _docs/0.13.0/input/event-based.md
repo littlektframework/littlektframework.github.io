@@ -57,6 +57,17 @@ Mouse/Touch events:
 -   `mouseMoved`: called when the mouse is moved over the screen. Only occurs on desktop.
 -   `scrolled`: called when the scroll wheel of the mouse was triggered. Returns `-1` or `1` for the delta values depending on the scroll direction. Only occurs on the desktop.
 
+`touchDown`, `touchUp`, `touchDragged`, and `mouseMoved` also have overloads with the `PointerType` of the device. By default they call the overloads without it.
+
+```kotlin
+override fun touchDown(screenX: Float, screenY: Float, pointer: Pointer, type: PointerType): Boolean {
+    if (type == PointerType.PEN) startStroke(screenX, screenY)
+    return true
+}
+
+override fun mouseMoved(screenX: Float, screenY: Float, type: PointerType): Boolean = false
+```
+
 Gamepad events:
 
 -   `gamepadButtonPressed`: called when a button on a gamepad is pressed.

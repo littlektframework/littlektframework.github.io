@@ -41,6 +41,14 @@ batch.use(renderPass)
 font.draw(batch, "Big text", x = 5f, y = 5f, scaleX = 2f, scaleY = 2f)
 ```
 
+#### Spacing and Justify
+
+`letterSpacing` and `lineSpacing` add extra pixels between glyphs and lines. `justify` stretches wrapped lines to `targetWidth`.
+
+```kotlin
+font.draw(batch, "My long text", x = 5f, y = 5f, targetWidth = 200f, wrap = true, letterSpacing = 1f, lineSpacing = 4f, justify = true)
+```
+
 #### Creating our own `BitampFontCache`
 
 We can create our own cache which we can add as much static text as we want without clearing existing data if we don't want to. We can create as many font caches as we want.

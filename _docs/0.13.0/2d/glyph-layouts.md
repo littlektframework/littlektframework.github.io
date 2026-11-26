@@ -24,3 +24,13 @@ layout.runs.forEach { run ->
     println()
 }
 ```
+
+## Spacing and Justify
+
+`letterSpacing` and `lineSpacing` add extra pixels between glyphs and lines. They aren't scaled by `scaleX`/`scaleY`. `justify` stretches wrapped lines to `width` by widening their spaces.
+
+```kotlin
+layout.setText(font, "My long text", width = 200f, wrap = true, letterSpacing = 1f, lineSpacing = 4f, justify = true)
+```
+
+The same parameters are on `FontCache`/`TextureFontCache` `setText` and `addText`, and `BitmapFont.draw`.

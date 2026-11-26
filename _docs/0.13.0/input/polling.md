@@ -35,6 +35,14 @@ We can find the amount of pressure applied one a pointer which returns a value b
 val pressure = input.getPressure(Pointer.POINTER1)
 ```
 
+#### Pointer Type
+
+`getPointerType` returns the `PointerType` of a pointer's last event: `MOUSE`, `TOUCH`, or `PEN`. Desktop windows only report `MOUSE`.
+
+```kotlin
+val isPen = input.getPointerType(Pointer.POINTER1) == PointerType.PEN
+```
+
 To determine which mouse buttons are pressed on desktop:
 
 ```kotlin
