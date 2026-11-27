@@ -124,6 +124,39 @@ val environment =
     }
 ```
 
+Lights can be changed at any time, such as each frame.
+
+```kotlin
+val torch = PointLight(Vec3f(0f, 1f, 0f), color = Color.ORANGE)
+environment.addPointLight(torch)
+
+torch.intensity = 2f
+torch.position = Vec3f(1f, 1f, 0f)
+```
+
+## Spot Lights
+
+A [SpotLight](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/g3d/light/SpotLight.kt) shines in a cone from `position` towards `direction`, such as a flashlight. Surfaces within `innerAngle` get the full light, which fades out to nothing at `outerAngle`.
+
+```kotlin
+val flashlight =
+    SpotLight(
+        color = Color(1f, 0.92f, 0.8f),
+        intensity = 25f,
+        range = 25f,
+        innerAngle = 12.degrees,
+        outerAngle = 22.degrees,
+    )
+environment.addSpotLight(flashlight)
+
+onUpdate {
+    flashlight.position.set(camera.position)
+    flashlight.direction.set(camera.direction)
+}
+```
+
+Remove it with `removeSpotLight`. A spot light can also [cast shadows](/docs/0.13.0/3d/shadows#spot-light-shadows).
+
 ## ModelBatch
 
 A [ModelBatch](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/g3d/ModelBatch.kt) handles the pipelines for each material type. The formats must match the render pass attachments.

@@ -70,3 +70,36 @@ val fox =
         config = GltfLoaderPbrConfig(GltfModelConfig(castShadows = true, skinned = true))
     )
 ```
+
+## Spot Light Shadows
+
+A [SpotShadowMap](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/g3d/shadow/SpotShadowMap.kt) gives up to `count` [spot lights](/docs/0.13.0/3d/basics#spot-lights) with `castShadows` their own shadow. Lights past `count` still shine but don't cast shadows.
+
+```kotlin
+val spotShadowMap = SpotShadowMap(device, count = 3)
+spotShadowMap.pcfRadius = 2
+
+val environment =
+    PBREnvironment(device, spotShadowMap = spotShadowMap).apply {
+        addSpotLight(SpotLight(intensity = 25f, range = 25f, castShadows = true))
+    }
+
+val shadowBatch =
+    ModelBatch(device).apply {
+        defaultPipelineProvider = ShadowMaterialPipelineProvider()
+        depthFormat = spotShadowMap.format
+    }
+```
+
+Update it after the lights move and render it before the main render pass.
+
+```kotlin
+renderFrame { frame, commandEncoder ->
+    spotShadowMap.update(environment.spotLights)
+    spotShadowMap.render(commandEncoder, shadowBatch, models, dt)
+
+    val renderPass = ... // main render pass
+}
+```
+
+`depthBias` and `normalOffset` reduce shadow acne and `near` skips casters too close to the light.

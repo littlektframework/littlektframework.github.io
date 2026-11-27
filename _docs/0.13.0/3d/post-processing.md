@@ -165,8 +165,34 @@ val tint =
         .apply { setTexture(0, tintTexture.view) }
 ```
 
+### Depth Textures
+
+`depthTextureCount` adds depth textures `post_depth_0` to `post_depth_<depthTextureCount - 1>`, read with `post_load_depth_<i>(uv)`. `post_linear_depth(depth)` turns a depth into the distance from the camera set with `setCamera` or `setDepthRange`. Set `depthSampleCount` for a multisampled depth texture.
+
+```kotlin
+val fog =
+    ShaderPostEffect(
+            device,
+            """
+            fn effect(uv: vec2f) -> vec4f {
+                let color = textureSample(source, source_sampler, uv);
+                let distance = post_linear_depth(post_load_depth_0(uv));
+                let fog = clamp(1.0 - exp(-distance * post.params[0].x), 0.0, 1.0);
+                return vec4f(mix(color.rgb, vec3f(0.01), fog), color.a);
+            }
+            """,
+            paramCount = 1,
+            depthTextureCount = 1,
+        )
+        .apply { setParam(0, 0.12f) }
+
+// each frame, before process
+fog.setDepthTexture(0, depthTarget.depthView)
+fog.setCamera(camera)
+```
+
 Implement [PostEffect](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/postprocess/PostEffect.kt) directly for anything else. Its `render` draws `source` over the whole pass in the given `format`.
 
 ## Example
 
-See the [PostProcessingExample](https://github.com/littlektframework/littlekt/blob/master/examples/src/commonMain/kotlin/com/littlekt/examples/g3d/PostProcessingExample.kt) (`-postProcessing`) for bloom, a tonemapper, FXAA, a vignette, color adjustments, chromatic aberration, and a custom pixelate effect, each toggled by a number key. See the [VfxParticlesExample](https://github.com/littlektframework/littlekt/blob/master/examples/src/commonMain/kotlin/com/littlekt/examples/g3d/VfxParticlesExample.kt) (`-vfxParticles`) for distortion.
+See the [PostProcessingExample](https://github.com/littlektframework/littlekt/blob/master/examples/src/commonMain/kotlin/com/littlekt/examples/g3d/PostProcessingExample.kt) (`-postProcessing`) for bloom, a tonemapper, FXAA, a vignette, color adjustments, chromatic aberration, and a custom pixelate effect, each toggled by a number key. See the [VfxParticlesExample](https://github.com/littlektframework/littlekt/blob/master/examples/src/commonMain/kotlin/com/littlekt/examples/g3d/VfxParticlesExample.kt) (`-vfxParticles`) for distortion. See the [SpotLightsExample](https://github.com/littlektframework/littlekt/blob/master/examples/src/commonMain/kotlin/com/littlekt/examples/g3d/SpotLightsExample.kt) (`-spotLights`) for depth fog.
