@@ -3,7 +3,7 @@ title: Texture Atlas
 permalink: /docs/0.12.0/2d/texture-atlas
 ---
 
-The **JSON Array** based atlases are supported by **LittleKt**. Whether it is published by [Code & Web's](https://www.codeandweb.com/texturepacker) texture packer or LittleKt's own [texture packer](/docs/0.12.0/tools/texture-packer) implementation, or whatever else that supports the format.
+The **JSON Array** based atlases are supported by **LittleKt**. Whether it is published by [Code & Web's](https://www.codeandweb.com/texturepacker) texture packer or LittleKt's own [texture packer](/docs/0.12.0/tools/texture-packer) implementation, or whatever else that supports the format, such as the browser-based [SpriteSheet.dev](https://spritesheet.dev) (JSON Array export).
 
 LittleKt can read and load multi-packed atlases just as easily as a single based atlas using a [TextureAtlas](https://github.com/littlektframework/littlekt/blob/master/core/src/commonMain/kotlin/com/littlekt/graphics/g2d/TextureAtlas.kt).
 
