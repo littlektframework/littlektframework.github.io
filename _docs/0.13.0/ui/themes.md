@@ -155,6 +155,7 @@ val myTheme = theme {
 Setting a value to `null` unsets it. The typed scopes are:
 
 -   `button`, `label`, `lineEdit`, `panel`, `panelContainer`, `progressBar`, `scrollContainer`
+-   `checkBox`, `optionButton`, `popupList`, `window`
 -   `vScrollBar`, `hScrollBar`, or `scrollBars` for both
 -   `column` _(VBoxContainer)_ and `row` _(HBoxContainer)_
 -   `paddedContainer`

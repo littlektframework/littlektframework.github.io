@@ -243,6 +243,20 @@ scrollContainer {
 }
 ```
 
+### Window
+
+A draggable `PanelContainer` with a title bar (via [Window](https://github.com/littlektframework/littlekt/blob/master/scene-graph/src/commonMain/kotlin/com/littlekt/graph/node/ui/Window.kt)). Dragging moves its position, so add it to a parent that doesn't lay out its children, such as the scene root or a plain `Control`.
+
+```kotlin
+window("Tools") {
+    x = 20f
+    y = 20f
+    column { button("Paint") }
+}
+```
+
+Set `draggable = false` to lock it in place or `keepInCanvas = false` to let it be dragged off the canvas.
+
 ## Custom Container
 
 It is also possible to create our own container. All we have to do is extend the `Container` class and implement logic on sorting the child controls and calculating size. Here is an example of implementing a container that centers its children:

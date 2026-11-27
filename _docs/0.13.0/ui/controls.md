@@ -76,6 +76,16 @@ column {
 
 The group has `buttons`, `selected`, and an `onSelected` signal. Only `button(...)` calls directly in the block join the group; other nodes are added to the parent as usual.
 
+### CheckBox
+
+A toggle `Button` that draws a box with a check mark (via [CheckBox](https://github.com/littlektframework/littlekt/blob/master/scene-graph/src/commonMain/kotlin/com/littlekt/graph/node/ui/CheckBox.kt)).
+
+```kotlin
+checkBox("Fullscreen", checked = true) {
+    onToggled += { println("Fullscreen: $it") }
+}
+```
+
 ### Label
 
 Displays plain text (via [Label](https://github.com/littlektframework/littlekt/blob/master/scene-graph/src/commonMain/kotlin/com/littlekt/graph/node/ui/Label.kt)). Allows control of the horizontal and vertical alignments.
@@ -134,6 +144,18 @@ ninePatchRect {
 }
 ```
 
+### OptionButton
+
+A dropdown button that opens a list of items to pick from (via [OptionButton](https://github.com/littlektframework/littlekt/blob/master/scene-graph/src/commonMain/kotlin/com/littlekt/graph/node/ui/OptionButton.kt)).
+
+```kotlin
+optionButton(listOf("Low", "Medium", "High"), selected = 1) {
+    onItemSelected += { println(items[it]) }
+}
+```
+
+Use `selectedItem` for the chosen item, `placeholder` for the text shown while nothing is selected, and `addItem`, `setItems`, or `clearItems` to change the items.
+
 ### Panel
 
 Displays an opaque background (via [Panel](https://github.com/littlektframework/littlekt/blob/master/scene-graph/src/commonMain/kotlin/com/littlekt/graph/node/ui/Panel.kt)). Commonly used as a parent.
@@ -143,6 +165,17 @@ panel {
     label {
         text = "Hello! I have an opaque background!"
     }
+}
+```
+
+### PopupList
+
+A list of choices shown over the whole scene (via [PopupList](https://github.com/littlektframework/littlekt/blob/master/scene-graph/src/commonMain/kotlin/com/littlekt/graph/node/ui/PopupList.kt)). Pressing outside the list closes it. `OptionButton` uses one.
+
+```kotlin
+PopupList().apply {
+    onItemSelected += { println("Picked $it") }
+    open(anchor, listOf("Grass", "Sand", "Stone"), selected = 0)
 }
 ```
 
