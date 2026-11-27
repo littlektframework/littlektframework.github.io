@@ -189,6 +189,19 @@ progressBar {
 }
 ```
 
+### SpinBox
+
+A number field (via [SpinBox](https://github.com/littlektframework/littlekt/blob/master/scene-graph/src/commonMain/kotlin/com/littlekt/graph/node/ui/SpinBox.kt)). Drag across it to scrub the value, press the arrows at its sides or scroll to step it, or click it to type a value (Enter keeps it, Escape cancels).
+
+```kotlin
+spinBox(value = 45f, min = 1f, max = 500f, step = 1f) {
+    suffix = " hp"
+    onValueChanged += { println("HP: $it") }
+}
+```
+
+Use `prefix`, `decimals`, `scrubPixels`, `editable`, and `disabled` to tune it, and `stepBy` to step it from code.
+
 ### TextureProgress
 
 A textured-based progress bar (via [TextureProgress](https://github.com/littlektframework/littlekt/blob/master/scene-graph/src/commonMain/kotlin/com/littlekt/graph/node/ui/TextureProgress.kt)). Useful for loading screens and health bars.
